@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://be8qbmt0fe144"]
 
-[ext_resource type="Texture2D" uid="uid://bixxj1ouy6j1r" path="res://assets/images/player/Hit (32x32).png" id="1_dqkch"]
-[ext_resource type="Script" uid="uid://c3ubxpp10k6x6" path="res://scripts/player.gd" id="1_qlg0r"]
-[ext_resource type="Texture2D" uid="uid://ctiqmsh5qtweb" path="res://assets/images/player/Idle (32x32).png" id="2_qlg0r"]
-[ext_resource type="Texture2D" uid="uid://bksikhpdye5n8" path="res://assets/images/player/Jump (32x32).png" id="3_tuyoq"]
-[ext_resource type="Texture2D" uid="uid://bb22udxp86y2y" path="res://assets/images/player/Run (32x32).png" id="4_fjrip"]
+[ext_resource type="Texture2D" uid="uid://bixxj1ouy6j1r" path="res://entities/player/sprites/Hit (32x32).png" id="1_dqkch"]
+[ext_resource type="Script" uid="uid://c3ubxpp10k6x6" path="res://entities/player/player.gd" id="1_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://ctiqmsh5qtweb" path="res://entities/player/sprites/Idle (32x32).png" id="2_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://dg143newr0o2e" path="res://entities/player/sprites/base.png" id="2_tuyoq"]
+[ext_resource type="Texture2D" uid="uid://bksikhpdye5n8" path="res://entities/player/sprites/Jump (32x32).png" id="3_tuyoq"]
+[ext_resource type="Texture2D" uid="uid://bb22udxp86y2y" path="res://entities/player/sprites/Run (32x32).png" id="4_fjrip"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -130,6 +131,14 @@ region = Rect2(352, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_tuyoq")
+}],
+"loop": true,
+"name": &"base",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_smehm")
 }, {
 "duration": 1.0,
@@ -243,7 +252,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qlg0r"]
-size = Vector2(21, 25)
+size = Vector2(22.333334, 29)
 
 [node name="Player" type="CharacterBody2D" unique_id=599257793]
 scale = Vector2(3, 3)
@@ -252,10 +261,9 @@ script = ExtResource("1_qlg0r")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=379381558]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_t4otl")
-animation = &"idle"
-autoplay = "idle"
-frame_progress = 0.39241275
+animation = &"base"
+autoplay = "base"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=347411653]
-position = Vector2(0.5, 3.5)
+position = Vector2(0.16666636, 0.5)
 shape = SubResource("RectangleShape2D_qlg0r")
