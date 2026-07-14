@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b8gyyodvp88vl"]
+
+[ext_resource type="Script" uid="uid://bo5f1hrobojif" path="res://spells/dash/dash_spell.gd" id="1_qd6fa"]
+
+[node name="DashScene" type="Node2D" unique_id=1442482023]
+script = ExtResource("1_qd6fa")

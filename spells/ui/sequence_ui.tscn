@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://c87uh023ahrv1"]
+
+[ext_resource type="Script" uid="uid://wdth5n1816m6" path="res://spells/ui/sequence_ui.gd" id="1_54i6u"]
+[ext_resource type="Texture2D" uid="uid://dlgqaejt1ex4q" path="res://ui/icons/button_x.png" id="2_wnegb"]
+[ext_resource type="Texture2D" uid="uid://1n5pr8fupio" path="res://ui/icons/button_y.png" id="3_880t2"]
+[ext_resource type="Texture2D" uid="uid://kolm5sl3slk7" path="res://ui/icons/button_b.png" id="4_yxu60"]
+
+[node name="SequenceUI" type="Node2D" unique_id=444228689]
+script = ExtResource("1_54i6u")
+attack_icon = ExtResource("2_wnegb")
+interaction_icon = ExtResource("3_880t2")
+move_icon = ExtResource("4_yxu60")
+
+[node name="SequenceContainer" type="HBoxContainer" parent="." unique_id=380409138]
+texture_filter = 1
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TimeoutBar" type="ProgressBar" parent="." unique_id=1725836371]
+texture_filter = 1
+offset_right = 33.0
+offset_bottom = 6.0
+max_value = 1.0
+value = 1.0
+show_percentage = false

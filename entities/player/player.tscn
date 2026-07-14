@@ -2,10 +2,15 @@
 
 [ext_resource type="Texture2D" uid="uid://bixxj1ouy6j1r" path="res://entities/player/sprites/Hit (32x32).png" id="1_dqkch"]
 [ext_resource type="Script" uid="uid://c3ubxpp10k6x6" path="res://entities/player/player.gd" id="1_qlg0r"]
+[ext_resource type="PackedScene" uid="uid://c87uh023ahrv1" path="res://spells/ui/sequence_ui.tscn" id="2_7thud"]
 [ext_resource type="Texture2D" uid="uid://ctiqmsh5qtweb" path="res://entities/player/sprites/Idle (32x32).png" id="2_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://dg143newr0o2e" path="res://entities/player/sprites/base.png" id="2_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://bksikhpdye5n8" path="res://entities/player/sprites/Jump (32x32).png" id="3_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://bb22udxp86y2y" path="res://entities/player/sprites/Run (32x32).png" id="4_fjrip"]
+[ext_resource type="Script" uid="uid://bg2bws5epjtcv" path="res://spells/core/sequence_caster.gd" id="7_26q78"]
+[ext_resource type="Script" uid="uid://bc80n76e2yidq" path="res://spells/core/spell_invoker.gd" id="8_bectd"]
+[ext_resource type="Script" uid="uid://cobttx3mdk6v1" path="res://spells/core/spell_definition.gd" id="8_wvtmh"]
+[ext_resource type="Resource" uid="uid://2i1pgqkwgu6r" path="res://spells/dash/dash_spell_definition.tres" id="9_7thud"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -258,6 +263,10 @@ size = Vector2(22.333334, 29)
 scale = Vector2(3, 3)
 script = ExtResource("1_qlg0r")
 
+[node name="SequenceUI" parent="." unique_id=444228689 node_paths=PackedStringArray("sequence_caster") instance=ExtResource("2_7thud")]
+position = Vector2(-12.333333, -50.666664)
+sequence_caster = NodePath("../SequenceCaster")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=379381558]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_t4otl")
@@ -267,3 +276,18 @@ autoplay = "base"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=347411653]
 position = Vector2(0.16666636, 0.5)
 shape = SubResource("RectangleShape2D_qlg0r")
+
+[node name="SpellOrigin" type="Marker2D" parent="." unique_id=473722362]
+
+[node name="SequenceCaster" type="Node" parent="." unique_id=788599091 node_paths=PackedStringArray("caster", "spell_origin", "effect_parent")]
+script = ExtResource("7_26q78")
+available_spells = Array[ExtResource("8_wvtmh")]([ExtResource("9_7thud")])
+caster = NodePath("..")
+spell_origin = NodePath("../SpellOrigin")
+effect_parent = NodePath("..")
+metadata/_custom_type_script = "uid://bg2bws5epjtcv"
+
+[node name="TimeoutTimer" type="Timer" parent="SequenceCaster" unique_id=1887620]
+
+[node name="SpellInvoker" type="Node" parent="." unique_id=768683111]
+script = ExtResource("8_bectd")

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SpellDefinition" format=3 uid="uid://2i1pgqkwgu6r"]
+
+[ext_resource type="Script" uid="uid://cobttx3mdk6v1" path="res://spells/core/spell_definition.gd" id="1_s73ym"]
+[ext_resource type="PackedScene" uid="uid://b8gyyodvp88vl" path="res://spells/dash/dash_scene.tscn" id="1_wsmje"]
+
+[resource]
+script = ExtResource("1_s73ym")
+id = &"dash"
+display_name = "Dash"
+cooldown = 1.0
+sequence = Array[StringName]([&"move"])
+command_scene = ExtResource("1_wsmje")
+metadata/_custom_type_script = "uid://cobttx3mdk6v1"
