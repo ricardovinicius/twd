@@ -3,6 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://tn7j2scmuyxk" path="res://levels/common/assets/background/Pink.png" id="1_bpffr"]
 [ext_resource type="Texture2D" uid="uid://bgwgkaphcs2sm" path="res://levels/common/tilemap/Terrain (16x16).png" id="2_2fp4v"]
 [ext_resource type="PackedScene" uid="uid://be8qbmt0fe144" path="res://entities/player/player.tscn" id="3_dm0pi"]
+[ext_resource type="Texture2D" uid="uid://b04xbw67honaw" path="res://assets/debug/Idle.png" id="4_71kry"]
+[ext_resource type="Script" uid="uid://crruxwaa1lwq2" path="res://components/action_reactions/action_receiver.gd" id="5_aqob7"]
+[ext_resource type="Script" uid="uid://bdw0c8r5ijn77" path="res://components/action_reactions/debug_push_reaction.gd" id="6_thp0t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4tcl0"]
 texture = ExtResource("2_2fp4v")
@@ -177,6 +180,12 @@ texture = ExtResource("2_2fp4v")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_4tcl0")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2fp4v"]
+size = Vector2(54, 53)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dm0pi"]
+size = Vector2(54, 53)
+
 [node name="LevelRoot" type="Node2D" unique_id=39161027]
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=598187824]
@@ -194,3 +203,32 @@ tile_set = SubResource("TileSet_dd0lh")
 
 [node name="Player" parent="." unique_id=599257793 instance=ExtResource("3_dm0pi")]
 position = Vector2(101, 551)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1858737398]
+position = Vector2(972, 573)
+collision_layer = 9
+collision_mask = 9
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1252558091]
+texture_filter = 1
+position = Vector2(26, 26)
+scale = Vector2(3.3636363, 3.3636363)
+texture = ExtResource("4_71kry")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=633741792]
+position = Vector2(26, 25.5)
+shape = SubResource("RectangleShape2D_2fp4v")
+
+[node name="ActionReceiver" type="Area2D" parent="StaticBody2D" unique_id=1419811217]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_aqob7")
+metadata/_custom_type_script = "uid://crruxwaa1lwq2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D/ActionReceiver" unique_id=1139075364]
+position = Vector2(26, 25.5)
+shape = SubResource("RectangleShape2D_dm0pi")
+
+[node name="DebugPushReaction" type="Node" parent="StaticBody2D/ActionReceiver" unique_id=593068359]
+script = ExtResource("6_thp0t")
+metadata/_custom_type_script = "uid://bdw0c8r5ijn77"

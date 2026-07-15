@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SpellDefinition" format=3 uid="uid://b1dg4hcevkwm0"]
+
+[ext_resource type="PackedScene" uid="uid://xv6cga6x6os2" path="res://spells/action/push/PushSpell.tscn" id="1_crwdp"]
+[ext_resource type="Script" uid="uid://cobttx3mdk6v1" path="res://spells/core/spell_definition.gd" id="1_qd0jt"]
+
+[resource]
+script = ExtResource("1_qd0jt")
+id = &"push"
+display_name = "Push"
+sequence = Array[StringName]([&"interaction"])
+command_scene = ExtResource("1_crwdp")
+metadata/_custom_type_script = "uid://cobttx3mdk6v1"

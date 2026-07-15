@@ -1,4 +1,4 @@
-class_name ProjectileSpell
+class_name DashSpell
 extends SpellCommand
 
 @export var speed: float = 500.0
