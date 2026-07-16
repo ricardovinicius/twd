@@ -4,3 +4,4 @@
 
 [node name="DashScene" type="Node2D" unique_id=1442482023]
 script = ExtResource("1_qd6fa")
+duration = 0.3
