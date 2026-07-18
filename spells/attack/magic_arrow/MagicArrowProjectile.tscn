@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://ce62or1km2pgw"]
+
+[ext_resource type="Script" uid="uid://b7q3xogovuhhg" path="res://spells/attack/magic_arrow/magic_arrow_projectile.gd" id="1_11i43"]
+[ext_resource type="Texture2D" uid="uid://b54asiuj6wx7s" path="res://spells/attack/magic_arrow/sprites/Spiked Ball.png" id="2_pots1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5a44f"]
+
+[node name="MagicArrowProjectile" type="Area2D" unique_id=242604131]
+collision_layer = 0
+collision_mask = 17
+script = ExtResource("1_11i43")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=420277688]
+texture_filter = 1
+texture = ExtResource("2_pots1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1580419031]
+shape = SubResource("CircleShape2D_5a44f")

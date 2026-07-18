@@ -12,7 +12,7 @@ config_version=5
 
 config/name="New Game Project"
 run/main_scene="uid://155xx7s6y6ta"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
@@ -63,7 +63,9 @@ cast_confirm_token={
 
 [layer_names]
 
+2d_physics/layer_1="World"
 2d_physics/layer_4="Action Receivers"
+2d_physics/layer_5="Attack Receivers"
 
 [physics]
 

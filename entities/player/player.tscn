@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://cobttx3mdk6v1" path="res://spells/core/spell_definition.gd" id="8_wvtmh"]
 [ext_resource type="Resource" uid="uid://2i1pgqkwgu6r" path="res://spells/dash/dash_spell_definition.tres" id="9_7thud"]
 [ext_resource type="Resource" uid="uid://b1dg4hcevkwm0" path="res://spells/action/push/push_spell_definition.tres" id="11_a1qjk"]
+[ext_resource type="Resource" uid="uid://k3fvqn6s44nu" path="res://spells/attack/magic_arrow/magic_arrow_definition.tres" id="12_j3ovn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -139,7 +140,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_tuyoq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"base",
 "speed": 5.0
 }, {
@@ -165,7 +166,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f1ej7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"hit",
 "speed": 20.0
 }, {
@@ -203,7 +204,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ke2ow")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 20.0
 }, {
@@ -211,7 +212,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_tuyoq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"jump",
 "speed": 20.0
 }, {
@@ -252,7 +253,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hax0n")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run",
 "speed": 20.0
 }]
@@ -282,7 +283,7 @@ shape = SubResource("RectangleShape2D_qlg0r")
 
 [node name="SequenceCaster" type="Node" parent="." unique_id=788599091 node_paths=PackedStringArray("caster", "spell_origin", "effect_parent")]
 script = ExtResource("7_26q78")
-available_spells = Array[ExtResource("8_wvtmh")]([ExtResource("9_7thud"), ExtResource("11_a1qjk")])
+available_spells = Array[ExtResource("8_wvtmh")]([ExtResource("9_7thud"), ExtResource("11_a1qjk"), ExtResource("12_j3ovn")])
 caster = NodePath("..")
 spell_origin = NodePath("../SpellOrigin")
 effect_parent = NodePath("..")

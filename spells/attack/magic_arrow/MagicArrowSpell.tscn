@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cs27lof8bter0"]
+
+[ext_resource type="Script" uid="uid://ccjoy2308xdas" path="res://spells/attack/magic_arrow/magic_arrow_spell.gd" id="1_t8m7a"]
+[ext_resource type="PackedScene" uid="uid://ce62or1km2pgw" path="res://spells/attack/magic_arrow/MagicArrowProjectile.tscn" id="2_2elj4"]
+
+[node name="MagicArrowSpell" type="Node2D" unique_id=969781514]
+script = ExtResource("1_t8m7a")
+projectile_scene = ExtResource("2_2elj4")
