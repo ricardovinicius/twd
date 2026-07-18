@@ -6,6 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_5a44f"]
 
 [node name="MagicArrowProjectile" type="Area2D" unique_id=242604131]
+scale = Vector2(3, 3)
 collision_layer = 0
 collision_mask = 17
 script = ExtResource("1_11i43")

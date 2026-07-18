@@ -1,0 +1,2 @@
+- Maybe I should use the same collision shape to detect collisions with the world and to detect collisions with spells/attacks. This would simplify the code and reduce the number of collision shapes needed. However, it might also lead to some unintended consequences, such as detecting collisions with objects that shouldn't trigger a response. I need to carefully consider the implications of this change before implementing it.
+- I should consider implementing a better system for animation transitions when the player is hit by an attack, or other events.

@@ -41,9 +41,7 @@ func _execute() -> void:
     var attack := _create_attack_data()
     var projectile_parent := _get_projectile_parent()
 
-    # FIX: The projectile should not be child of the caster, as it may cause issues with collision detection and other behaviors. 
-    # Instead, it should be added to a neutral parent node in the scene tree.
-    projectile_parent.add_child(projectile)
+    context.caster.add_sibling(projectile)
 
     projectile.launch(
         context.origin,
