@@ -1,8 +1,8 @@
 extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
-const SPEED = 400.0
-const JUMP_VELOCITY = -1050.0
+@export var speed = 400.0
+@export var jump_velocity = -1050.0
 
 @export var facing_direction: Vector2 = Vector2.RIGHT
 
@@ -32,15 +32,15 @@ func _apply_normal_movement(delta: float) -> void:
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		velocity.y = jump_velocity
 
 	# Get the input direction and handle the movement/deceleration.
 	var direction := Input.get_axis("left", "right")
 	if direction:
 		facing_direction = Vector2(direction, 0.0)
-		velocity.x = direction * SPEED
+		velocity.x = direction * speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, speed)
 
 	move_and_slide()
 	

@@ -140,7 +140,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_tuyoq")
 }],
-"loop": 1,
+"loop": true,
 "name": &"base",
 "speed": 5.0
 }, {
@@ -166,7 +166,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f1ej7")
 }],
-"loop": 1,
+"loop": true,
 "name": &"hit",
 "speed": 20.0
 }, {
@@ -204,7 +204,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ke2ow")
 }],
-"loop": 1,
+"loop": true,
 "name": &"idle",
 "speed": 20.0
 }, {
@@ -212,7 +212,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_tuyoq")
 }],
-"loop": 1,
+"loop": true,
 "name": &"jump",
 "speed": 20.0
 }, {
@@ -253,7 +253,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hax0n")
 }],
-"loop": 1,
+"loop": true,
 "name": &"run",
 "speed": 20.0
 }]
