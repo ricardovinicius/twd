@@ -2,6 +2,7 @@ extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var horizontal_movement: HorizontalMovementComponent = $HorizontalMovement
 @onready var coyote_time: CoyoteTimeComponent = $CoyoteTimer
+@onready var variable_jump_height: VariableJumpHeightComponent = $VariableJumpHeight
 
 @export var jump_velocity = -1050.0
 @export var Jump_buffer_Time: float = .1
@@ -25,29 +26,22 @@ func _physics_process(delta: float) -> void:
 	
 
 func _apply_normal_movement(delta: float) -> void:
-	# Add animation
-	if velocity.x > 1 or velocity.x < -1:
-		animated_sprite_2d.animation = "walk"
-	else:
-		animated_sprite_2d.animation = "idle"
-	
-
-	#jump fall gravity.
+	_update_movement_animation()
 
 	# Add the gravity.
 	if not is_on_floor():
-		animated_sprite_2d.animation = "jump"
 		velocity += get_gravity() * delta
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and coyote_time.can_jump(is_on_floor()):
 		velocity.y = jump_velocity
 		coyote_time.consume_jump()
+		_play_animation(&"jump")
 
 
-	#jump veriable high
-	if Input.is_action_just_released("jump") and velocity.y < 0:
-		velocity.y = jump_velocity / 4
+	# Cut the remaining upward velocity when jump is released early.
+	if Input.is_action_just_released("jump"):
+		velocity.y = variable_jump_height.cut_jump(velocity.y)
 
 	# Get the input direction and handle the movement/deceleration.
 	var direction := Input.get_axis("left", "right")
@@ -73,8 +67,24 @@ func _apply_dash_movement() -> void:
 	velocity = dash_direction * dash_speed
 	velocity.y = 0  # Ensure no vertical movement during dash
 
-	animated_sprite_2d.animation = "jump"
+	_play_animation(&"jump")
 	move_and_slide()
+
+
+func _update_movement_animation() -> void:
+	if not is_on_floor():
+		_play_animation(&"jump")
+	elif absf(velocity.x) > 1.0:
+		_play_animation(&"walk")
+	else:
+		_play_animation(&"idle")
+
+
+func _play_animation(animation_name: StringName) -> void:
+	if animated_sprite_2d.animation == animation_name:
+		return
+
+	animated_sprite_2d.play(animation_name)
 
 
 func begin_dash(direction: Vector2, speed: float, duration: float) -> void:

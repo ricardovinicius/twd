@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://bixxj1ouy6j1r" path="res://entities/player/sprites/Hit (32x32).png" id="1_dqkch"]
 [ext_resource type="Script" uid="uid://c3ubxpp10k6x6" path="res://entities/player/player.gd" id="1_qlg0r"]
-[ext_resource type="Script" path="res://components/movement/coyote_time_component.gd" id="2_coyote"]
 [ext_resource type="PackedScene" uid="uid://c87uh023ahrv1" path="res://spells/ui/sequence_ui.tscn" id="2_7thud"]
+[ext_resource type="Script" uid="uid://lfreu1uvss2b" path="res://components/movement/coyote_time_component.gd" id="2_coyote"]
 [ext_resource type="Texture2D" uid="uid://dg143newr0o2e" path="res://entities/player/sprites/base.png" id="2_tuyoq"]
 [ext_resource type="Script" uid="uid://bmouqvprw5wyj" path="res://components/movement/horizontal_movement_component.gd" id="3_horizontal"]
-[ext_resource type="Texture2D" uid="uid://bb22udxp86y2y" path="res://entities/player/sprites/Run (32x32).png" id="4_fjrip"]
+[ext_resource type="Script" uid="uid://c0ubcaxscurux" path="res://components/movement/variable_jump_height_component.gd" id="4_variable_jump"]
 [ext_resource type="Texture2D" uid="uid://drp51vif56qby" path="res://entities/player/sprites/idle.png" id="5_afbqv"]
 [ext_resource type="Texture2D" uid="uid://d23ri4s1gm75k" path="res://entities/player/sprites/jump animation.png" id="6_afbqv"]
 [ext_resource type="Script" uid="uid://bg2bws5epjtcv" path="res://spells/core/sequence_caster.gd" id="7_26q78"]
@@ -288,54 +288,6 @@ region = Rect2(736, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_52mt1"]
 atlas = ExtResource("6_afbqv")
 region = Rect2(768, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ujl30"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_31cv2"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pf23h"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dt7fs"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wqfne"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(128, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wnwbv"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(160, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gl8cc"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(192, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_487ah"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(224, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_md1ol"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(256, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bj30b"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(288, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jc3p3"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(320, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hax0n"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(352, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gx6sm"]
 atlas = ExtResource("8_afbqv")
@@ -662,50 +614,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_52mt1")
 }],
-"loop": true,
+"loop": false,
 "name": &"jump",
-"speed": 50.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ujl30")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_31cv2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pf23h")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dt7fs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wqfne")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wnwbv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gl8cc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_487ah")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_md1ol")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bj30b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jc3p3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hax0n")
-}],
-"loop": true,
-"name": &"run",
-"speed": 20.0
+"speed": 100.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -794,11 +705,16 @@ size = Vector2(22.333334, 29)
 [node name="Player" type="CharacterBody2D" unique_id=599257793]
 scale = Vector2(3, 3)
 script = ExtResource("1_qlg0r")
+jump_velocity = -1000.0
 
 [node name="HorizontalMovement" type="Node" parent="." unique_id=848493857]
 script = ExtResource("3_horizontal")
 max_speed = 500.0
 deceleration = 1000.0
+
+[node name="VariableJumpHeight" type="Node" parent="." unique_id=1967477122]
+script = ExtResource("4_variable_jump")
+jump_cut_multiplier = 0.5
 
 [node name="SequenceUI" parent="." unique_id=444228689 node_paths=PackedStringArray("sequence_caster") instance=ExtResource("2_7thud")]
 position = Vector2(-12.333333, -50.666664)
@@ -808,8 +724,7 @@ sequence_caster = NodePath("../SequenceCaster")
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_t4otl")
 animation = &"jump"
-autoplay = "base"
-frame_progress = 0.028719356
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=347411653]
 position = Vector2(0.16666636, 0.5)
@@ -831,6 +746,6 @@ metadata/_custom_type_script = "uid://bg2bws5epjtcv"
 script = ExtResource("8_bectd")
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=515972411]
-wait_time = 0.15
+wait_time = 0.1
 one_shot = true
 script = ExtResource("2_coyote")
