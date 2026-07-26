@@ -3,12 +3,13 @@ extends CharacterBody2D
 
 @export var speed = 400.0
 @export var jump_velocity = -1050.0
-
+@export var Jump_buffer_Time: float = .1
 @export var facing_direction: Vector2 = Vector2.RIGHT
 
 var is_dashing: bool = false
 var dash_direction: Vector2 = Vector2.ZERO
 var dash_speed: float = 0.0
+var jump_buffer:bool = false
 
 
 func _physics_process(delta: float) -> void:
@@ -21,10 +22,13 @@ func _physics_process(delta: float) -> void:
 func _apply_normal_movement(delta: float) -> void:
 	# Add animation
 	if velocity.x > 1 or velocity.x < -1:
-		animated_sprite_2d.animation = "run"
+		animated_sprite_2d.animation = "walk"
 	else:
 		animated_sprite_2d.animation = "idle"
 	
+
+	#jump fall gravity.
+
 	# Add the gravity.
 	if not is_on_floor():
 		animated_sprite_2d.animation = "jump"
@@ -33,6 +37,11 @@ func _apply_normal_movement(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
+
+
+	#jump veriable high
+	if Input.is_action_just_released("jump") and velocity.y < 0:
+		velocity.y = jump_velocity / 4
 
 	# Get the input direction and handle the movement/deceleration.
 	var direction := Input.get_axis("left", "right")
@@ -78,4 +87,3 @@ func begin_dash(direction: Vector2, speed: float, duration: float) -> void:
 
 	is_dashing = false
 	velocity.x = 0  # Stop horizontal movement after dash
-
