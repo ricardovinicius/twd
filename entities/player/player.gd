@@ -1,7 +1,8 @@
 extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var horizontal_movement: HorizontalMovementComponent = $HorizontalMovement
+@onready var coyote_time: CoyoteTimeComponent = $CoyoteTimer
 
-@export var speed = 400.0
 @export var jump_velocity = -1050.0
 @export var Jump_buffer_Time: float = .1
 @export var facing_direction: Vector2 = Vector2.RIGHT
@@ -13,10 +14,14 @@ var jump_buffer:bool = false
 
 
 func _physics_process(delta: float) -> void:
+	var was_on_floor := is_on_floor()
+
 	if not is_dashing:
 		_apply_normal_movement(delta)
 	else:
 		_apply_dash_movement()
+
+	coyote_time.update_floor_state(was_on_floor, is_on_floor())
 	
 
 func _apply_normal_movement(delta: float) -> void:
@@ -35,8 +40,9 @@ func _apply_normal_movement(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and coyote_time.can_jump(is_on_floor()):
 		velocity.y = jump_velocity
+		coyote_time.consume_jump()
 
 
 	#jump veriable high
@@ -47,9 +53,12 @@ func _apply_normal_movement(delta: float) -> void:
 	var direction := Input.get_axis("left", "right")
 	if direction:
 		facing_direction = Vector2(direction, 0.0)
-		velocity.x = direction * speed
-	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
+
+	velocity.x = horizontal_movement.calculate_velocity(
+		velocity.x,
+		direction,
+		delta
+	)
 
 	move_and_slide()
 	
