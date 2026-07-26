@@ -472,12 +472,9 @@ tile_set = SubResource("TileSet_dd0lh")
 
 [node name="Player" parent="." unique_id=599257793 instance=ExtResource("3_dm0pi")]
 position = Vector2(189, 579)
-Jump_buffer_Time = 0.15
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1177485573]
 offset = Vector2(0, -20)
-limit_left = 0
-limit_top = 0
 limit_right = 900000
 limit_bottom = 900000
 limit_smoothed = true
@@ -521,6 +518,3 @@ resistance = 0.2
 
 [node name="Dummy" parent="." unique_id=1685303879 instance=ExtResource("8_thp0t")]
 position = Vector2(4114, 1697)
-
-[node name="Dummy" parent="Dummy" unique_id=1235004629 instance=ExtResource("8_thp0t")]
-position = Vector2(4273, 1692)

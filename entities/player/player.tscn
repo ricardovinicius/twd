@@ -8,7 +8,9 @@
 [ext_resource type="Script" uid="uid://bmouqvprw5wyj" path="res://components/movement/horizontal_movement_component.gd" id="3_horizontal"]
 [ext_resource type="Script" uid="uid://c0ubcaxscurux" path="res://components/movement/variable_jump_height_component.gd" id="4_variable_jump"]
 [ext_resource type="Texture2D" uid="uid://drp51vif56qby" path="res://entities/player/sprites/idle.png" id="5_afbqv"]
+[ext_resource type="Script" uid="uid://donfkuablatda" path="res://components/movement/jump_buffer_component.gd" id="5_jump_buffer"]
 [ext_resource type="Texture2D" uid="uid://d23ri4s1gm75k" path="res://entities/player/sprites/jump animation.png" id="6_afbqv"]
+[ext_resource type="Script" uid="uid://2htj0e4va8nl" path="res://components/movement/gravity_component.gd" id="6_gravity"]
 [ext_resource type="Script" uid="uid://bg2bws5epjtcv" path="res://spells/core/sequence_caster.gd" id="7_26q78"]
 [ext_resource type="Texture2D" uid="uid://dqumptbjwn0jm" path="res://entities/player/sprites/walk sprite sheet.png" id="8_afbqv"]
 [ext_resource type="Script" uid="uid://bc80n76e2yidq" path="res://spells/core/spell_invoker.gd" id="8_bectd"]
@@ -715,6 +717,14 @@ deceleration = 1000.0
 [node name="VariableJumpHeight" type="Node" parent="." unique_id=1967477122]
 script = ExtResource("4_variable_jump")
 jump_cut_multiplier = 0.5
+
+[node name="JumpBufferTimer" type="Timer" parent="." unique_id=1030028783]
+wait_time = 0.15
+one_shot = true
+script = ExtResource("5_jump_buffer")
+
+[node name="Gravity" type="Node" parent="." unique_id=18360107]
+script = ExtResource("6_gravity")
 
 [node name="SequenceUI" parent="." unique_id=444228689 node_paths=PackedStringArray("sequence_caster") instance=ExtResource("2_7thud")]
 position = Vector2(-12.333333, -50.666664)

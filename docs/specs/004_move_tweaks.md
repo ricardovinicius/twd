@@ -42,5 +42,11 @@ Including:
 - The gravity value can be adjusted to balance responsiveness and challenge.
 - A down-gravity value will be applied when the player is falling, which will be higher than the normal gravity value applied when the player is ascending.
 
+_Note:_ The features ahead will be implemented in a future update, but are included here for completeness.
+
+## Push Off Ledges
+- Implement a mechanic that allows the player to push off ledges when moving around the top of ledges, making the movement feel more natural and dynamic.
+- When the player jumps and bumps into a ledge, the game moves the player slightly away from the ledge, allowing them to push off and continue moving in the desired direction.
+
 
 
