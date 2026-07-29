@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cgaihek5qxa15"]
+
+[ext_resource type="Texture2D" uid="uid://1vm731a8bylf" path="res://entities/enemies/Skeletons/basic skeleton/sprites/esqueletinho base.png" id="2_s4wkh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ik31s"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1073094200]
+scale = Vector2(3, 3)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=631931108]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=452417098]
+shape = SubResource("RectangleShape2D_ik31s")
+
+[node name="EsqueletinhoBase" type="Sprite2D" parent="." unique_id=1904938988]
+texture = ExtResource("2_s4wkh")
