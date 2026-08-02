@@ -47,10 +47,6 @@ func _apply_normal_movement(delta: float) -> void:
 	_try_jump()
 
 
-	# Cut the remaining upward velocity when jump is released early.
-	if Input.is_action_just_released("jump"):
-		velocity.y = variable_jump_height.cut_jump(velocity.y)
-
 	# Get the input direction and handle the movement/deceleration.
 	var direction := Input.get_axis("left", "right")
 	if direction:
