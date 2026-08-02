@@ -7,7 +7,7 @@ extends Resource
 @export var id: StringName
 @export var display_name: String
 @export_multiline var description: String
-@export var cooldown: float
+@export_range(0.0, 3600.0, 0.05, "or_greater") var cooldown: float = 0.0
 
 # TODO: Check if this is the best way to handle the sequence of spell effects. 
 @export var sequence: Array[StringName] = []

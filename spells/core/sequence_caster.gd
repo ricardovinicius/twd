@@ -36,6 +36,7 @@ var sequence_to_spell: Dictionary[StringName, SpellDefinition] = {}
 func _ready() -> void:
 	timeout_timer.one_shot = true
 	timeout_timer.timeout.connect(_on_timeout)
+	spell_invoker.spell_rejected.connect(_on_spell_rejected)
 
 	_register_spells()
 
@@ -150,3 +151,7 @@ func _create_spell_context() -> SpellContext:
 func _on_timeout() -> void:
 	push_warning("SequenceCaster::_on_timeout() - Input sequence timed out.")
 	clear_sequence()
+
+
+func _on_spell_rejected(_spell: SpellDefinition, reason: StringName) -> void:
+	sequence_failed.emit(current_sequence.duplicate(), reason)

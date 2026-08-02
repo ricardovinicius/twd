@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://bc80n76e2yidq" path="res://spells/core/spell_invoker.gd" id="8_bectd"]
 [ext_resource type="Script" uid="uid://cobttx3mdk6v1" path="res://spells/core/spell_definition.gd" id="8_wvtmh"]
 [ext_resource type="Resource" uid="uid://2i1pgqkwgu6r" path="res://spells/dash/dash_spell_definition.tres" id="9_7thud"]
+[ext_resource type="Script" uid="uid://b6ijjdasfwcco" path="res://spells/core/spell_cooldowns.gd" id="10_cooldowns"]
 [ext_resource type="Resource" uid="uid://b1dg4hcevkwm0" path="res://spells/action/push/push_spell_definition.tres" id="11_a1qjk"]
 [ext_resource type="Resource" uid="uid://k3fvqn6s44nu" path="res://spells/attack/magic_arrow/magic_arrow_definition.tres" id="12_j3ovn"]
 
@@ -751,8 +752,12 @@ metadata/_custom_type_script = "uid://bg2bws5epjtcv"
 
 [node name="TimeoutTimer" type="Timer" parent="SequenceCaster" unique_id=1887620]
 
-[node name="SpellInvoker" type="Node" parent="." unique_id=768683111]
+[node name="SpellCooldowns" type="Node" parent="." unique_id=1460381734]
+script = ExtResource("10_cooldowns")
+
+[node name="SpellInvoker" type="Node" parent="." unique_id=768683111 node_paths=PackedStringArray("cooldowns")]
 script = ExtResource("8_bectd")
+cooldowns = NodePath("../SpellCooldowns")
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=515972411]
 wait_time = 0.1
