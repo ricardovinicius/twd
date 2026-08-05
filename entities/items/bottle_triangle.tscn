@@ -5,18 +5,11 @@
 [ext_resource type="Script" uid="uid://c2sq8ch4tw1q4" path="res://components/action_reactions/push/rigid_body_push_reaction.gd" id="4_13f6v"]
 [ext_resource type="Texture2D" uid="uid://74mek0r2wdo" path="res://assets/objects/pote 1.png" id="4_cu6jg"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2fp4v"]
-size = Vector2(42, 48)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dm0pi"]
 size = Vector2(42, 47.5)
 
 [node name="TempDummyBox" type="RigidBody2D" unique_id=1087390374]
 mass = 0.5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=918128852]
-position = Vector2(0, -1)
-shape = SubResource("RectangleShape2D_2fp4v")
 
 [node name="ActionReceiver" type="Area2D" parent="." unique_id=931157303]
 collision_layer = 8
@@ -40,3 +33,6 @@ resistance = 0.2
 [node name="Pote1" type="Sprite2D" parent="." unique_id=1217819661]
 scale = Vector2(3, 3)
 texture = ExtResource("4_cu6jg")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=735824444]
+polygon = PackedVector2Array(-3, -23, -21, 23, 21, 23, 3, -23)
