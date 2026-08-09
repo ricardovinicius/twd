@@ -22,7 +22,8 @@ func _execute() -> void:
 		fail(&"missing_caster")
 		return
 
-	if context.direction.is_zero_approx():
+	var projectile_direction := _get_projectile_direction()
+	if projectile_direction.is_zero_approx():
 		fail(&"missing_direction")
 		return
 	
@@ -38,14 +39,14 @@ func _execute() -> void:
 		fail(&"invalid_projectile_scene")
 		return
 	
-	var attack := _create_attack_data()
+	var attack := _create_attack_data(projectile_direction)
 	var projectile_parent := _get_projectile_parent()
 
 	context.caster.add_sibling(projectile)
 
 	projectile.launch(
 		context.origin,
-		context.direction.normalized(),
+		projectile_direction,
 		attack,
 		speed,
 		lifetime
@@ -54,13 +55,20 @@ func _execute() -> void:
 	complete()
 
 
-func _create_attack_data() -> AttackData:
+func _get_projectile_direction() -> Vector2:
+	if not context.aim_direction.is_zero_approx():
+		return context.aim_direction.normalized()
+
+	return context.direction.normalized()
+
+
+func _create_attack_data(projectile_direction: Vector2) -> AttackData:
 	var attack := AttackData.new()
 
 	attack.attack_type = &"magic_arrow"
 	attack.source = context.caster
 	attack.origin = context.origin
-	attack.direction = context.direction.normalized()
+	attack.direction = projectile_direction
 	attack.damage = damage
 
 	return attack

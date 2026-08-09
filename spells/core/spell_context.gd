@@ -8,6 +8,7 @@ var effect_parent: Node
 
 var origin: Vector2
 var direction: Vector2
+var aim_direction: Vector2
 var target_position: Vector2
 
 var metadata: Dictionary = {}

@@ -27,6 +27,7 @@
 [ext_resource type="Script" uid="uid://crruxwaa1lwq2" path="res://components/action_reactions/action_receiver.gd" id="18_action_receiver"]
 [ext_resource type="Script" uid="uid://b4gvtml86rgjw" path="res://components/action_reactions/push/character_body_push_reaction.gd" id="19_push_reaction"]
 [ext_resource type="Script" uid="uid://dsjaapsgk0ke3" path="res://components/contact/character_rigid_body_push_component.gd" id="20_rigid_body_push"]
+[ext_resource type="Script" uid="uid://i7wmgxll2lvl" path="res://components/input/aim_input_component.gd" id="21_aim_input"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -760,12 +761,16 @@ shape = SubResource("RectangleShape2D_qlg0r")
 
 [node name="SpellOrigin" type="Marker2D" parent="." unique_id=473722362]
 
-[node name="SequenceCaster" type="Node" parent="." unique_id=788599091 node_paths=PackedStringArray("caster", "spell_origin", "effect_parent")]
+[node name="AimInput" type="Node" parent="."]
+script = ExtResource("21_aim_input")
+
+[node name="SequenceCaster" type="Node" parent="." unique_id=788599091 node_paths=PackedStringArray("caster", "spell_origin", "effect_parent", "projectile_aim")]
 script = ExtResource("7_26q78")
 available_spells = Array[ExtResource("8_wvtmh")]([ExtResource("9_7thud"), ExtResource("11_a1qjk"), ExtResource("12_j3ovn")])
 caster = NodePath("..")
 spell_origin = NodePath("../SpellOrigin")
 effect_parent = NodePath("..")
+projectile_aim = NodePath("../AimInput")
 metadata/_custom_type_script = "uid://bg2bws5epjtcv"
 
 [node name="TimeoutTimer" type="Timer" parent="SequenceCaster" unique_id=1887620]

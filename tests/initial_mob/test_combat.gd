@@ -8,11 +8,15 @@ const HealthDamageReactionScript = preload(
 )
 const HealthScript = preload("res://health/health.gd")
 const MeleeAttackScript = preload("res://components/attack_reactions/melee_attack_component.gd")
+const AimInputScript = preload("res://components/input/aim_input_component.gd")
 const SkeletonScene = preload(
 	"res://entities/enemies/Skeletons/basic skeleton/basic_skeleton.tscn"
 )
 const MagicArrowScene = preload(
 	"res://spells/attack/magic_arrow/MagicArrowProjectile.tscn"
+)
+const MagicArrowSpellScene = preload(
+	"res://spells/attack/magic_arrow/MagicArrowSpell.tscn"
 )
 
 const ATTACK_RECEIVER_LAYER := 1 << 4
@@ -30,6 +34,7 @@ func _run() -> void:
 	await process_frame
 
 	await _test_attack_reaction_pipeline()
+	_test_analog_projectile_aim()
 	await _test_melee_timing_single_hit_miss_and_recovery()
 	await _test_magic_arrow_hits_mob_receiver()
 	await _test_mob_health_and_death()
@@ -45,6 +50,50 @@ func _run() -> void:
 		push_error("FAIL: %s" % failure)
 	print("FAIL: initial mob combat (%d failures, %d checks)" % [_failures.size(), _checks])
 	quit(1)
+
+
+func _test_analog_projectile_aim() -> void:
+	var aim_input := AimInputScript.new()
+	Input.action_press(&"right", 0.8)
+	Input.action_press(&"aim_up", 0.6)
+
+	var analog_direction: Vector2 = aim_input.get_direction()
+	_check_equal(
+		analog_direction,
+		Vector2.RIGHT,
+		"analog aim snaps a diagonal toward its dominant horizontal axis"
+	)
+
+	Input.action_release(&"right")
+	Input.action_release(&"aim_up")
+	Input.action_press(&"right", 0.6)
+	Input.action_press(&"aim_up", 0.8)
+	_check_equal(
+		aim_input.get_direction(),
+		Vector2.UP,
+		"analog aim snaps a diagonal toward its dominant vertical axis"
+	)
+	Input.action_release(&"right")
+	Input.action_release(&"aim_up")
+
+	_check_equal(
+		aim_input.get_direction(Vector2.LEFT),
+		Vector2.LEFT,
+		"neutral analog aim falls back to facing direction"
+	)
+	aim_input.free()
+
+	var spell := MagicArrowSpellScene.instantiate()
+	var context := SpellContext.new()
+	context.direction = Vector2.LEFT
+	context.aim_direction = Vector2.UP
+	spell.context = context
+	_check_equal(
+		spell._get_projectile_direction(),
+		Vector2.UP,
+		"Magic Arrow uses analog aim instead of player facing"
+	)
+	spell.free()
 
 
 func _test_attack_reaction_pipeline() -> void:

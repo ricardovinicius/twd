@@ -22,6 +22,7 @@ signal spell_selected(spell: SpellDefinition)
 @export var caster: CharacterBody2D
 @export var spell_origin: Marker2D
 @export var effect_parent: Node
+@export var projectile_aim: Node
 
 @onready var timeout_timer: Timer = $TimeoutTimer
 @onready var spell_invoker: SpellInvoker = $"../SpellInvoker" # Maybe I should use a signal to connect 
@@ -142,7 +143,10 @@ func _create_spell_context() -> SpellContext:
 	context.caster = caster
 	context.effect_parent = effect_parent
 	context.origin = spell_origin.global_position
-	context.direction = caster.facing_direction.normalized()  # Assuming the character has a facing_direction property
+	context.direction = caster.facing_direction.normalized()
+	context.aim_direction = context.direction
+	if projectile_aim != null:
+		context.aim_direction = projectile_aim.get_direction(context.direction)
 	context.target_position = spell_origin.global_position + context.direction * 1000.0  # Arbitrary distance for targeting
 
 	return context
