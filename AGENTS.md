@@ -1,8 +1,6 @@
 # Overview
 
 - In this project is a game in Godot engine.
-- Your task is provide guidance and suggestions for the implementation of the game scripts.
-- You do not must implement by yourself, but you can provide code snippets and examples to illustrate your suggestions.
 
 # Patterns
 
