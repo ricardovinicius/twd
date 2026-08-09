@@ -635,11 +635,11 @@ position = Vector2(97, 589)
 [node name="Dummy" parent="." unique_id=1685303879 instance=ExtResource("8_thp0t")]
 position = Vector2(4114, 1697)
 
-[node name="basic skeleton" parent="." unique_id=1073094200 instance=ExtResource("10_upmp1")]
-position = Vector2(292, 597)
-
 [node name="TempDummyBox3" parent="." unique_id=31910361 instance=ExtResource("10_5dpqp")]
 position = Vector2(2086, 810)
 
 [node name="TempDummyBox4" parent="." unique_id=1069525285 instance=ExtResource("10_5dpqp")]
 position = Vector2(1790, 904)
+
+[node name="BasicMob" parent="." unique_id=807228014 instance=ExtResource("10_upmp1")]
+position = Vector2(288, 573)

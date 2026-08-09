@@ -19,6 +19,13 @@
 [ext_resource type="Script" uid="uid://b6ijjdasfwcco" path="res://spells/core/spell_cooldowns.gd" id="10_cooldowns"]
 [ext_resource type="Resource" uid="uid://b1dg4hcevkwm0" path="res://spells/action/push/push_spell_definition.tres" id="11_a1qjk"]
 [ext_resource type="Resource" uid="uid://k3fvqn6s44nu" path="res://spells/attack/magic_arrow/magic_arrow_definition.tres" id="12_j3ovn"]
+[ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="13_health"]
+[ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="14_receiver"]
+[ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="15_damage"]
+[ext_resource type="Script" uid="uid://cbm3slkadyjjh" path="res://health/reload_scene_on_death.gd" id="16_reload"]
+[ext_resource type="Script" uid="uid://gvpwl4q5fqvh" path="res://components/movement/knockback_component.gd" id="17_knockback"]
+[ext_resource type="Script" uid="uid://crruxwaa1lwq2" path="res://components/action_reactions/action_receiver.gd" id="18_action_receiver"]
+[ext_resource type="Script" uid="uid://b4gvtml86rgjw" path="res://components/action_reactions/push/character_body_push_reaction.gd" id="19_push_reaction"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -424,7 +431,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f1ej7")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"hit",
 "speed": 20.0
 }, {
@@ -703,10 +710,12 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qlg0r"]
-size = Vector2(12.666666, 23.833334)
+size = Vector2(22.166668, 27.25)
 
-[node name="Player" type="CharacterBody2D" unique_id=599257793]
+[node name="Player" type="CharacterBody2D" unique_id=599257793 groups=["player"]]
 scale = Vector2(3, 3)
+collision_layer = 4
+collision_mask = 5
 script = ExtResource("1_qlg0r")
 jump_velocity = -1000.0
 
@@ -726,6 +735,10 @@ script = ExtResource("5_jump_buffer")
 [node name="Gravity" type="Node" parent="." unique_id=18360107]
 script = ExtResource("6_gravity")
 
+[node name="Knockback" type="Node" parent="." unique_id=1701475534 node_paths=PackedStringArray("body")]
+script = ExtResource("17_knockback")
+body = NodePath("..")
+
 [node name="SequenceUI" parent="." unique_id=444228689 node_paths=PackedStringArray("sequence_caster") instance=ExtResource("2_7thud")]
 position = Vector2(-12.333333, -50.666664)
 sequence_caster = NodePath("../SequenceCaster")
@@ -737,7 +750,7 @@ animation = &"walk"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=347411653]
-position = Vector2(-3.5762787e-07, 3.2499998)
+position = Vector2(-0.25000036, 2.6249998)
 shape = SubResource("RectangleShape2D_qlg0r")
 
 [node name="SpellOrigin" type="Marker2D" parent="." unique_id=473722362]
@@ -763,3 +776,36 @@ cooldowns = NodePath("../SpellCooldowns")
 wait_time = 0.1
 one_shot = true
 script = ExtResource("2_coyote")
+
+[node name="Health" type="Node" parent="." unique_id=1003559884]
+script = ExtResource("13_health")
+
+[node name="ReloadSceneOnDeath" type="Node" parent="." unique_id=2061136104 node_paths=PackedStringArray("health")]
+script = ExtResource("16_reload")
+health = NodePath("../Health")
+
+[node name="AttackReceiver" type="Area2D" parent="." unique_id=1458623947]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("14_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackReceiver" unique_id=1389464371]
+position = Vector2(-3.5762787e-07, 1.3333333)
+shape = SubResource("RectangleShape2D_qlg0r")
+
+[node name="HealthDamageReaction" type="Node" parent="AttackReceiver" unique_id=1096457119 node_paths=PackedStringArray("health")]
+script = ExtResource("15_damage")
+health = NodePath("../../Health")
+
+[node name="ActionReceiver" type="Area2D" parent="." unique_id=707453816]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("18_action_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActionReceiver" unique_id=181630313]
+position = Vector2(-0.16666684, 0.25000018)
+shape = SubResource("RectangleShape2D_qlg0r")
+
+[node name="CharacterBodyPushReaction" type="Node" parent="ActionReceiver" unique_id=935991583 node_paths=PackedStringArray("knockback")]
+script = ExtResource("19_push_reaction")
+knockback = NodePath("../../Knockback")

@@ -1,6 +1,9 @@
 class_name MagicArrowProjectile
 extends Area2D
 
+@export_category("Debug")
+@export var debug_collisions: bool = false
+
 var _attack: AttackData
 var _direction: Vector2 = Vector2.ZERO
 var _speed: float = 0.0
@@ -52,6 +55,10 @@ func launch(
 	rotation = _direction.angle()
 
 	_launched = true
+	_debug_log(
+		"launched source=%s origin=%s direction=%s mask=%d"
+		% [_attack.source, global_position, _direction, collision_mask]
+	)
 
 
 func _physics_process(delta: float) -> void:
@@ -65,7 +72,7 @@ func _physics_process(delta: float) -> void:
 	# Update lifetime
 	_remaining_lifetime -= delta
 	if _remaining_lifetime <= 0.0:
-		_consume()
+		_consume("lifetime expired")
 
 
 func _on_area_entered(area: Area2D) -> void:
@@ -75,13 +82,16 @@ func _on_area_entered(area: Area2D) -> void:
 	var attack_receiver = area as AttackReceiver
 
 	if attack_receiver == null:
+		_debug_log("ignored non-attack area: %s" % _describe_node(area))
 		return
 	
 	if _belongs_to_caster(attack_receiver):
+		_debug_log("ignored caster attack receiver: %s" % _describe_node(area))
 		return
 	
+	_debug_log("hit AttackReceiver: %s" % _describe_node(attack_receiver))
 	attack_receiver.receive_attack(_attack)
-	_consume()
+	_consume("attack receiver handled collision")
 
 
 func _on_body_entered(body: Node) -> void:
@@ -89,9 +99,10 @@ func _on_body_entered(body: Node) -> void:
 		return
 
 	if _belongs_to_caster(body):
+		_debug_log("ignored caster body: %s" % _describe_node(body))
 		return
 	
-	_consume()
+	_consume("body collision treated as world obstacle: %s" % _describe_node(body))
 
 
 func _belongs_to_caster(node: Node) -> bool:
@@ -109,11 +120,36 @@ func _belongs_to_caster(node: Node) -> bool:
 	)
 
 
-func _consume() -> void:
+func _consume(reason: String) -> void:
 	if _consumed:
 		return
 	
+	_debug_log("consumed — %s" % reason)
 	_consumed = true
 	set_physics_process(false)
 	set_deferred(&"monitoring", false)
 	queue_free()
+
+
+func _describe_node(node: Node) -> String:
+	var description := "name=%s class=%s path=%s" % [
+		node.name,
+		node.get_class(),
+		node.get_path(),
+	]
+	var collision_object := node as CollisionObject2D
+
+	if collision_object != null:
+		description += " collision_layer=%d collision_mask=%d" % [
+			collision_object.collision_layer,
+			collision_object.collision_mask,
+		]
+
+	return description
+
+
+func _debug_log(message: String) -> void:
+	if not debug_collisions:
+		return
+
+	print("[MagicArrowProjectile:%d] %s" % [get_instance_id(), message])

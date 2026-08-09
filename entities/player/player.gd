@@ -5,6 +5,8 @@ extends CharacterBody2D
 @onready var variable_jump_height: VariableJumpHeightComponent = $VariableJumpHeight
 @onready var jump_buffer: JumpBufferComponent = $JumpBufferTimer
 @onready var gravity: GravityComponent = $Gravity
+@onready var knockback: KnockbackComponent = $Knockback
+@onready var health: Health = $Health
 
 @export var jump_velocity = -1050.0
 @export var facing_direction: Vector2 = Vector2.RIGHT
@@ -12,15 +14,25 @@ extends CharacterBody2D
 var is_dashing: bool = false
 var dash_direction: Vector2 = Vector2.ZERO
 var dash_speed: float = 0.0
+var _is_playing_hit_animation: bool = false
+
+
+func _ready() -> void:
+	health.damaged.connect(_on_health_damaged)
+	animated_sprite_2d.animation_finished.connect(_on_animation_finished)
 
 
 func _physics_process(delta: float) -> void:
 	var was_on_floor := is_on_floor()
+	var is_being_knocked_back := knockback.is_active()
 
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer.buffer_jump()
 
-	if not is_dashing:
+	if is_being_knocked_back:
+		is_dashing = false
+		_apply_knockback_movement(delta)
+	elif not is_dashing:
 		_apply_normal_movement(delta)
 	else:
 		_apply_dash_movement()
@@ -29,7 +41,7 @@ func _physics_process(delta: float) -> void:
 
 	# Floor contact is refreshed by move_and_slide(), so check again to consume
 	# a buffered jump on the exact frame the player lands.
-	if not is_dashing:
+	if not is_dashing and not is_being_knocked_back:
 		_try_jump()
 	
 
@@ -93,6 +105,22 @@ func _apply_dash_movement() -> void:
 	move_and_slide()
 
 
+func _apply_knockback_movement(delta: float) -> void:
+	_play_hit_animation()
+
+	if not is_on_floor():
+		velocity = gravity.calculate_velocity(
+			velocity,
+			get_gravity(),
+			delta
+		)
+	elif velocity.y > 0.0:
+		velocity.y = 0.0
+
+	velocity.x = knockback.calculate_horizontal_velocity(delta)
+	move_and_slide()
+
+
 func _update_movement_animation() -> void:
 	if not is_on_floor() or velocity.y < 0.0:
 		_play_animation(&"jump")
@@ -103,10 +131,34 @@ func _update_movement_animation() -> void:
 
 
 func _play_animation(animation_name: StringName) -> void:
+	if _is_playing_hit_animation and animation_name != &"hit":
+		return
+
 	if animated_sprite_2d.animation == animation_name:
 		return
 
 	animated_sprite_2d.play(animation_name)
+
+
+func _play_hit_animation(restart: bool = false) -> void:
+	if _is_playing_hit_animation and not restart:
+		return
+
+	_is_playing_hit_animation = true
+	animated_sprite_2d.play(&"hit")
+	animated_sprite_2d.set_frame_and_progress(0, 0.0)
+
+
+func _on_health_damaged(amount: float) -> void:
+	if amount <= 0.0:
+		return
+
+	_play_hit_animation(true)
+
+
+func _on_animation_finished() -> void:
+	if animated_sprite_2d.animation == &"hit":
+		_is_playing_hit_animation = false
 
 
 func begin_dash(direction: Vector2, speed: float, duration: float) -> void:

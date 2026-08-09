@@ -47,6 +47,9 @@ func _find_receivers() -> Array[ActionReceiver]:
 		if receiver == null:
 			continue
 
+		if _belongs_to_caster(receiver):
+			continue
+
 		var receiver_id = receiver.get_instance_id()
 
 		if seen.has(receiver_id):
@@ -56,6 +59,13 @@ func _find_receivers() -> Array[ActionReceiver]:
 		receivers.append(receiver)
 	
 	return receivers
+
+
+func _belongs_to_caster(node: Node) -> bool:
+	if context == null or not is_instance_valid(context.caster):
+		return false
+
+	return node == context.caster or context.caster.is_ancestor_of(node)
 	
 
 func _create_action_for(_receiver: ActionReceiver) -> ActionData:
