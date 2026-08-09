@@ -1,0 +1,6 @@
+[gd_resource type="PhysicsMaterial" format=3 uid="uid://tgymsrc4icws"]
+
+[resource]
+resource_name = "BottlePhysicsMaterial"
+friction = 0.3
+bounce = 0.05

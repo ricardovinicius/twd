@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var jump_buffer: JumpBufferComponent = $JumpBufferTimer
 @onready var gravity: GravityComponent = $Gravity
 @onready var knockback: KnockbackComponent = $Knockback
+@onready var rigid_body_push: CharacterRigidBodyPushComponent = $RigidBodyPush
 @onready var health: Health = $Health
 
 @export var jump_velocity = -1050.0
@@ -70,7 +71,7 @@ func _apply_normal_movement(delta: float) -> void:
 		delta
 	)
 
-	move_and_slide()
+	_move_and_slide_with_rigid_body_push()
 	
 	if direction == 1.0:
 		animated_sprite_2d.flip_h = false
@@ -102,7 +103,7 @@ func _apply_dash_movement() -> void:
 	velocity.y = 0  # Ensure no vertical movement during dash
 
 	_play_animation(&"jump")
-	move_and_slide()
+	_move_and_slide_with_rigid_body_push()
 
 
 func _apply_knockback_movement(delta: float) -> void:
@@ -118,7 +119,13 @@ func _apply_knockback_movement(delta: float) -> void:
 		velocity.y = 0.0
 
 	velocity.x = knockback.calculate_horizontal_velocity(delta)
+	_move_and_slide_with_rigid_body_push()
+
+
+func _move_and_slide_with_rigid_body_push() -> void:
+	var intended_velocity := velocity
 	move_and_slide()
+	rigid_body_push.push_slide_collisions(intended_velocity)
 
 
 func _update_movement_animation() -> void:

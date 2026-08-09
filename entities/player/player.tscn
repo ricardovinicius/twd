@@ -26,6 +26,7 @@
 [ext_resource type="Script" uid="uid://gvpwl4q5fqvh" path="res://components/movement/knockback_component.gd" id="17_knockback"]
 [ext_resource type="Script" uid="uid://crruxwaa1lwq2" path="res://components/action_reactions/action_receiver.gd" id="18_action_receiver"]
 [ext_resource type="Script" uid="uid://b4gvtml86rgjw" path="res://components/action_reactions/push/character_body_push_reaction.gd" id="19_push_reaction"]
+[ext_resource type="Script" uid="uid://dsjaapsgk0ke3" path="res://components/contact/character_rigid_body_push_component.gd" id="20_rigid_body_push"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -722,6 +723,10 @@ jump_velocity = -1000.0
 [node name="HorizontalMovement" type="Node" parent="." unique_id=848493857]
 script = ExtResource("3_horizontal")
 deceleration = 2000.0
+
+[node name="RigidBodyPush" type="Node" parent="." node_paths=PackedStringArray("character")]
+script = ExtResource("20_rigid_body_push")
+character = NodePath("..")
 
 [node name="VariableJumpHeight" type="Node" parent="." unique_id=1967477122]
 script = ExtResource("4_variable_jump")

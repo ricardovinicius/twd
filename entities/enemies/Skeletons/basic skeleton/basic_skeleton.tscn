@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="12_damage"]
 [ext_resource type="Texture2D" uid="uid://cpav8kyar4bws" path="res://entities/enemies/Skeletons/basic skeleton/sprites/attack.png" id="13_attack"]
 [ext_resource type="Script" path="res://components/contact/contact_impact_component.gd" id="14_contact"]
+[ext_resource type="Script" uid="uid://dsjaapsgk0ke3" path="res://components/contact/character_rigid_body_push_component.gd" id="15_rigid_body_push"]
 
 [sub_resource type="AtlasTexture" id="Attack00"]
 atlas = ExtResource("13_attack")
@@ -355,6 +356,10 @@ script = ExtResource("4_move")
 max_speed = 120.0
 acceleration = 600.0
 deceleration = 900.0
+
+[node name="RigidBodyPush" type="Node" parent="." node_paths=PackedStringArray("character")]
+script = ExtResource("15_rigid_body_push")
+character = NodePath("..")
 
 [node name="Gravity" type="Node" parent="." unique_id=606260745]
 script = ExtResource("5_gravity")

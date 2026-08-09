@@ -4,12 +4,17 @@
 [ext_resource type="Script" uid="uid://bdw0c8r5ijn77" path="res://components/action_reactions/push/debug_push_reaction.gd" id="2_cb6rl"]
 [ext_resource type="Script" uid="uid://c2sq8ch4tw1q4" path="res://components/action_reactions/push/rigid_body_push_reaction.gd" id="3_oaity"]
 [ext_resource type="Texture2D" uid="uid://dr72xkxqdsrya" path="res://entities/items/pote 2.png" id="4_mu0ii"]
+[ext_resource type="PhysicsMaterial" path="res://entities/items/bottle_physics_material.tres" id="5_physics"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dm0pi"]
 size = Vector2(18, 47.5)
 
-[node name="TempDummyBox" type="RigidBody2D" unique_id=1087390374]
+[node name="BottleLine" type="RigidBody2D" unique_id=1087390374 groups=["character_pushable"]]
+collision_layer = 4
+collision_mask = 5
 mass = 0.5
+physics_material_override = ExtResource("5_physics")
+continuous_cd = 2
 
 [node name="ActionReceiver" type="Area2D" parent="." unique_id=931157303]
 collision_layer = 8

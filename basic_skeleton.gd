@@ -12,6 +12,7 @@ enum State {
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var horizontal_movement: HorizontalMovementComponent = $HorizontalMovement
 @onready var gravity: GravityComponent = $Gravity
+@onready var rigid_body_push: CharacterRigidBodyPushComponent = $RigidBodyPush
 @onready var aggro_detector: TargetDetector = $AggroDetector
 @onready var attack_range_detector: TargetDetector = $AttackRangeDetector
 @onready var melee_attack: MeleeAttackComponent = $MeleeAttack
@@ -52,7 +53,9 @@ func _physics_process(delta: float) -> void:
 		delta
 	)
 
+	var intended_velocity := velocity
 	move_and_slide()
+	rigid_body_push.push_slide_collisions(intended_velocity)
 	_update_animation()
 
 
