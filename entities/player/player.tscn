@@ -740,6 +740,7 @@ script = ExtResource("5_jump_buffer")
 
 [node name="Gravity" type="Node" parent="." unique_id=18360107]
 script = ExtResource("6_gravity")
+fall_gravity_multiplier = 1.2
 
 [node name="Knockback" type="Node" parent="." unique_id=1701475534 node_paths=PackedStringArray("body")]
 script = ExtResource("17_knockback")
