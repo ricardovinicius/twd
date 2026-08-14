@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="11_receiver"]
 [ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="12_damage"]
 [ext_resource type="Texture2D" uid="uid://cpav8kyar4bws" path="res://entities/enemies/Skeletons/basic skeleton/sprites/attack.png" id="13_attack"]
-[ext_resource type="Script" path="res://components/contact/contact_impact_component.gd" id="14_contact"]
+[ext_resource type="Script" uid="uid://dx4kugto8jvw2" path="res://components/contact/contact_impact_component.gd" id="14_contact"]
 [ext_resource type="Script" uid="uid://dsjaapsgk0ke3" path="res://components/contact/character_rigid_body_push_component.gd" id="15_rigid_body_push"]
 
 [sub_resource type="AtlasTexture" id="Attack00"]
@@ -329,11 +329,11 @@ radius = 12.0
 [sub_resource type="RectangleShape2D" id="AttackHitboxShape"]
 size = Vector2(20, 18)
 
-[sub_resource type="RectangleShape2D" id="AttackReceiverShape"]
-size = Vector2(16, 24)
-
 [sub_resource type="RectangleShape2D" id="ContactShape"]
 size = Vector2(16, 25)
+
+[sub_resource type="RectangleShape2D" id="AttackReceiverShape"]
+size = Vector2(16, 24)
 
 [node name="BasicMob" type="CharacterBody2D" unique_id=807228014]
 scale = Vector2(3, 3)
@@ -357,7 +357,7 @@ max_speed = 120.0
 acceleration = 600.0
 deceleration = 900.0
 
-[node name="RigidBodyPush" type="Node" parent="." node_paths=PackedStringArray("character")]
+[node name="RigidBodyPush" type="Node" parent="." unique_id=1324261363 node_paths=PackedStringArray("character")]
 script = ExtResource("15_rigid_body_push")
 character = NodePath("..")
 
@@ -384,6 +384,7 @@ shape = SubResource("AttackRangeShape")
 script = ExtResource("7_melee")
 attack_hitbox = NodePath("AttackHitbox")
 visual = NodePath("../AnimatedSprite2D")
+damage = 20.0
 windup_duration = 0.67
 active_duration = 0.125
 recovery_duration = 0.5
@@ -400,27 +401,23 @@ script = ExtResource("8_hitbox")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeAttack/AttackHitbox" unique_id=1467763512]
 shape = SubResource("AttackHitboxShape")
 
-[node name="ContactImpact" type="Node2D" parent="." node_paths=PackedStringArray("source", "contact_area")]
+[node name="ContactImpact" type="Node2D" parent="." unique_id=247911101 node_paths=PackedStringArray("source", "contact_area")]
 script = ExtResource("14_contact")
 source = NodePath("..")
 contact_area = NodePath("ContactArea")
-contact_damage = 10.0
-knockback_strength = 450.0
-knockback_duration = 0.25
-contact_cooldown = 0.5
 
-[node name="ContactArea" type="Area2D" parent="ContactImpact"]
+[node name="ContactArea" type="Area2D" parent="ContactImpact" unique_id=1948559518]
 collision_layer = 0
 collision_mask = 4
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactImpact/ContactArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactImpact/ContactArea" unique_id=300947794]
 position = Vector2(0, 2.166667)
 shape = SubResource("ContactShape")
 
 [node name="Health" type="Node" parent="." unique_id=1481310139]
 script = ExtResource("9_health")
-maximum = 30.0
+maximum = 50.0
 
 [node name="DestroyOnDeath" type="Node" parent="." unique_id=528825542 node_paths=PackedStringArray("health", "target")]
 script = ExtResource("10_death")

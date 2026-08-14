@@ -645,3 +645,12 @@ position = Vector2(1790, 904)
 
 [node name="BasicMob" parent="." unique_id=807228014 instance=ExtResource("10_upmp1")]
 position = Vector2(288, 573)
+
+[node name="BasicMob2" parent="." unique_id=1167768400 instance=ExtResource("10_upmp1")]
+position = Vector2(3959, 1725.0001)
+
+[node name="BasicMob3" parent="." unique_id=1071687073 instance=ExtResource("10_upmp1")]
+position = Vector2(2799, 1732)
+
+[node name="BasicMob4" parent="." unique_id=1495162883 instance=ExtResource("10_upmp1")]
+position = Vector2(1664, 1736)

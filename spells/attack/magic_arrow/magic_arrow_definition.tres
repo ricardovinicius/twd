@@ -7,7 +7,7 @@
 script = ExtResource("1_23l15")
 id = &"magic_arrow"
 display_name = "Magic Arrow"
-cooldown = 2.0
+cooldown = 1.5
 sequence = Array[StringName]([&"attack"])
 command_scene = ExtResource("1_rhl8a")
 metadata/_custom_type_script = "uid://cobttx3mdk6v1"
