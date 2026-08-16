@@ -28,6 +28,7 @@
 [ext_resource type="Script" uid="uid://b4gvtml86rgjw" path="res://components/action_reactions/push/character_body_push_reaction.gd" id="19_push_reaction"]
 [ext_resource type="Script" uid="uid://dsjaapsgk0ke3" path="res://components/contact/character_rigid_body_push_component.gd" id="20_rigid_body_push"]
 [ext_resource type="Script" uid="uid://i7wmgxll2lvl" path="res://components/input/aim_input_component.gd" id="21_aim_input"]
+[ext_resource type="PackedScene" uid="uid://gwxkdc61j1ld" path="res://ui/player_hud/PlayerHud.tscn" id="22_player_hud"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -820,3 +821,9 @@ shape = SubResource("RectangleShape2D_qlg0r")
 [node name="CharacterBodyPushReaction" type="Node" parent="ActionReceiver" unique_id=935991583 node_paths=PackedStringArray("knockback")]
 script = ExtResource("19_push_reaction")
 knockback = NodePath("../../Knockback")
+
+[node name="PlayerHudLayer" type="CanvasLayer" parent="."]
+layer = 1
+
+[node name="PlayerHud" parent="PlayerHudLayer" node_paths=PackedStringArray("health") instance=ExtResource("22_player_hud")]
+health = NodePath("../../Health")

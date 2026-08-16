@@ -16,6 +16,7 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	await _test_player_owns_health_hud()
 	await _test_melee_damage_plays_and_completes_hit_animation()
 	await _test_contact_payloads_deduplication_and_cooldown()
 	await _test_knockback_moves_away_while_gravity_continues()
@@ -33,6 +34,27 @@ func _run() -> void:
 
 	print("FAIL: %d failure(s), %d check(s) passed" % [_failures.size(), _passed])
 	quit(1)
+
+
+func _test_player_owns_health_hud() -> void:
+	var player := await _spawn_player()
+	player.set_physics_process(false)
+
+	var health: Health = player.get_node("Health")
+	var hud: PlayerHud = player.get_node("PlayerHudLayer/PlayerHud")
+	var health_bar: TextureProgressBar = hud.get_node(
+		"HealthMarginContainer/NinePatchRect/HealthBar"
+	)
+
+	_check(hud.health == health, "Player HUD must use its owning player's Health component.")
+	health.take_damage(25.0)
+	_check(is_equal_approx(health_bar.value, 75.0), "Player HUD must reflect Health changes.")
+	_check(
+		is_equal_approx(health_bar.max_value, health.maximum),
+		"Player HUD maximum must match its owning player's maximum health."
+	)
+
+	await _free_node(player)
 
 
 func _test_melee_damage_plays_and_completes_hit_animation() -> void:
