@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var coyote_time: CoyoteTimeComponent = $CoyoteTimer
 @onready var variable_jump_height: VariableJumpHeightComponent = $VariableJumpHeight
 @onready var jump_buffer: JumpBufferComponent = $JumpBufferTimer
+@onready var jump_down: JumpDownComponent = $JumpDown
 @onready var gravity: GravityComponent = $Gravity
 @onready var knockback: KnockbackComponent = $Knockback
 @onready var rigid_body_push: CharacterRigidBodyPushComponent = $RigidBodyPush
@@ -28,7 +29,7 @@ func _physics_process(delta: float) -> void:
 	var is_being_knocked_back := knockback.is_active()
 
 	if Input.is_action_just_pressed("jump"):
-		jump_buffer.buffer_jump()
+		_handle_jump_input()
 
 	if is_being_knocked_back:
 		is_dashing = false
@@ -80,6 +81,9 @@ func _apply_normal_movement(delta: float) -> void:
 
 
 func _try_jump() -> void:
+	if jump_down.is_active():
+		return
+
 	if not jump_buffer.is_jump_buffered():
 		return
 
@@ -95,6 +99,18 @@ func _try_jump() -> void:
 	# before the player became able to jump.
 	if not Input.is_action_pressed("jump"):
 		velocity.y = variable_jump_height.cut_jump(velocity.y)
+
+
+func _handle_jump_input() -> void:
+	if jump_down.is_active():
+		return
+
+	if jump_down.is_requested() and jump_down.begin(is_on_floor()):
+		jump_buffer.consume_jump()
+		coyote_time.consume_jump()
+		return
+
+	jump_buffer.buffer_jump()
 
 
 func _apply_dash_movement() -> void:

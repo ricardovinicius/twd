@@ -29,6 +29,7 @@
 [ext_resource type="Script" uid="uid://dsjaapsgk0ke3" path="res://components/contact/character_rigid_body_push_component.gd" id="20_rigid_body_push"]
 [ext_resource type="Script" uid="uid://i7wmgxll2lvl" path="res://components/input/aim_input_component.gd" id="21_aim_input"]
 [ext_resource type="PackedScene" uid="uid://gwxkdc61j1ld" path="res://ui/player_hud/PlayerHud.tscn" id="22_player_hud"]
+[ext_resource type="Script" uid="uid://dxhjj8wjk7wr4" path="res://components/movement/jump_down_component.gd" id="23_jump_down"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -718,7 +719,7 @@ size = Vector2(22.166668, 27.25)
 [node name="Player" type="CharacterBody2D" unique_id=599257793 groups=["player"]]
 scale = Vector2(3, 3)
 collision_layer = 4
-collision_mask = 5
+collision_mask = 7
 script = ExtResource("1_qlg0r")
 jump_velocity = -1000.0
 
@@ -738,6 +739,10 @@ jump_cut_multiplier = 0.5
 wait_time = 0.12
 one_shot = true
 script = ExtResource("5_jump_buffer")
+
+[node name="JumpDown" type="Node" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("23_jump_down")
+body = NodePath("..")
 
 [node name="Gravity" type="Node" parent="." unique_id=18360107]
 script = ExtResource("6_gravity")

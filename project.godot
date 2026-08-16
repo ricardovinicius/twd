@@ -88,6 +88,7 @@ pause={
 [layer_names]
 
 2d_physics/layer_1="World"
+2d_physics/layer_2="One-way Platforms"
 2d_physics/layer_3="Entities"
 2d_physics/layer_4="Action Receivers"
 2d_physics/layer_5="Attack Receivers"

@@ -531,20 +531,27 @@ texture = ExtResource("6_qu0in")
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_thp0t"]
 texture = ExtResource("3_aqob7")
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -2.5180216, 8, -2.5180216, 8, 8, -8, 8)
+0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -2.334566, 8, -2.5180216, 8, 8, -8, 8)
+0:0/0/physics_layer_1/polygon_0/one_way = true
 1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -2.5180216, 8, -2.5180216, 8, 8, -8, 8)
+1:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -2.334566, 8, -2.5180216, 8, 8, -8, 8)
+1:0/0/physics_layer_1/polygon_0/one_way = true
 2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -2.5180216, 8, -2.5180216, 8, 8, -8, 8)
+2:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -2.334566, 8, -2.5180216, 8, 8, -8, 8)
+2:0/0/physics_layer_1/polygon_0/one_way = true
 3:0/0 = 0
-3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -2.5180216, 8, -2.5180216, 8, 8, -8, 8)
+3:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -2.334566, 8, -2.5180216, 8, 8, -8, 8)
+3:0/0/physics_layer_1/polygon_0/one_way = true
 4:0/0 = 0
-4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -2.5180216, 8, -2.5180216, 8, 8, -8, 8)
+4:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -2.334566, 8, -2.5180216, 8, 8, -8, 8)
+4:0/0/physics_layer_1/polygon_0/one_way = true
 5:0/0 = 0
-5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -2.5180216, 8, -2.5180216, 8, 8, -8, 8)
+5:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -2.334566, 8, -2.5180216, 8, 8, -8, 8)
+5:0/0/physics_layer_1/polygon_0/one_way = true
 
 [sub_resource type="TileSet" id="TileSet_dd0lh"]
 physics_layer_0/collision_layer = 1
+physics_layer_1/collision_layer = 2
 sources/1 = SubResource("TileSetAtlasSource_upmp1")
 sources/2 = SubResource("TileSetAtlasSource_5dpqp")
 sources/5 = SubResource("TileSetAtlasSource_thp0t")
