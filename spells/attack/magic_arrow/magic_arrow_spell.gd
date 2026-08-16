@@ -6,8 +6,8 @@ extends SpellCommand
 @export_range(0.0, 10000.0, 1.0, "or_greater")
 var speed: float = 1000.0
 
-@export_range(0.0, 10000.0, 1.0, "or_greater")
-var lifetime: float = 5.0
+@export_range(0.0, 10000.0, 0.1, "or_greater")
+var lifetime: float = 0.5
 
 @export_range(0.0, 10000.0, 1.0, "or_greater")
 var damage: float = 10.0

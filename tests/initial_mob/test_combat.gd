@@ -221,7 +221,7 @@ func _test_magic_arrow_hits_mob_receiver() -> void:
 	var projectile_ref: WeakRef = weakref(projectile)
 
 	await _wait_until(func() -> bool: return health.current < health.maximum, 90)
-	_check_equal(health.current, 20.0, "Magic Arrow damages the mob through AttackReceiver")
+	_check_equal(health.current, 40.0, "Magic Arrow damages the mob through AttackReceiver")
 	_check_equal(
 		projectile.collision_mask & 4,
 		0,
@@ -247,12 +247,12 @@ func _test_mob_health_and_death() -> void:
 
 	var health: Health = mob.get_node("Health")
 	var receiver: AttackReceiver = mob.get_node("AttackReceiver")
-	_check_equal(health.maximum, 30.0, "mob scene exposes configured maximum health")
-	_check_equal(health.current, 30.0, "mob health starts full")
+	_check_equal(health.maximum, 50.0, "mob scene exposes configured maximum health")
+	_check_equal(health.current, 50.0, "mob health starts full")
 
 	receiver.receive_attack(_make_attack(source, 10.0, &"magic_arrow"))
-	_check_equal(health.current, 20.0, "mob receiver applies non-lethal damage")
-	receiver.receive_attack(_make_attack(source, 20.0, &"magic_arrow"))
+	_check_equal(health.current, 40.0, "mob receiver applies non-lethal damage")
+	receiver.receive_attack(_make_attack(source, 40.0, &"magic_arrow"))
 	_check_true(mob.is_queued_for_deletion(), "depleted mob queues itself for deletion")
 	await process_frame
 	_check_false(is_instance_valid(mob), "depleted mob is removed from the scene")

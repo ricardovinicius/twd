@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://155xx7s6y6ta"]
 
 [ext_resource type="PackedScene" uid="uid://6uw7wsvlc7y2" path="res://levels/level_01/level_01.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://byp0dycr0lg5s" path="res://ui/pause_menu/pause_menu.tscn" id="3_pause_menu"]
 
 [node name="Main" type="Node2D" unique_id=1783851588]
 
 [node name="LevelRoot" parent="." unique_id=39161027 instance=ExtResource("2_0wfyh")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=621268640]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("3_pause_menu")]
