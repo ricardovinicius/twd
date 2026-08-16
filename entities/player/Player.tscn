@@ -825,5 +825,6 @@ knockback = NodePath("../../Knockback")
 [node name="PlayerHudLayer" type="CanvasLayer" parent="."]
 layer = 1
 
-[node name="PlayerHud" parent="PlayerHudLayer" node_paths=PackedStringArray("health") instance=ExtResource("22_player_hud")]
+[node name="PlayerHud" parent="PlayerHudLayer" node_paths=PackedStringArray("health", "cooldowns") instance=ExtResource("22_player_hud")]
 health = NodePath("../../Health")
+cooldowns = NodePath("../../SpellCooldowns")

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dffa4ttnwtmpx" path="res://ui/player_hud/player_hud.gd" id="1_j2wd1"]
 [ext_resource type="Texture2D" uid="uid://bljaubfwtp4jj" path="res://ui/player_hud/sprites/health_bar_frame.png" id="1_qgh1g"]
+[ext_resource type="PackedScene" path="res://spells/ui/CooldownUI.tscn" id="3_cooldown_ui"]
 
 [sub_resource type="Gradient" id="Gradient_d3s28"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -52,3 +53,12 @@ value = 100.0
 nine_patch_stretch = true
 texture_under = SubResource("GradientTexture2D_ik31s")
 texture_progress = SubResource("GradientTexture2D_j2wd1")
+
+[node name="CooldownUI" parent="." instance=ExtResource("3_cooldown_ui")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 52.0
+offset_bottom = 100.0
+grow_horizontal = 2

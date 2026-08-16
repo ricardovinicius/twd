@@ -1,7 +1,7 @@
 class_name SpellCooldowns
 extends Node
 
-signal cooldown_started(spell_id: StringName, duration: float)
+signal cooldown_started(spell: SpellDefinition, duration: float)
 signal cooldown_finished(spell_id: StringName)
 
 var _ends_at_msec: Dictionary[StringName, int] = {}
@@ -33,7 +33,7 @@ func start(spell: SpellDefinition) -> void:
 
 	_ends_at_msec[spell.id] = Time.get_ticks_msec() + ceili(spell.cooldown * 1000.0)
 	set_process(true)
-	cooldown_started.emit(spell.id, spell.cooldown)
+	cooldown_started.emit(spell, spell.cooldown)
 
 
 func get_remaining(spell_id: StringName) -> float:

@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cobttx3mdk6v1" path="res://spells/core/spell_definition.gd" id="1_23l15"]
 [ext_resource type="PackedScene" uid="uid://cs27lof8bter0" path="res://spells/attack/magic_arrow/MagicArrowSpell.tscn" id="1_rhl8a"]
+[ext_resource type="Texture2D" uid="uid://dlgqaejt1ex4q" path="res://ui/icons/button_x.png" id="2_icon"]
 
 [resource]
 script = ExtResource("1_23l15")
 id = &"magic_arrow"
 display_name = "Magic Arrow"
+icon = ExtResource("2_icon")
 cooldown = 1.5
 sequence = Array[StringName]([&"attack"])
 command_scene = ExtResource("1_rhl8a")

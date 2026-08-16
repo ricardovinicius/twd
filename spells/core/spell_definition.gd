@@ -7,11 +7,9 @@ extends Resource
 @export var id: StringName
 @export var display_name: String
 @export_multiline var description: String
+@export var icon: Texture2D
 @export_range(0.0, 3600.0, 0.05, "or_greater") var cooldown: float = 0.0
 
 # TODO: Check if this is the best way to handle the sequence of spell effects. 
 @export var sequence: Array[StringName] = []
 @export var command_scene: PackedScene
-
-# TODO: This is a placeholder for the spell icon. We need to decide how to handle icons for spells in the future.
-# @export var icon: Texture2D
