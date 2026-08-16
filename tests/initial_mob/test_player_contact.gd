@@ -1,8 +1,8 @@
 extends SceneTree
 
-const PLAYER_SCENE := preload("res://entities/player/player.tscn")
+const PLAYER_SCENE := preload("res://entities/player/Player.tscn")
 const BASIC_MOB_SCENE := preload(
-	"res://entities/enemies/Skeletons/basic skeleton/basic_skeleton.tscn"
+	"res://entities/enemies/basic_skeleton/BasicSkeleton.tscn"
 )
 
 const PHYSICS_TIMEOUT_FRAMES := 180
@@ -154,8 +154,13 @@ func _test_knockback_moves_away_while_gravity_continues() -> void:
 
 	var initial_position := player.global_position
 	contact._on_body_entered(player)
-	await physics_frame
-	await physics_frame
+	# Depending on SceneTree callback ordering, the test coroutine can resume
+	# before the player's movement callback for the same physics frame.
+	await _wait_until(
+		func() -> bool:
+			return player.velocity.y > 0.0 and player.global_position.y > initial_position.y,
+		5
+	)
 
 	_check(knockback.is_active(), "Contact must leave knockback active during its configured duration.")
 	_check(player.velocity.x > 0.0, "Player to the right of a mob must be knocked right.")

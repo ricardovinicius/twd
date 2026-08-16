@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ce62or1km2pgw"]
 
 [ext_resource type="Script" uid="uid://b7q3xogovuhhg" path="res://spells/attack/magic_arrow/magic_arrow_projectile.gd" id="1_11i43"]
-[ext_resource type="Texture2D" uid="uid://b54asiuj6wx7s" path="res://spells/attack/magic_arrow/sprites/Spiked Ball.png" id="2_pots1"]
+[ext_resource type="Texture2D" uid="uid://b54asiuj6wx7s" path="res://spells/attack/magic_arrow/sprites/spiked_ball.png" id="2_pots1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5a44f"]
 

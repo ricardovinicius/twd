@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://155xx7s6y6ta"]
+
+[ext_resource type="PackedScene" uid="uid://6uw7wsvlc7y2" path="res://levels/level_01/Level01.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://byp0dycr0lg5s" path="res://ui/pause_menu/PauseMenu.tscn" id="3_pause_menu"]
+[ext_resource type="PackedScene" uid="uid://gwxkdc61j1ld" path="res://ui/player_hud/PlayerHud.tscn" id="4_player_hud"]
+
+[node name="Main" type="Node2D" unique_id=1783851588]
+
+[node name="LevelRoot" parent="." unique_id=39161027 instance=ExtResource("2_0wfyh")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=621268640]
+
+[node name="PlayerHud" parent="CanvasLayer" node_paths=PackedStringArray("health") instance=ExtResource("4_player_hud")]
+health = NodePath("../../LevelRoot/Player/Health")
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("3_pause_menu")]

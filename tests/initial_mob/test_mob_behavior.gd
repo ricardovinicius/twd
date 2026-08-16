@@ -1,7 +1,7 @@
 extends SceneTree
 
 const MOB_SCENE: PackedScene = preload(
-	"res://entities/enemies/Skeletons/basic skeleton/basic_skeleton.tscn"
+	"res://entities/enemies/basic_skeleton/BasicSkeleton.tscn"
 )
 
 const PHYSICS_SETTLE_FRAMES := 4

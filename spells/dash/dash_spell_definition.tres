@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SpellDefinition" format=3 uid="uid://2i1pgqkwgu6r"]
 
 [ext_resource type="Script" uid="uid://cobttx3mdk6v1" path="res://spells/core/spell_definition.gd" id="1_s73ym"]
-[ext_resource type="PackedScene" uid="uid://b8gyyodvp88vl" path="res://spells/dash/dash_scene.tscn" id="1_wsmje"]
+[ext_resource type="PackedScene" uid="uid://b8gyyodvp88vl" path="res://spells/dash/DashScene.tscn" id="1_wsmje"]
 
 [resource]
 script = ExtResource("1_s73ym")

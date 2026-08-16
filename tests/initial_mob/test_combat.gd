@@ -1,21 +1,21 @@
 extends SceneTree
 
-const AttackDataScript = preload("res://spells/attack/core/attack_data.gd")
-const AttackHitboxScript = preload("res://components/attack_reactions/attack_hitbox.gd")
-const AttackReceiverScript = preload("res://components/attack_reactions/attack_receiver.gd")
-const HealthDamageReactionScript = preload(
+const ATTACK_DATA_SCRIPT = preload("res://spells/attack/core/attack_data.gd")
+const ATTACK_HITBOX_SCRIPT = preload("res://components/attack_reactions/attack_hitbox.gd")
+const ATTACK_RECEIVER_SCRIPT = preload("res://components/attack_reactions/attack_receiver.gd")
+const HEALTH_DAMAGE_REACTION_SCRIPT = preload(
 	"res://components/attack_reactions/health/health_damage_reaction.gd"
 )
-const HealthScript = preload("res://health/health.gd")
-const MeleeAttackScript = preload("res://components/attack_reactions/melee_attack_component.gd")
-const AimInputScript = preload("res://components/input/aim_input_component.gd")
-const SkeletonScene = preload(
-	"res://entities/enemies/Skeletons/basic skeleton/basic_skeleton.tscn"
+const HEALTH_SCRIPT = preload("res://health/health.gd")
+const MELEE_ATTACK_SCRIPT = preload("res://components/attack_reactions/melee_attack_component.gd")
+const AIM_INPUT_SCRIPT = preload("res://components/input/aim_input_component.gd")
+const SKELETON_SCENE = preload(
+	"res://entities/enemies/basic_skeleton/BasicSkeleton.tscn"
 )
-const MagicArrowScene = preload(
+const MAGIC_ARROW_SCENE = preload(
 	"res://spells/attack/magic_arrow/MagicArrowProjectile.tscn"
 )
-const MagicArrowSpellScene = preload(
+const MAGIC_ARROW_SPELL_SCENE = preload(
 	"res://spells/attack/magic_arrow/MagicArrowSpell.tscn"
 )
 
@@ -53,7 +53,7 @@ func _run() -> void:
 
 
 func _test_analog_projectile_aim() -> void:
-	var aim_input := AimInputScript.new()
+	var aim_input := AIM_INPUT_SCRIPT.new()
 	Input.action_press(&"right", 0.8)
 	Input.action_press(&"aim_up", 0.6)
 
@@ -83,7 +83,7 @@ func _test_analog_projectile_aim() -> void:
 	)
 	aim_input.free()
 
-	var spell := MagicArrowSpellScene.instantiate()
+	var spell := MAGIC_ARROW_SPELL_SCENE.instantiate()
 	var context := SpellContext.new()
 	context.direction = Vector2.LEFT
 	context.aim_direction = Vector2.UP
@@ -135,14 +135,14 @@ func _test_melee_timing_single_hit_miss_and_recovery() -> void:
 	visual.name = "Visual"
 	source.add_child(visual)
 
-	var hitbox := AttackHitboxScript.new()
+	var hitbox := ATTACK_HITBOX_SCRIPT.new()
 	hitbox.name = "AttackHitbox"
 	hitbox.collision_layer = 0
 	hitbox.collision_mask = ATTACK_RECEIVER_LAYER
 	hitbox.monitorable = false
 	hitbox.add_child(_make_collision_shape(Vector2(24.0, 24.0)))
 
-	var melee := MeleeAttackScript.new()
+	var melee := MELEE_ATTACK_SCRIPT.new()
 	melee.name = "MeleeAttack"
 	melee.damage = 10.0
 	melee.windup_duration = 0.05
@@ -203,7 +203,7 @@ func _test_magic_arrow_hits_mob_receiver() -> void:
 	source.name = "ArrowCaster"
 	world.add_child(source)
 
-	var mob := SkeletonScene.instantiate()
+	var mob := SKELETON_SCENE.instantiate()
 	mob.name = "ProjectileTargetMob"
 	mob.position = Vector2(120.0, 0.0)
 	world.add_child(mob)
@@ -212,7 +212,7 @@ func _test_magic_arrow_hits_mob_receiver() -> void:
 	mob.set_physics_process(false)
 
 	var health: Health = mob.get_node("Health")
-	var projectile := MagicArrowScene.instantiate()
+	var projectile := MAGIC_ARROW_SCENE.instantiate()
 	projectile.name = "ReceiverTestArrow"
 	projectile.debug_collisions = false
 	world.add_child(projectile)
@@ -240,7 +240,7 @@ func _test_mob_health_and_death() -> void:
 
 	var source := Node2D.new()
 	world.add_child(source)
-	var mob := SkeletonScene.instantiate()
+	var mob := SKELETON_SCENE.instantiate()
 	world.add_child(mob)
 	await process_frame
 	mob.set_physics_process(false)
@@ -279,7 +279,7 @@ func _test_projectile_world_collision() -> void:
 	wall.add_child(_make_collision_shape(Vector2(10.0, 80.0)))
 	world.add_child(wall)
 
-	var projectile := MagicArrowScene.instantiate()
+	var projectile := MAGIC_ARROW_SCENE.instantiate()
 	projectile.debug_collisions = false
 	world.add_child(projectile)
 	await process_frame
@@ -300,7 +300,7 @@ func _test_projectile_lifetime() -> void:
 	var source := Node2D.new()
 	world.add_child(source)
 
-	var projectile := MagicArrowScene.instantiate()
+	var projectile := MAGIC_ARROW_SCENE.instantiate()
 	projectile.debug_collisions = false
 	world.add_child(projectile)
 	await process_frame
@@ -316,18 +316,18 @@ func _test_projectile_lifetime() -> void:
 func _make_damage_receiver_fixture(maximum_health: float) -> Dictionary:
 	var fixture_root := Node2D.new()
 
-	var health := HealthScript.new()
+	var health := HEALTH_SCRIPT.new()
 	health.name = "Health"
 	health.maximum = maximum_health
 	fixture_root.add_child(health)
 
-	var receiver := AttackReceiverScript.new()
+	var receiver := ATTACK_RECEIVER_SCRIPT.new()
 	receiver.name = "AttackReceiver"
 	receiver.collision_layer = ATTACK_RECEIVER_LAYER
 	receiver.collision_mask = 0
 	receiver.add_child(_make_collision_shape(Vector2(18.0, 18.0)))
 
-	var reaction := HealthDamageReactionScript.new()
+	var reaction := HEALTH_DAMAGE_REACTION_SCRIPT.new()
 	reaction.name = "HealthDamageReaction"
 	reaction.health = health
 	receiver.add_child(reaction)
@@ -349,7 +349,7 @@ func _make_collision_shape(size: Vector2) -> CollisionShape2D:
 
 
 func _make_attack(source: Node2D, damage: float, attack_type: StringName) -> AttackData:
-	var attack := AttackDataScript.new()
+	var attack := ATTACK_DATA_SCRIPT.new()
 	attack.source = source
 	attack.origin = source.global_position
 	attack.direction = Vector2.RIGHT

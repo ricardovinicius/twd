@@ -1,0 +1,438 @@
+[gd_scene format=3 uid="uid://cgaihek5qxa15"]
+
+[ext_resource type="Script" uid="uid://vihwfj3oqiy7" path="res://entities/enemies/basic_skeleton/basic_skeleton.gd" id="1_mob"]
+[ext_resource type="Texture2D" uid="uid://1vm731a8bylf" path="res://entities/enemies/basic_skeleton/sprites/idle.png" id="2_idle"]
+[ext_resource type="Texture2D" uid="uid://bh0osj3y7ay0i" path="res://entities/enemies/basic_skeleton/sprites/walk.png" id="3_walk"]
+[ext_resource type="Script" uid="uid://bmouqvprw5wyj" path="res://components/movement/horizontal_movement_component.gd" id="4_move"]
+[ext_resource type="Script" uid="uid://2htj0e4va8nl" path="res://components/movement/gravity_component.gd" id="5_gravity"]
+[ext_resource type="Script" uid="uid://d14jwxuq06jvb" path="res://components/detection/target_detector.gd" id="6_detector"]
+[ext_resource type="Script" uid="uid://bwbhww5r7mqe3" path="res://components/attack_reactions/melee_attack_component.gd" id="7_melee"]
+[ext_resource type="Script" uid="uid://d2y585wyaknw3" path="res://components/attack_reactions/attack_hitbox.gd" id="8_hitbox"]
+[ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="9_health"]
+[ext_resource type="Script" uid="uid://njnek1a4aq7p" path="res://health/destroy_on_death.gd" id="10_death"]
+[ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="11_receiver"]
+[ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="12_damage"]
+[ext_resource type="Texture2D" uid="uid://cpav8kyar4bws" path="res://entities/enemies/basic_skeleton/sprites/attack.png" id="13_attack"]
+[ext_resource type="Script" uid="uid://dx4kugto8jvw2" path="res://components/contact/contact_impact_component.gd" id="14_contact"]
+[ext_resource type="Script" uid="uid://dsjaapsgk0ke3" path="res://components/contact/character_rigid_body_push_component.gd" id="15_rigid_body_push"]
+
+[sub_resource type="AtlasTexture" id="Attack00"]
+atlas = ExtResource("13_attack")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack01"]
+atlas = ExtResource("13_attack")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack02"]
+atlas = ExtResource("13_attack")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack03"]
+atlas = ExtResource("13_attack")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack04"]
+atlas = ExtResource("13_attack")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack05"]
+atlas = ExtResource("13_attack")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack06"]
+atlas = ExtResource("13_attack")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack07"]
+atlas = ExtResource("13_attack")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack08"]
+atlas = ExtResource("13_attack")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack09"]
+atlas = ExtResource("13_attack")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack10"]
+atlas = ExtResource("13_attack")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack11"]
+atlas = ExtResource("13_attack")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack12"]
+atlas = ExtResource("13_attack")
+region = Rect2(384, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack13"]
+atlas = ExtResource("13_attack")
+region = Rect2(416, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack14"]
+atlas = ExtResource("13_attack")
+region = Rect2(448, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Attack15"]
+atlas = ExtResource("13_attack")
+region = Rect2(480, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk00"]
+atlas = ExtResource("3_walk")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk01"]
+atlas = ExtResource("3_walk")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk02"]
+atlas = ExtResource("3_walk")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk03"]
+atlas = ExtResource("3_walk")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk04"]
+atlas = ExtResource("3_walk")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk05"]
+atlas = ExtResource("3_walk")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk06"]
+atlas = ExtResource("3_walk")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk07"]
+atlas = ExtResource("3_walk")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk08"]
+atlas = ExtResource("3_walk")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk09"]
+atlas = ExtResource("3_walk")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk10"]
+atlas = ExtResource("3_walk")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk11"]
+atlas = ExtResource("3_walk")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk12"]
+atlas = ExtResource("3_walk")
+region = Rect2(384, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk13"]
+atlas = ExtResource("3_walk")
+region = Rect2(416, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk14"]
+atlas = ExtResource("3_walk")
+region = Rect2(448, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk15"]
+atlas = ExtResource("3_walk")
+region = Rect2(480, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk16"]
+atlas = ExtResource("3_walk")
+region = Rect2(512, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk17"]
+atlas = ExtResource("3_walk")
+region = Rect2(544, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk18"]
+atlas = ExtResource("3_walk")
+region = Rect2(576, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk19"]
+atlas = ExtResource("3_walk")
+region = Rect2(608, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk20"]
+atlas = ExtResource("3_walk")
+region = Rect2(640, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk21"]
+atlas = ExtResource("3_walk")
+region = Rect2(672, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk22"]
+atlas = ExtResource("3_walk")
+region = Rect2(704, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk23"]
+atlas = ExtResource("3_walk")
+region = Rect2(736, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SkeletonFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Attack00")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack01")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack02")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack03")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack04")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack05")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack06")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack07")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack08")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack09")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack10")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack11")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack12")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack13")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack14")
+}, {
+"duration": 1.0,
+"texture": SubResource("Attack15")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_idle")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Walk00")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk01")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk02")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk03")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk04")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk05")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk06")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk07")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk08")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk09")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk10")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk11")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk12")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk13")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk14")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk15")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk16")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk17")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk18")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk19")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk20")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk21")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk22")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk23")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 16.0
+}]
+
+[sub_resource type="RectangleShape2D" id="BodyShape"]
+size = Vector2(14, 23.666668)
+
+[sub_resource type="CircleShape2D" id="AggroShape"]
+radius = 247.96797
+
+[sub_resource type="CircleShape2D" id="AttackRangeShape"]
+radius = 12.0
+
+[sub_resource type="RectangleShape2D" id="AttackHitboxShape"]
+size = Vector2(20, 18)
+
+[sub_resource type="RectangleShape2D" id="ContactShape"]
+size = Vector2(16, 25)
+
+[sub_resource type="RectangleShape2D" id="AttackReceiverShape"]
+size = Vector2(16, 24)
+
+[node name="BasicMob" type="CharacterBody2D" unique_id=807228014]
+scale = Vector2(3, 3)
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_mob")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=102553290]
+texture_filter = 1
+sprite_frames = SubResource("SkeletonFrames")
+animation = &"attack"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=493760796]
+position = Vector2(0, 2.166667)
+shape = SubResource("BodyShape")
+
+[node name="HorizontalMovement" type="Node" parent="." unique_id=1100684938]
+script = ExtResource("4_move")
+max_speed = 120.0
+acceleration = 600.0
+deceleration = 900.0
+
+[node name="RigidBodyPush" type="Node" parent="." unique_id=1324261363 node_paths=PackedStringArray("character")]
+script = ExtResource("15_rigid_body_push")
+character = NodePath("..")
+
+[node name="Gravity" type="Node" parent="." unique_id=606260745]
+script = ExtResource("5_gravity")
+
+[node name="AggroDetector" type="Area2D" parent="." unique_id=349126162]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("6_detector")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AggroDetector" unique_id=480855013]
+shape = SubResource("AggroShape")
+
+[node name="AttackRangeDetector" type="Area2D" parent="." unique_id=1751079919]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("6_detector")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeDetector" unique_id=1151235654]
+shape = SubResource("AttackRangeShape")
+
+[node name="MeleeAttack" type="Node2D" parent="." unique_id=1895945653 node_paths=PackedStringArray("attack_hitbox", "visual")]
+script = ExtResource("7_melee")
+attack_hitbox = NodePath("AttackHitbox")
+visual = NodePath("../AnimatedSprite2D")
+damage = 20.0
+windup_duration = 0.67
+active_duration = 0.125
+recovery_duration = 0.5
+windup_distance = 0.0
+lunge_distance = 0.0
+
+[node name="AttackHitbox" type="Area2D" parent="MeleeAttack" unique_id=1075785595]
+position = Vector2(14, 0)
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+script = ExtResource("8_hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeAttack/AttackHitbox" unique_id=1467763512]
+shape = SubResource("AttackHitboxShape")
+
+[node name="ContactImpact" type="Node2D" parent="." unique_id=247911101 node_paths=PackedStringArray("source", "contact_area")]
+script = ExtResource("14_contact")
+source = NodePath("..")
+contact_area = NodePath("ContactArea")
+
+[node name="ContactArea" type="Area2D" parent="ContactImpact" unique_id=1948559518]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactImpact/ContactArea" unique_id=300947794]
+position = Vector2(0, 2.166667)
+shape = SubResource("ContactShape")
+
+[node name="Health" type="Node" parent="." unique_id=1481310139]
+script = ExtResource("9_health")
+maximum = 50.0
+
+[node name="DestroyOnDeath" type="Node" parent="." unique_id=528825542 node_paths=PackedStringArray("health", "target")]
+script = ExtResource("10_death")
+health = NodePath("../Health")
+target = NodePath("..")
+
+[node name="AttackReceiver" type="Area2D" parent="." unique_id=1924509952]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("11_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackReceiver" unique_id=1273917927]
+position = Vector2(0, 2.166667)
+shape = SubResource("AttackReceiverShape")
+
+[node name="HealthDamageReaction" type="Node" parent="AttackReceiver" unique_id=735799197 node_paths=PackedStringArray("health")]
+script = ExtResource("12_damage")
+health = NodePath("../../Health")

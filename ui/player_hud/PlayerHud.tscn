@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://gwxkdc61j1ld"]
+
+[ext_resource type="Script" uid="uid://dffa4ttnwtmpx" path="res://ui/player_hud/player_hud.gd" id="1_j2wd1"]
+[ext_resource type="Texture2D" uid="uid://bljaubfwtp4jj" path="res://ui/player_hud/sprites/health_bar_frame.png" id="1_qgh1g"]
+
+[sub_resource type="Gradient" id="Gradient_d3s28"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ik31s"]
+gradient = SubResource("Gradient_d3s28")
+height = 16
+
+[sub_resource type="Gradient" id="Gradient_qgh1g"]
+colors = PackedColorArray(0.7882353, 0.18431373, 0.13725491, 1, 0.9607843, 0.41568628, 0.31764707, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j2wd1"]
+gradient = SubResource("Gradient_qgh1g")
+height = 16
+
+[node name="PlayerHud" type="Control" unique_id=464940595]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_j2wd1")
+
+[node name="HealthMarginContainer" type="MarginContainer" parent="." unique_id=793989540]
+custom_minimum_size = Vector2(64, 16)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 16.0
+scale = Vector2(3, 3)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="HealthMarginContainer" unique_id=1961747608]
+layout_mode = 2
+texture = ExtResource("1_qgh1g")
+region_rect = Rect2(0, 0, 64, 16)
+
+[node name="HealthBar" type="TextureProgressBar" parent="HealthMarginContainer/NinePatchRect" unique_id=1904599539]
+unique_name_in_owner = true
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 63.0
+offset_bottom = 14.0
+value = 100.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_ik31s")
+texture_progress = SubResource("GradientTexture2D_j2wd1")
