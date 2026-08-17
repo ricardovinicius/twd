@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://b1w4namq34for" path="res://entities/dummy/Dummy.tscn" id="8_thp0t"]
 [ext_resource type="PackedScene" uid="uid://voymbcvjwcmq" path="res://entities/items/BottleLine.tscn" id="10_5dpqp"]
 [ext_resource type="PackedScene" uid="uid://cgaihek5qxa15" path="res://entities/enemies/basic_skeleton/BasicSkeleton.tscn" id="10_upmp1"]
+[ext_resource type="PackedScene" path="res://entities/interactive/lever/Lever.tscn" id="11_lever"]
+[ext_resource type="PackedScene" path="res://entities/interactive/door/Door.tscn" id="12_door"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b3jm5"]
 texture = ExtResource("1_thp0t")
@@ -706,6 +708,14 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_top_margin = 0.8
 
+[node name="Lever" parent="." unique_id=1612203383 instance=ExtResource("11_lever")]
+position = Vector2(794, 1010)
+
+[node name="Door" parent="." unique_id=853494269 node_paths=PackedStringArray("switch") instance=ExtResource("12_door")]
+position = Vector2(1110, 1022)
+scale = Vector2(2, 2)
+switch = NodePath("../Lever/SwitchComponent")
+
 [node name="BottleTriangle" parent="." unique_id=1087390374 instance=ExtResource("5_aqob7")]
 position = Vector2(5359, 980)
 mass = 0.01
@@ -724,19 +734,25 @@ position = Vector2(5281, 654)
 position = Vector2(5345, 639)
 
 [node name="BasicMob" parent="." unique_id=807228014 instance=ExtResource("10_upmp1")]
-position = Vector2(-519, 957)
+position = Vector2(-562, 946)
+collision_mask = 5
 
 [node name="BasicMob2" parent="." unique_id=1482072956 instance=ExtResource("10_upmp1")]
 position = Vector2(4130, 1732.0001)
+collision_mask = 5
 
 [node name="BasicMob3" parent="." unique_id=567108536 instance=ExtResource("10_upmp1")]
 position = Vector2(1442, 1735.0001)
+collision_mask = 5
 
 [node name="BasicMob4" parent="." unique_id=705642612 instance=ExtResource("10_upmp1")]
 position = Vector2(2414, 1533)
+collision_mask = 5
 
 [node name="BasicMob5" parent="." unique_id=1826279901 instance=ExtResource("10_upmp1")]
 position = Vector2(2977, 1733.0001)
+collision_mask = 5
 
 [node name="BasicMob6" parent="." unique_id=39197674 instance=ExtResource("10_upmp1")]
 position = Vector2(672, 1736)
+collision_mask = 5

@@ -2,5 +2,5 @@
 
 [resource]
 resource_name = "BottlePhysicsMaterial"
-friction = 0.3
+friction = 0.03
 bounce = 0.05

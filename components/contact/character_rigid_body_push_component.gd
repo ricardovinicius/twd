@@ -37,6 +37,7 @@ func push_slide_collisions(intended_velocity: Vector2) -> void:
 			maximum_impulse
 		)
 		var impulse := push_direction * impulse_magnitude
-		rigid_body.apply_central_impulse(impulse)
+		var application_offset := collision.get_position() - rigid_body.global_position
+		rigid_body.apply_impulse(impulse, application_offset)
 		pushed_bodies.append(rigid_body)
 		body_pushed.emit(rigid_body, impulse)

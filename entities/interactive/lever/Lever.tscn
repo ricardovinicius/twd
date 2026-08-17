@@ -1,0 +1,99 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://entities/interactive/lever/lever.gd" id="1_lever"]
+[ext_resource type="Script" path="res://components/switches/switch_component.gd" id="2_switch"]
+[ext_resource type="Script" path="res://entities/interactive/lever/lever_handle.gd" id="3_handle"]
+[ext_resource type="Script" path="res://entities/interactive/lever/physics_lever_component.gd" id="4_physics"]
+[ext_resource type="Script" path="res://components/action_reactions/action_receiver.gd" id="5_receiver"]
+[ext_resource type="Script" path="res://components/action_reactions/lever/lever_impulse_reaction.gd" id="6_reaction"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_base"]
+size = Vector2(38, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_handle"]
+size = Vector2(10, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_receiver"]
+size = Vector2(24, 52)
+
+[node name="Lever" type="Node2D" node_paths=PackedStringArray("switch", "handle", "pivot_joint", "physics_component", "grip")]
+script = ExtResource("1_lever")
+switch = NodePath("SwitchComponent")
+handle = NodePath("LeverHandle")
+pivot_joint = NodePath("PivotJoint")
+physics_component = NodePath("PhysicsLeverComponent")
+grip = NodePath("LeverHandle/Grip")
+
+[node name="Base" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="BaseVisual" type="Polygon2D" parent="Base"]
+position = Vector2(0, -4)
+polygon = PackedVector2Array(-19, -6, 19, -6, 19, 6, -19, 6)
+color = Color(0.23, 0.27, 0.32, 1)
+
+[node name="PivotVisual" type="Polygon2D" parent="Base"]
+position = Vector2(0, -10)
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+color = Color(0.72, 0.78, 0.84, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Base"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_base")
+
+[node name="Pivot" type="Marker2D" parent="."]
+position = Vector2(0, -10)
+
+[node name="LeverHandle" type="RigidBody2D" parent="." groups=["character_pushable"] node_paths=PackedStringArray("physics_component")]
+position = Vector2(0, -10)
+rotation = -0.610865
+collision_layer = 4
+collision_mask = 5
+mass = 1.0
+gravity_scale = 0.0
+can_sleep = false
+continuous_cd = 2
+script = ExtResource("3_handle")
+physics_component = NodePath("../PhysicsLeverComponent")
+
+[node name="Stem" type="Polygon2D" parent="LeverHandle"]
+polygon = PackedVector2Array(-4, -43, 4, -43, 4, -4, -4, -4)
+color = Color(0.92, 0.69, 0.18, 1)
+
+[node name="Grip" type="Polygon2D" parent="LeverHandle"]
+position = Vector2(0, -45)
+polygon = PackedVector2Array(-8, -6, 8, -6, 8, 6, -8, 6)
+color = Color(0.85, 0.28, 0.2, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeverHandle"]
+position = Vector2(0, -23)
+shape = SubResource("RectangleShape2D_handle")
+
+[node name="ActionReceiver" type="Area2D" parent="LeverHandle"]
+position = Vector2(0, -23)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeverHandle/ActionReceiver"]
+shape = SubResource("RectangleShape2D_receiver")
+
+[node name="LeverImpulseReaction" type="Node" parent="LeverHandle/ActionReceiver" node_paths=PackedStringArray("handle", "physics_component")]
+script = ExtResource("6_reaction")
+handle = NodePath("../..")
+physics_component = NodePath("../../../PhysicsLeverComponent")
+
+[node name="PivotJoint" type="PinJoint2D" parent="." node_paths=PackedStringArray("node_a", "node_b")]
+position = Vector2(0, -10)
+node_a = NodePath("../Base")
+node_b = NodePath("../LeverHandle")
+
+[node name="SwitchComponent" type="Node" parent="."]
+script = ExtResource("2_switch")
+
+[node name="PhysicsLeverComponent" type="Node" parent="." node_paths=PackedStringArray("handle", "pivot", "switch")]
+script = ExtResource("4_physics")
+handle = NodePath("../LeverHandle")
+pivot = NodePath("../Pivot")
+switch = NodePath("../SwitchComponent")

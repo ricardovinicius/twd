@@ -1,7 +1,7 @@
 class_name PushSpell
 extends ActionSpell
 
-@export var push_strength: float = 100.0
+@export var push_strength: float = 200.0
 
 
 func _create_action_for(_receiver: ActionReceiver) -> ActionData:

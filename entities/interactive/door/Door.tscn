@@ -1,0 +1,137 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://entities/interactive/door/door_controller.gd" id="1_door"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(28, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_detector"]
+size = Vector2(44, 98)
+
+[sub_resource type="Animation" id="Animation_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DoorBody:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -48)]
+}
+
+[sub_resource type="Animation" id="Animation_open"]
+resource_name = "open"
+length = 0.45
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DoorBody:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -48), Vector2(0, -152)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.12),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"release_collision"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_close"]
+resource_name = "close"
+length = 0.45
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DoorBody:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -152), Vector2(0, -48)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.44),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"try_restore_collision"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_door"]
+_data = {
+&"RESET": SubResource("Animation_reset"),
+&"close": SubResource("Animation_close"),
+&"open": SubResource("Animation_open")
+}
+
+[node name="Door" type="Node2D" node_paths=PackedStringArray("animation_player", "door_body", "door_collision", "doorway_detector")]
+script = ExtResource("1_door")
+animation_player = NodePath("AnimationPlayer")
+door_body = NodePath("DoorBody")
+door_collision = NodePath("DoorBody/CollisionShape2D")
+doorway_detector = NodePath("DoorwayDetector")
+
+[node name="FrameLeft" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-23, -104, -14, -104, -14, 0, -23, 0)
+color = Color(0.25, 0.29, 0.35, 1)
+
+[node name="FrameRight" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(14, -104, 23, -104, 23, 0, 14, 0)
+color = Color(0.25, 0.29, 0.35, 1)
+
+[node name="FrameTop" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-23, -112, 23, -112, 23, -103, -23, -103)
+color = Color(0.25, 0.29, 0.35, 1)
+
+[node name="DoorBody" type="AnimatableBody2D" parent="."]
+position = Vector2(0, -48)
+collision_layer = 1
+collision_mask = 0
+
+[node name="DoorPanel" type="Polygon2D" parent="DoorBody"]
+polygon = PackedVector2Array(-14, -48, 14, -48, 14, 48, -14, 48)
+color = Color(0.16, 0.42, 0.58, 1)
+
+[node name="DoorStripe" type="Polygon2D" parent="DoorBody"]
+polygon = PackedVector2Array(-14, -6, 14, -6, 14, 6, -14, 6)
+color = Color(0.38, 0.72, 0.75, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorBody"]
+shape = SubResource("RectangleShape2D_door")
+
+[node name="DoorwayDetector" type="Area2D" parent="."]
+position = Vector2(0, -49)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorwayDetector"]
+shape = SubResource("RectangleShape2D_detector")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries/ = SubResource("AnimationLibrary_door")

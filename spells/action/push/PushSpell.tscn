@@ -6,6 +6,7 @@
 
 [node name="PushSpell" type="Node2D" unique_id=148912943]
 script = ExtResource("1_eek88")
+push_strength = 200.0
 
 [node name="EffectQuery" type="ShapeCast2D" parent="." unique_id=375891772]
 shape = SubResource("CircleShape2D_eek88")

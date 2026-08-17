@@ -12,7 +12,7 @@ size = Vector2(42, 47.5)
 [node name="BottleTriangle" type="RigidBody2D" unique_id=1087390374 groups=["character_pushable"]]
 collision_layer = 4
 collision_mask = 5
-mass = 0.5
+mass = 0.05
 physics_material_override = ExtResource("5_physics")
 continuous_cd = 2
 

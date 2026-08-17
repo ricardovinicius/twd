@@ -730,6 +730,8 @@ deceleration = 2000.0
 [node name="RigidBodyPush" type="Node" parent="." node_paths=PackedStringArray("character")]
 script = ExtResource("20_rigid_body_push")
 character = NodePath("..")
+impulse_factor = 0.1
+maximum_impulse = 1.0
 
 [node name="VariableJumpHeight" type="Node" parent="." unique_id=1967477122]
 script = ExtResource("4_variable_jump")
