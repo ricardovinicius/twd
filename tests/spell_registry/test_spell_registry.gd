@@ -37,7 +37,7 @@ func _test_database_queries_and_copying() -> void:
 	var database := SPELL_DATABASE as SpellDatabase
 	var database_spells := database.get_spells()
 
-	_check(database_spells.size() == 3, "The spell database must contain all three spells.")
+	_check(database_spells.size() == 4, "The spell database must contain all four spells.")
 	_check(
 		database.get_spell(&"magic_arrow") == database_spells[0],
 		"Database lookup must return the canonical spell definition."
@@ -47,7 +47,7 @@ func _test_database_queries_and_copying() -> void:
 
 	database_spells.clear()
 	_check(
-		database.get_spells().size() == 3,
+		database.get_spells().size() == 4,
 		"Mutating a returned spell list must not mutate the database."
 	)
 
@@ -133,8 +133,8 @@ func _test_player_casting_and_cooldown_integration() -> void:
 	)
 
 	_check(
-		registry.get_registered_spells().size() == 3,
-		"The player must start with the existing three-spell loadout."
+		registry.get_registered_spells().size() == 4,
+		"The player must start with the four-spell loadout."
 	)
 	registry.unregister_spell(&"magic_arrow")
 	_check(
@@ -197,8 +197,8 @@ func _test_debug_ui_controls() -> void:
 		"The spell registry window must be centered horizontally."
 	)
 	_check(debug_ui.registry == registry, "The debug UI must receive the player's registry.")
-	_check(debug_ui.get_catalogued_spell_count() == 3, "The debug UI must list every database spell.")
-	_check(debug_ui.get_registered_spell_count() == 3, "The debug UI must list registered spells.")
+	_check(debug_ui.get_catalogued_spell_count() == 4, "The debug UI must list every database spell.")
+	_check(debug_ui.get_registered_spell_count() == 4, "The debug UI must list registered spells.")
 
 	pause_menu.pause_game()
 	_check(pause_menu.visible, "Opening the ESC menu must show the pause menu.")
@@ -229,7 +229,7 @@ func _test_debug_ui_controls() -> void:
 
 	debug_ui.get_unregister_button(&"push").pressed.emit()
 	_check(not registry.has_spell(&"push"), "The Remove action must unregister its spell.")
-	_check(debug_ui.get_registered_spell_count() == 2, "The registered list must refresh after removal.")
+	_check(debug_ui.get_registered_spell_count() == 3, "The registered list must refresh after removal.")
 	_check(
 		not debug_ui.get_register_button(&"push").disabled,
 		"The Register action must become available after removal."
@@ -237,7 +237,7 @@ func _test_debug_ui_controls() -> void:
 
 	debug_ui.get_register_button(&"push").pressed.emit()
 	_check(registry.has_spell(&"push"), "The Register action must add its spell.")
-	_check(debug_ui.get_registered_spell_count() == 3, "The registered list must refresh after adding.")
+	_check(debug_ui.get_registered_spell_count() == 4, "The registered list must refresh after adding.")
 
 	pause_menu.close_spell_registry_button.pressed.emit()
 	_check(not registry_window.visible, "The Back button must close the registry window.")

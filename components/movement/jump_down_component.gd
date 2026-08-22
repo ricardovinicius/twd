@@ -49,6 +49,10 @@ func is_active() -> bool:
 	return _is_active
 
 
+func cancel() -> void:
+	_finish()
+
+
 func _exit_tree() -> void:
 	_restore_platform_collision()
 
