@@ -2,6 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://c3kxdepblmhwf" path="res://ui/pause_menu/pause_menu.gdshader" id="1_nwcfo"]
 [ext_resource type="Script" uid="uid://bfol328bs7tdj" path="res://ui/pause_menu/pause_menu.gd" id="2_05uyy"]
+[ext_resource type="PackedScene" path="res://spells/ui/SpellRegistryDebugUI.tscn" id="3_spell_registry"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4g4vn"]
 shader = ExtResource("1_nwcfo")
@@ -160,9 +161,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -235.0
-offset_top = -124.0
+offset_top = -150.0
 offset_right = 235.0
-offset_bottom = 124.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -170,8 +171,14 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="Resume" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1347737396]
+unique_name_in_owner = true
 layout_mode = 2
 text = "resume"
+
+[node name="SpellRegistryButton" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "spell registry"
 
 [node name="Restart" type="Button" parent="PanelContainer/VBoxContainer" unique_id=443455466]
 layout_mode = 2
@@ -181,9 +188,52 @@ text = "restart"
 layout_mode = 2
 text = "quit"
 
+[node name="SpellRegistryWindow" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -270.0
+offset_right = 400.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="SpellRegistryWindow"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SpellRegistryWindow/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SpellRegistryDebugUI" parent="SpellRegistryWindow/MarginContainer/VBoxContainer" instance=ExtResource("3_spell_registry")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="SpellRegistryWindow/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CloseSpellRegistry" type="Button" parent="SpellRegistryWindow/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 42)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "back"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1168548184]
 libraries/ = SubResource("AnimationLibrary_d3xb4")
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/SpellRegistryButton" to="." method="_on_spell_registry_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="SpellRegistryWindow/MarginContainer/VBoxContainer/CloseSpellRegistry" to="." method="close_spell_registry_window"]

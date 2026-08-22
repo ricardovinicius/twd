@@ -11,4 +11,5 @@ position = Vector2(62, 12)
 [node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=621268640]
 layer = 10
 
-[node name="PauseMenu" parent="PauseMenuLayer" unique_id=1613493885 instance=ExtResource("3_pause_menu")]
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=1613493885 node_paths=PackedStringArray("spell_registry") instance=ExtResource("3_pause_menu")]
+spell_registry = NodePath("../../LevelRoot/Player/SpellRegistry")
