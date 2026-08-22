@@ -14,11 +14,7 @@
 [ext_resource type="Script" uid="uid://bg2bws5epjtcv" path="res://spells/core/sequence_caster.gd" id="7_26q78"]
 [ext_resource type="Texture2D" uid="uid://dqumptbjwn0jm" path="res://entities/player/sprites/walk_sprite_sheet.png" id="8_afbqv"]
 [ext_resource type="Script" uid="uid://bc80n76e2yidq" path="res://spells/core/spell_invoker.gd" id="8_bectd"]
-[ext_resource type="Script" uid="uid://cobttx3mdk6v1" path="res://spells/core/spell_definition.gd" id="8_wvtmh"]
-[ext_resource type="Resource" uid="uid://2i1pgqkwgu6r" path="res://spells/dash/dash_spell_definition.tres" id="9_7thud"]
 [ext_resource type="Script" uid="uid://b6ijjdasfwcco" path="res://spells/core/spell_cooldowns.gd" id="10_cooldowns"]
-[ext_resource type="Resource" uid="uid://b1dg4hcevkwm0" path="res://spells/action/push/push_spell_definition.tres" id="11_a1qjk"]
-[ext_resource type="Resource" uid="uid://k3fvqn6s44nu" path="res://spells/attack/magic_arrow/magic_arrow_definition.tres" id="12_j3ovn"]
 [ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="13_health"]
 [ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="14_receiver"]
 [ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="15_damage"]
@@ -30,6 +26,8 @@
 [ext_resource type="Script" uid="uid://i7wmgxll2lvl" path="res://components/input/aim_input_component.gd" id="21_aim_input"]
 [ext_resource type="PackedScene" uid="uid://gwxkdc61j1ld" path="res://ui/player_hud/PlayerHud.tscn" id="22_player_hud"]
 [ext_resource type="Script" uid="uid://dxhjj8wjk7wr4" path="res://components/movement/jump_down_component.gd" id="23_jump_down"]
+[ext_resource type="Script" path="res://spells/core/spell_registry.gd" id="24_spell_registry"]
+[ext_resource type="Resource" path="res://spells/spell_database.tres" id="25_spell_database"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -773,9 +771,14 @@ shape = SubResource("RectangleShape2D_qlg0r")
 [node name="AimInput" type="Node" parent="."]
 script = ExtResource("21_aim_input")
 
-[node name="SequenceCaster" type="Node" parent="." unique_id=788599091 node_paths=PackedStringArray("caster", "spell_origin", "effect_parent", "projectile_aim")]
+[node name="SpellRegistry" type="Node" parent="."]
+script = ExtResource("24_spell_registry")
+database = ExtResource("25_spell_database")
+initial_spell_ids = Array[StringName]([&"magic_arrow", &"push", &"dash"])
+
+[node name="SequenceCaster" type="Node" parent="." unique_id=788599091 node_paths=PackedStringArray("registry", "caster", "spell_origin", "effect_parent", "projectile_aim")]
 script = ExtResource("7_26q78")
-available_spells = Array[ExtResource("8_wvtmh")]([ExtResource("9_7thud"), ExtResource("11_a1qjk"), ExtResource("12_j3ovn")])
+registry = NodePath("../SpellRegistry")
 caster = NodePath("..")
 spell_origin = NodePath("../SpellOrigin")
 effect_parent = NodePath("..")
