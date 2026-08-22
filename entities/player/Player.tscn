@@ -35,6 +35,7 @@
 [ext_resource type="Script" uid="uid://dxhjj8wjk7wr4" path="res://components/movement/jump_down_component.gd" id="23_jump_down"]
 [ext_resource type="Script" path="res://spells/core/spell_registry.gd" id="24_spell_registry"]
 [ext_resource type="Resource" path="res://spells/spell_database.tres" id="25_spell_database"]
+[ext_resource type="Script" path="res://components/movement/spell_jump_component.gd" id="26_spell_jump"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -751,6 +752,10 @@ script = ExtResource("5_jump_buffer")
 script = ExtResource("23_jump_down")
 body = NodePath("..")
 
+[node name="SpellJump" type="Node" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("26_spell_jump")
+body = NodePath("..")
+
 [node name="Gravity" type="Node" parent="." unique_id=18360107]
 script = ExtResource("6_gravity")
 fall_gravity_multiplier = 1.2
@@ -785,7 +790,7 @@ script = ExtResource("21_aim_input")
 [node name="SpellRegistry" type="Node" parent="."]
 script = ExtResource("24_spell_registry")
 database = ExtResource("25_spell_database")
-initial_spell_ids = Array[StringName]([&"magic_arrow", &"push", &"dash"])
+initial_spell_ids = Array[StringName]([&"magic_arrow", &"push", &"dash", &"double_jump"])
 
 [node name="SequenceCaster" type="Node" parent="." unique_id=788599091 node_paths=PackedStringArray("registry", "caster", "spell_origin", "effect_parent", "projectile_aim")]
 script = ExtResource("7_26q78")

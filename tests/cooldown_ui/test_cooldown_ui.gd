@@ -4,6 +4,9 @@ const COOLDOWN_ENTRY_SCENE := preload("res://spells/ui/CooldownEntry.tscn")
 const COOLDOWN_UI_SCENE := preload("res://spells/ui/CooldownUI.tscn")
 const PLAYER_SCENE := preload("res://entities/player/Player.tscn")
 const DASH_DEFINITION := preload("res://spells/dash/dash_spell_definition.tres")
+const DOUBLE_JUMP_DEFINITION := preload(
+	"res://spells/double_jump/double_jump_spell_definition.tres"
+)
 const PUSH_DEFINITION := preload("res://spells/action/push/push_spell_definition.tres")
 const MAGIC_ARROW_DEFINITION := preload(
 	"res://spells/attack/magic_arrow/magic_arrow_definition.tres"
@@ -42,6 +45,7 @@ func _test_initial_spell_icons() -> void:
 	_check(MAGIC_ARROW_DEFINITION.icon != null, "Magic Arrow must have an icon.")
 	_check(PUSH_DEFINITION.icon != null, "Push must have an icon.")
 	_check(DASH_DEFINITION.icon != null, "Dash must have an icon.")
+	_check(DOUBLE_JUMP_DEFINITION.icon != null, "Double Jump must have an icon.")
 
 
 func _test_vertical_overlay_progress() -> void:

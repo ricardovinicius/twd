@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="SpellDatabase" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="SpellDatabase" load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://spells/core/spell_database.gd" id="1_database"]
 [ext_resource type="Resource" path="res://spells/attack/magic_arrow/magic_arrow_definition.tres" id="2_magic_arrow"]
 [ext_resource type="Resource" path="res://spells/action/push/push_spell_definition.tres" id="3_push"]
 [ext_resource type="Resource" path="res://spells/dash/dash_spell_definition.tres" id="4_dash"]
+[ext_resource type="Resource" path="res://spells/double_jump/double_jump_spell_definition.tres" id="5_double_jump"]
 
 [resource]
 script = ExtResource("1_database")
-spells = Array[ExtResource("2_magic_arrow")]([ExtResource("2_magic_arrow"), ExtResource("3_push"), ExtResource("4_dash")])
+spells = Array[ExtResource("2_magic_arrow")]([ExtResource("2_magic_arrow"), ExtResource("3_push"), ExtResource("4_dash"), ExtResource("5_double_jump")])

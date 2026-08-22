@@ -66,6 +66,14 @@ func _test_component_collision_mask_lifecycle() -> void:
 		body.velocity.y >= jump_down.minimum_downward_speed,
 		"Jump down must apply enough downward speed to leave the platform."
 	)
+	jump_down.cancel()
+	_check(not jump_down.is_active(), "Cancelling jump down must finish it immediately.")
+	_check(
+		body.get_collision_mask_value(ONE_WAY_PLATFORM_LAYER),
+		"Cancelling jump down must restore one-way platform collision."
+	)
+
+	_check(jump_down.begin(true), "Jump down must be reusable after cancellation.")
 
 	jump_down.set_physics_process(false)
 	jump_down._physics_process(jump_down.ignore_duration)

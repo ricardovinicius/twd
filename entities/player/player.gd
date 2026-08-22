@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var variable_jump_height: VariableJumpHeightComponent = $VariableJumpHeight
 @onready var jump_buffer: JumpBufferComponent = $JumpBufferTimer
 @onready var jump_down: JumpDownComponent = $JumpDown
+@onready var spell_jump: SpellJumpComponent = $SpellJump
 @onready var gravity: GravityComponent = $Gravity
 @onready var knockback: KnockbackComponent = $Knockback
 @onready var rigid_body_push: CharacterRigidBodyPushComponent = $RigidBodyPush
@@ -17,6 +18,7 @@ var is_dashing: bool = false
 var dash_direction: Vector2 = Vector2.ZERO
 var dash_speed: float = 0.0
 var _is_playing_hit_animation: bool = false
+var _dash_generation: int = 0
 
 
 func _ready() -> void:
@@ -32,7 +34,7 @@ func _physics_process(delta: float) -> void:
 		_handle_jump_input()
 
 	if is_being_knocked_back:
-		is_dashing = false
+		_cancel_dash()
 		_apply_knockback_movement(delta)
 	elif not is_dashing:
 		_apply_normal_movement(delta)
@@ -45,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	# a buffered jump on the exact frame the player lands.
 	if not is_dashing and not is_being_knocked_back:
 		_try_jump()
-	
+
 
 func _apply_normal_movement(delta: float) -> void:
 	_update_movement_animation()
@@ -73,7 +75,7 @@ func _apply_normal_movement(delta: float) -> void:
 	)
 
 	_move_and_slide_with_rigid_body_push()
-	
+
 	if direction == 1.0:
 		animated_sprite_2d.flip_h = false
 	elif direction == -1.0:
@@ -184,11 +186,24 @@ func _on_animation_finished() -> void:
 		_is_playing_hit_animation = false
 
 
+func try_spell_jump() -> bool:
+	_cancel_dash()
+	jump_down.cancel()
+
+	if not spell_jump.jump():
+		return false
+
+	_play_animation(&"jump")
+	return true
+
+
 func begin_dash(direction: Vector2, speed: float, duration: float) -> void:
 	if is_dashing:
 		push_error("Player is already dashing.")
 		return
-	
+
+	_dash_generation += 1
+	var generation := _dash_generation
 	is_dashing = true
 
 	dash_direction = direction.normalized()
@@ -196,10 +211,23 @@ func begin_dash(direction: Vector2, speed: float, duration: float) -> void:
 	if dash_direction.is_zero_approx():
 		push_error("Dash direction is zero. Defaulting to facing direction.")
 		dash_direction = facing_direction.normalized()
-	
+
 	dash_speed = speed
 
 	await get_tree().create_timer(duration).timeout
 
+	if generation != _dash_generation:
+		return
+
 	is_dashing = false
 	velocity.x = 0  # Stop horizontal movement after dash
+
+
+func _cancel_dash() -> void:
+	if not is_dashing:
+		return
+
+	_dash_generation += 1
+	is_dashing = false
+	dash_direction = Vector2.ZERO
+	dash_speed = 0.0

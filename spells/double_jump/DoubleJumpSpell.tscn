@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://spells/double_jump/double_jump_spell.gd" id="1_double_jump"]
+
+[node name="DoubleJumpSpell" type="Node"]
+script = ExtResource("1_double_jump")
