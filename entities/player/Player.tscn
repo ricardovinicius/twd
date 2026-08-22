@@ -16,9 +16,12 @@
 [ext_resource type="Script" uid="uid://bc80n76e2yidq" path="res://spells/core/spell_invoker.gd" id="8_bectd"]
 [ext_resource type="Script" uid="uid://cobttx3mdk6v1" path="res://spells/core/spell_definition.gd" id="8_wvtmh"]
 [ext_resource type="Resource" uid="uid://2i1pgqkwgu6r" path="res://spells/dash/dash_spell_definition.tres" id="9_7thud"]
+[ext_resource type="Texture2D" uid="uid://b8iicct70ra1w" path="res://ui/icons/TWD_forfex.png" id="10_5qbdv"]
 [ext_resource type="Script" uid="uid://b6ijjdasfwcco" path="res://spells/core/spell_cooldowns.gd" id="10_cooldowns"]
 [ext_resource type="Resource" uid="uid://b1dg4hcevkwm0" path="res://spells/action/push/push_spell_definition.tres" id="11_a1qjk"]
+[ext_resource type="Texture2D" uid="uid://dr7ad5nnv315m" path="res://ui/icons/TWD_saxum.png" id="11_wbbrj"]
 [ext_resource type="Resource" uid="uid://k3fvqn6s44nu" path="res://spells/attack/magic_arrow/magic_arrow_definition.tres" id="12_j3ovn"]
+[ext_resource type="Texture2D" uid="uid://dqe4v5rbpdits" path="res://ui/icons/TWD_charta.png" id="12_m1mwl"]
 [ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="13_health"]
 [ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="14_receiver"]
 [ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="15_damage"]
@@ -727,7 +730,7 @@ jump_velocity = -1000.0
 script = ExtResource("3_horizontal")
 deceleration = 2000.0
 
-[node name="RigidBodyPush" type="Node" parent="." node_paths=PackedStringArray("character")]
+[node name="RigidBodyPush" type="Node" parent="." unique_id=1539834805 node_paths=PackedStringArray("character")]
 script = ExtResource("20_rigid_body_push")
 character = NodePath("..")
 impulse_factor = 0.1
@@ -742,7 +745,7 @@ wait_time = 0.12
 one_shot = true
 script = ExtResource("5_jump_buffer")
 
-[node name="JumpDown" type="Node" parent="." node_paths=PackedStringArray("body")]
+[node name="JumpDown" type="Node" parent="." unique_id=1290939001 node_paths=PackedStringArray("body")]
 script = ExtResource("23_jump_down")
 body = NodePath("..")
 
@@ -755,8 +758,12 @@ script = ExtResource("17_knockback")
 body = NodePath("..")
 
 [node name="SequenceUI" parent="." unique_id=444228689 node_paths=PackedStringArray("sequence_caster") instance=ExtResource("2_7thud")]
-position = Vector2(-12.333333, -50.666664)
+position = Vector2(0, -29.666668)
+scale = Vector2(0.5, 0.5)
 sequence_caster = NodePath("../SequenceCaster")
+attack_icon = ExtResource("10_5qbdv")
+interaction_icon = ExtResource("11_wbbrj")
+move_icon = ExtResource("12_m1mwl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=379381558]
 texture_filter = 1
@@ -770,7 +777,7 @@ shape = SubResource("RectangleShape2D_qlg0r")
 
 [node name="SpellOrigin" type="Marker2D" parent="." unique_id=473722362]
 
-[node name="AimInput" type="Node" parent="."]
+[node name="AimInput" type="Node" parent="." unique_id=63398163]
 script = ExtResource("21_aim_input")
 
 [node name="SequenceCaster" type="Node" parent="." unique_id=788599091 node_paths=PackedStringArray("caster", "spell_origin", "effect_parent", "projectile_aim")]
@@ -829,9 +836,8 @@ shape = SubResource("RectangleShape2D_qlg0r")
 script = ExtResource("19_push_reaction")
 knockback = NodePath("../../Knockback")
 
-[node name="PlayerHudLayer" type="CanvasLayer" parent="."]
-layer = 1
+[node name="PlayerHudLayer" type="CanvasLayer" parent="." unique_id=1570350129]
 
-[node name="PlayerHud" parent="PlayerHudLayer" node_paths=PackedStringArray("health", "cooldowns") instance=ExtResource("22_player_hud")]
+[node name="PlayerHud" parent="PlayerHudLayer" unique_id=589008531 node_paths=PackedStringArray("health", "cooldowns") instance=ExtResource("22_player_hud")]
 health = NodePath("../../Health")
 cooldowns = NodePath("../../SpellCooldowns")

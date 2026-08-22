@@ -10,24 +10,24 @@ var context: SpellContext
 
 
 func execute(new_context: SpellContext) -> void:
-    context = new_context
-    _execute()
+	context = new_context
+	_execute()
 
 
 func _execute() -> void:
-    push_error("SpellCommand::_execute() must be overridden in subclasses.")
-    fail(&"not_implemented")
+	push_error("SpellCommand::_execute() must be overridden in subclasses.")
+	fail(&"not_implemented")
 
 
 func complete() -> void:
-    finished.emit()
-    queue_free()
+	finished.emit()
+	queue_free()
 
 
 func fail(reason: StringName) -> void:
-    failed.emit(self, reason)
-    queue_free()
+	failed.emit(self, reason)
+	queue_free()
 
 
 func cancel() -> void:
-    fail(&"cancelled")
+	fail(&"cancelled")

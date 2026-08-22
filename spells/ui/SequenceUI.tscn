@@ -13,13 +13,24 @@ move_icon = ExtResource("4_yxu60")
 
 [node name="SequenceContainer" type="HBoxContainer" parent="." unique_id=380409138]
 texture_filter = 1
-offset_right = 40.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -48.0
+offset_right = 48.0
 offset_bottom = 40.0
+grow_horizontal = 2
+alignment = 1
 
 [node name="TimeoutBar" type="ProgressBar" parent="." unique_id=1725836371]
 texture_filter = 1
-offset_right = 33.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.5
+offset_right = 16.5
 offset_bottom = 6.0
+grow_horizontal = 2
 max_value = 1.0
 value = 1.0
 show_percentage = false
