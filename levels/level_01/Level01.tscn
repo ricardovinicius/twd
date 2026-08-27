@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" path="res://entities/interactive/lever/Lever.tscn" id="11_lever"]
 [ext_resource type="PackedScene" uid="uid://c4iwhpprq4xb5" path="res://entities/interactive/door/Door.tscn" id="12_door"]
 [ext_resource type="Script" uid="uid://kqq5ql8icjqo" path="res://entities/interactive/door/door_controller.gd" id="15_6aend"]
+[ext_resource type="PackedScene" uid="uid://ly5pn5ri2yxo" path="res://node_3d.tscn" id="16_uld3a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b3jm5"]
 texture = ExtResource("1_thp0t")
@@ -685,6 +686,34 @@ sources/2 = SubResource("TileSetAtlasSource_anxy3")
 
 [node name="LevelRoot" type="Node2D" unique_id=39161027]
 
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1070818621]
+offset_left = -446.0
+offset_top = 193.0
+offset_right = 833.0
+offset_bottom = 918.0
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1820475664]
+handle_input_locally = false
+size = Vector2i(1279, 725)
+render_target_update_mode = 4
+
+[node name="Node3D" parent="SubViewportContainer/SubViewport" unique_id=1593389714 node_paths=PackedStringArray("camera_2d", "camera_3d") instance=ExtResource("16_uld3a")]
+camera_2d = NodePath("../../../Player/Camera2D")
+camera_3d = NodePath("Camera3D")
+
+[node name="Cube_004" parent="SubViewportContainer/SubViewport/Node3D" index="0" unique_id=937849545]
+transform = Transform3D(0.11667153, 0, 0.109880574, 0, 0.676, 0, -0.48619723, 0, 0.026367767, 1.458996, 0.48723686, -5.275502)
+
+[node name="Prateleira test" parent="SubViewportContainer/SubViewport/Node3D" index="2" unique_id=295670379]
+transform = Transform3D(0.2806114, 0, 0.4138324, 0, 0.5, 0, -0.4138324, 0, 0.2806114, 2.408003, 0.35320425, -5.4796915)
+
+[node name="Camera3D" parent="SubViewportContainer/SubViewport/Node3D" index="3" unique_id=2087540423]
+transform = Transform3D(-0.9975641, 0, 0.06975647, 0, 1, 0, -0.06975647, 0, -0.9975641, 2.332188, 0.36572504, -8.9637785)
+projection = 1
+size = 5.545
+
 [node name="TileMapFundo1" type="TileMapLayer" parent="." unique_id=1875558897]
 texture_filter = 1
 position = Vector2(1, 0)
@@ -797,6 +826,7 @@ position = Vector2(5182, 1306)
 node_a = NodePath("")
 node_b = NodePath("")
 
+[editable path="SubViewportContainer/SubViewport/Node3D"]
 [editable path="Lever_2"]
 [editable path="Door_2"]
 [editable path="Door_3"]

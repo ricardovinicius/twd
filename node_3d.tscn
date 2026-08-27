@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://ly5pn5ri2yxo"]
 
 [ext_resource type="PackedScene" uid="uid://8uvwor13duq1" path="res://assets/3Dmodels/Background/Prateleira test.glb" id="1_a202f"]
+[ext_resource type="Script" uid="uid://bnl8ah57g4d5y" path="res://3d_to_2d_camera.gd" id="1_jka67"]
 [ext_resource type="Texture2D" uid="uid://dm3mmrwk8wjl6" path="res://assets/3Dmodels/Background/Prateleira test_Sprite-0004.png" id="2_a0tk4"]
 [ext_resource type="Shader" uid="uid://b8ivs7fgt4vs4" path="res://post_processing.gdshader" id="2_noarx"]
 [ext_resource type="Shader" uid="uid://chetxitl0lnb" path="res://default_object.gdshader" id="3_a0tk4"]
@@ -62,10 +63,7 @@ flip_faces = true
 size = Vector2(2, 2)
 
 [node name="Node3D" type="Node3D" unique_id=1593389714]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1068746348]
-transform = Transform3D(0.7074653, 0, 0, 0, 0.510181, -0.4901249, 0, 0.4901249, 0.51018107, -3.2424192, 0.991773, -2.4535797)
-shadow_enabled = true
+script = ExtResource("1_jka67")
 
 [node name="Cube_004" type="MeshInstance3D" parent="." unique_id=937849545]
 transform = Transform3D(0.23334306, 0, 0.21917711, 0, 1.3524342, 0, -0.9723944, 0, 0.052595377, 0.4463346, 0.016929507, -2.0144103)
@@ -81,3 +79,7 @@ mesh = SubResource("QuadMesh_ik31s")
 
 [node name="Prateleira test" parent="." unique_id=295670379 instance=ExtResource("1_a202f")]
 transform = Transform3D(0.5612228, 0, 0.8276648, 0, 1, 0, -0.8276648, 0, 0.5612228, 2.408003, 0.35320425, -3.0127575)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2087540423]
+transform = Transform3D(-0.9975641, 0, 0.06975647, 0, 1, 0, -0.06975647, 0, -0.9975641, 2.1968167, 0.36572504, -8.9637785)
+fov = 50.0
