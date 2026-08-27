@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://chuh85ml5k8s7"]
+
+[ext_resource type="Script" uid="uid://cx5pkub82pp3c" path="res://item.gd" id="1_1udq6"]
+[ext_resource type="Resource" uid="uid://xk70q4op8aj3" path="res://entities/items/definitions/regular_ring.tres" id="2_ws221"]
+[ext_resource type="Texture2D" uid="uid://82airhvyl0ix" path="res://collective/place_holder_stardust.webp" id="3_axysc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tmrnw"]
+size = Vector2(23, 22)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ws221"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_axysc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Item" type="Area2D" unique_id=2075180168]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_1udq6")
+item_definition = ExtResource("2_ws221")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1881371334]
+position = Vector2(-0.5, -1)
+shape = SubResource("RectangleShape2D_tmrnw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=301585514]
+scale = Vector2(0.027960528, 0.027960524)
+sprite_frames = SubResource("SpriteFrames_ws221")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

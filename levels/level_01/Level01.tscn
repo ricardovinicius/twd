@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://c4iwhpprq4xb5" path="res://entities/interactive/door/Door.tscn" id="12_door"]
 [ext_resource type="Script" uid="uid://kqq5ql8icjqo" path="res://entities/interactive/door/door_controller.gd" id="15_6aend"]
 [ext_resource type="Script" uid="uid://dlo81gifjljid" path="res://entities/manager/enemy_manager.gd" id="16_n4hfu"]
+[ext_resource type="PackedScene" uid="uid://chuh85ml5k8s7" path="res://entities/items/definitions/item.tscn" id="18_6qj1r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b3jm5"]
 texture = ExtResource("1_thp0t")
@@ -715,20 +716,21 @@ collision_mask = 7
 script = ExtResource("9_uld3a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="checkpoint" unique_id=386619942]
-position = Vector2(1244.5, 982)
+position = Vector2(94.5, 3187)
 shape = SubResource("RectangleShape2D_6aend")
 
 [node name="Marker2D" type="Marker2D" parent="checkpoint" unique_id=1718514267]
-position = Vector2(1245, 982)
+position = Vector2(95, 3187)
 
 [node name="ColorRect" type="ColorRect" parent="checkpoint" unique_id=1701746993]
-offset_left = 1207.0
-offset_top = 952.0
-offset_right = 1282.0
-offset_bottom = 1013.0
+offset_left = 57.0
+offset_top = 3157.0
+offset_right = 132.0
+offset_bottom = 3218.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." unique_id=599257793 instance=ExtResource("3_dm0pi")]
-position = Vector2(189, 579)
+position = Vector2(198, 583)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1177485573]
 offset = Vector2(0, -20)
@@ -740,6 +742,10 @@ position_smoothing_speed = 20.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_top_margin = 0.8
+
+[node name="Item" parent="." unique_id=2075180168 instance=ExtResource("18_6qj1r")]
+position = Vector2(1057, 975)
+collision_layer = 5
 
 [node name="Lever_2" parent="." unique_id=1189508911 instance=ExtResource("11_lever")]
 position = Vector2(5371, 1778)

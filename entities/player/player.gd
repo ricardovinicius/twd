@@ -11,6 +11,7 @@ extends CharacterBody2D
 @onready var knockback: KnockbackComponent = $Knockback
 @onready var rigid_body_push: CharacterRigidBodyPushComponent = $RigidBodyPush
 @onready var health: Health = $Health
+@onready var inventory: Inventory = $Inventory
 
 @export var jump_velocity = -1050.0
 @export var facing_direction: Vector2 = Vector2.RIGHT
@@ -255,6 +256,10 @@ func _cancel_dash() -> void:
 # ============================================================
 # CHECKPOINT
 # ============================================================
+
+func collect_item(item: ItemDefinition, amount: int = 1) -> void:
+	inventory.add_item(item, amount)
+	Events.item_collected.emit(item, inventory.get_quantity(item))
 
 func set_checkpoint(pos: Vector2) -> void:
 	checkpoint_position = pos
