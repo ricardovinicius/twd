@@ -10,11 +10,13 @@
 [ext_resource type="PackedScene" uid="uid://c07v06tcl5mos" path="res://entities/items/BottleTriangle.tscn" id="5_aqob7"]
 [ext_resource type="Texture2D" uid="uid://dqj25qt1gdarj" path="res://assets/tilemap/destructive_block_2.png" id="6_qu0in"]
 [ext_resource type="Texture2D" uid="uid://cwct6cm77rk3i" path="res://assets/tilemap/chandelier.png" id="8_6aend"]
+[ext_resource type="Script" uid="uid://ughfcn5adrqx" path="res://levels/level_01/checkpoint.gd" id="9_uld3a"]
 [ext_resource type="PackedScene" uid="uid://voymbcvjwcmq" path="res://entities/items/BottleLine.tscn" id="10_5dpqp"]
 [ext_resource type="PackedScene" uid="uid://cgaihek5qxa15" path="res://entities/enemies/basic_skeleton/BasicSkeleton.tscn" id="10_upmp1"]
 [ext_resource type="PackedScene" path="res://entities/interactive/lever/Lever.tscn" id="11_lever"]
 [ext_resource type="PackedScene" uid="uid://c4iwhpprq4xb5" path="res://entities/interactive/door/Door.tscn" id="12_door"]
 [ext_resource type="Script" uid="uid://kqq5ql8icjqo" path="res://entities/interactive/door/door_controller.gd" id="15_6aend"]
+[ext_resource type="Script" uid="uid://dlo81gifjljid" path="res://entities/manager/enemy_manager.gd" id="16_n4hfu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b3jm5"]
 texture = ExtResource("1_thp0t")
@@ -683,6 +685,9 @@ sources/0 = SubResource("TileSetAtlasSource_ng00s")
 sources/1 = SubResource("TileSetAtlasSource_ehlne")
 sources/2 = SubResource("TileSetAtlasSource_anxy3")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6aend"]
+size = Vector2(73, 60)
+
 [node name="LevelRoot" type="Node2D" unique_id=39161027]
 
 [node name="TileMapFundo1" type="TileMapLayer" parent="." unique_id=1875558897]
@@ -703,6 +708,24 @@ texture_filter = 1
 scale = Vector2(3, 3)
 tile_map_data = PackedByteArray("AADx/xIAAgAAAAAAAADx/xMAAgAAAAEAAADx/xQAAgAAAAIAAADx/xUAAgAAAAMAAADy/xIAAgABAAAAAADy/xMAAgABAAEAAADy/xQAAgABAAIAAADy/xUAAgABAAMAAAA=")
 tile_set = SubResource("TileSet_ticvn")
+
+[node name="checkpoint" type="Area2D" parent="." unique_id=1649291570]
+collision_layer = 5
+collision_mask = 7
+script = ExtResource("9_uld3a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="checkpoint" unique_id=386619942]
+position = Vector2(1244.5, 982)
+shape = SubResource("RectangleShape2D_6aend")
+
+[node name="Marker2D" type="Marker2D" parent="checkpoint" unique_id=1718514267]
+position = Vector2(1245, 982)
+
+[node name="ColorRect" type="ColorRect" parent="checkpoint" unique_id=1701746993]
+offset_left = 1207.0
+offset_top = 952.0
+offset_right = 1282.0
+offset_bottom = 1013.0
 
 [node name="Player" parent="." unique_id=599257793 instance=ExtResource("3_dm0pi")]
 position = Vector2(189, 579)
@@ -745,30 +768,6 @@ position = Vector2(5281, 654)
 [node name="BottleLine2" parent="." unique_id=1069525285 instance=ExtResource("10_5dpqp")]
 position = Vector2(5345, 639)
 
-[node name="BasicMob" parent="." unique_id=807228014 instance=ExtResource("10_upmp1")]
-position = Vector2(-562, 946)
-collision_mask = 5
-
-[node name="BasicMob2" parent="." unique_id=1482072956 instance=ExtResource("10_upmp1")]
-position = Vector2(3503.0002, 1732.0001)
-collision_mask = 5
-
-[node name="BasicMob3" parent="." unique_id=567108536 instance=ExtResource("10_upmp1")]
-position = Vector2(1442, 1735.0001)
-collision_mask = 5
-
-[node name="BasicMob4" parent="." unique_id=705642612 instance=ExtResource("10_upmp1")]
-position = Vector2(2414, 1533)
-collision_mask = 5
-
-[node name="BasicMob5" parent="." unique_id=1826279901 instance=ExtResource("10_upmp1")]
-position = Vector2(2977, 1733.0001)
-collision_mask = 5
-
-[node name="BasicMob6" parent="." unique_id=39197674 instance=ExtResource("10_upmp1")]
-position = Vector2(672, 1736)
-collision_mask = 5
-
 [node name="DoorController" type="Node2D" parent="." unique_id=1932270721]
 script = ExtResource("15_6aend")
 metadata/_custom_type_script = "uid://kqq5ql8icjqo"
@@ -796,6 +795,36 @@ position = Vector2(5182, 1306)
 [node name="PivotJoint" parent="Lever_4" index="3"]
 node_a = NodePath("")
 node_b = NodePath("")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1668798102]
+script = ExtResource("16_n4hfu")
+
+[node name="BasicMob" parent="Node2D" unique_id=807228014 instance=ExtResource("10_upmp1")]
+position = Vector2(-562, 946)
+collision_mask = 5
+
+[node name="BasicMob2" parent="Node2D" unique_id=1482072956 instance=ExtResource("10_upmp1")]
+position = Vector2(3503.0002, 1732.0001)
+collision_mask = 5
+
+[node name="BasicMob3" parent="Node2D" unique_id=567108536 instance=ExtResource("10_upmp1")]
+position = Vector2(1442, 1735.0001)
+collision_mask = 5
+
+[node name="BasicMob4" parent="Node2D" unique_id=705642612 instance=ExtResource("10_upmp1")]
+position = Vector2(2414, 1533)
+collision_mask = 5
+
+[node name="BasicMob5" parent="Node2D" unique_id=1826279901 instance=ExtResource("10_upmp1")]
+position = Vector2(2977, 1733.0001)
+collision_mask = 5
+
+[node name="BasicMob6" parent="Node2D" unique_id=39197674 instance=ExtResource("10_upmp1")]
+position = Vector2(672, 1736)
+collision_mask = 5
+
+[connection signal="body_entered" from="checkpoint" to="checkpoint" method="_on_body_entered"]
+[connection signal="body_exited" from="checkpoint" to="checkpoint" method="_on_body_exited"]
 
 [editable path="Lever_2"]
 [editable path="Door_2"]
