@@ -1,0 +1,83 @@
+[gd_scene format=4 uid="uid://ly5pn5ri2yxo"]
+
+[ext_resource type="PackedScene" uid="uid://8uvwor13duq1" path="res://assets/3Dmodels/Background/Prateleira test.glb" id="1_a202f"]
+[ext_resource type="Texture2D" uid="uid://dm3mmrwk8wjl6" path="res://assets/3Dmodels/Background/Prateleira test_Sprite-0004.png" id="2_a0tk4"]
+[ext_resource type="Shader" uid="uid://b8ivs7fgt4vs4" path="res://post_processing.gdshader" id="2_noarx"]
+[ext_resource type="Shader" uid="uid://chetxitl0lnb" path="res://default_object.gdshader" id="3_a0tk4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r3fl7"]
+render_priority = 0
+shader = ExtResource("3_a0tk4")
+shader_parameter/textura_albedo = ExtResource("2_a0tk4")
+shader_parameter/vertex_wobble = 0.1999999955296
+shader_parameter/affine_mapping = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x1b24"]
+resource_name = "Material.002"
+cull_mode = 2
+shading_mode = 0
+albedo_texture = ExtResource("2_a0tk4")
+texture_filter = 2
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_jka67"]
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAACAAEAAwAEAAEABQAAAAIAAwAAAAUABAAGAAIABQACAAYAAwAHAAQAAwAFAAcABwAGAAQABwAFAAYA"),
+"name": "Material.002",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("AAAAAP//AAAAAP//AAAAAAAA/////wAAAAAAAAAAAAD/////AAAAAP//AAD//wAA////////AAD//wAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_i5arm"]
+resource_name = "Prateleira test_Cube_005"
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("/1////+f/7//n////1//vxb0ef7IDeMAFvTjAMgNef4RHTD/Rws0ABEdNABHCzD//1//P/+fAAD/n/8//18AAP8f/3//X/8//1//f/8f/z9rEiAO7+83Ae/vIA5rEjcB"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_x1b24"),
+"name": "Material.002",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAAP//VNUAAP//AABU1QAA/////1TVAAAAAAAAVNUAAAAAAAD///////8AAP//AAD//wAA/////wAAAAD/////AAAAAP+//////////7//////AAD/v///AAD///+///8AAP///78AAP//////v/////////+/AAAAAP///78AAAAAAAD/v///AAD///+///8AAAAA/78AAAAA////v/////8AAP//AAD///////8AAP//AAD/////////////VNVU1VTVVNVU1VTVVNVU1f9//v//f/7//3/+//9//v//fwAA/38AAP9/AAD/fwAA/////////////////////wAA/38AAP9/AAD/fwAA/3//f/+//3//v/9//7//f/+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_jka67")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ticvn"]
+render_priority = 0
+shader = ExtResource("2_noarx")
+shader_parameter/dither_amount = 0.5
+
+[sub_resource type="QuadMesh" id="QuadMesh_ik31s"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[node name="Node3D" type="Node3D" unique_id=1593389714]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1068746348]
+transform = Transform3D(0.7074653, 0, 0, 0, 0.510181, -0.4901249, 0, 0.4901249, 0.51018107, -3.2424192, 0.991773, -2.4535797)
+shadow_enabled = true
+
+[node name="Cube_004" type="MeshInstance3D" parent="." unique_id=937849545]
+transform = Transform3D(0.23334306, 0, 0.21917711, 0, 1.3524342, 0, -0.9723944, 0, 0.052595377, 0.4463346, 0.016929507, -2.0144103)
+material_override = SubResource("ShaderMaterial_r3fl7")
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_i5arm")
+
+[node name="ScreenQuad" type="MeshInstance3D" parent="." unique_id=726737305]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2620195, 0, 0)
+material_override = SubResource("ShaderMaterial_ticvn")
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_ik31s")
+
+[node name="Prateleira test" parent="." unique_id=295670379 instance=ExtResource("1_a202f")]
+transform = Transform3D(0.5612228, 0, 0.8276648, 0, 1, 0, -0.8276648, 0, 0.5612228, 2.408003, 0.35320425, -3.0127575)
