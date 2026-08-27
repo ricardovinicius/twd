@@ -1,67 +1,69 @@
-[gd_scene format=3 uid="uid://dmn3yv2xxshoq"]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" uid="uid://d4apmta7bd8t1" path="res://spells/ui/spell_registry_debug_ui.gd" id="1_script"]
+[ext_resource type="Script" path="res://spells/ui/spell_registry_debug_ui.gd" id="1_script"]
 
-[node name="SpellRegistryDebugUI" type="VBoxContainer" unique_id=1320499550]
+[node name="SpellRegistryDebugUI" type="VBoxContainer"]
 custom_minimum_size = Vector2(720, 390)
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 1
 theme_override_constants/separation = 8
 script = ExtResource("1_script")
 
-[node name="Title" type="Label" parent="." unique_id=1037250806]
+[node name="Title" type="Label" parent="."]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Spell Registry"
 horizontal_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="." unique_id=57935194]
+[node name="StatusLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Changes apply immediately to the player."
 horizontal_alignment = 1
 
-[node name="Columns" type="HBoxContainer" parent="." unique_id=81317869]
+[node name="Columns" type="HBoxContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="CataloguedColumn" type="VBoxContainer" parent="Columns" unique_id=439267213]
+[node name="CataloguedColumn" type="VBoxContainer" parent="Columns"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
 
-[node name="Heading" type="Label" parent="Columns/CataloguedColumn" unique_id=1013323860]
+[node name="Heading" type="Label" parent="Columns/CataloguedColumn"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 17
 text = "Catalogued Spells"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Columns/CataloguedColumn" unique_id=1644859954]
+[node name="ScrollContainer" type="ScrollContainer" parent="Columns/CataloguedColumn"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="CataloguedSpellList" type="VBoxContainer" parent="Columns/CataloguedColumn/ScrollContainer" unique_id=97131871]
+[node name="CataloguedSpellList" type="VBoxContainer" parent="Columns/CataloguedColumn/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RegisteredColumn" type="VBoxContainer" parent="Columns" unique_id=2134216]
+[node name="RegisteredColumn" type="VBoxContainer" parent="Columns"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
 
-[node name="Heading" type="Label" parent="Columns/RegisteredColumn" unique_id=1998749537]
+[node name="Heading" type="Label" parent="Columns/RegisteredColumn"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 17
 text = "Registered Spells"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Columns/RegisteredColumn" unique_id=1547860271]
+[node name="ScrollContainer" type="ScrollContainer" parent="Columns/RegisteredColumn"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="RegisteredSpellList" type="VBoxContainer" parent="Columns/RegisteredColumn/ScrollContainer" unique_id=228751623]
+[node name="RegisteredSpellList" type="VBoxContainer" parent="Columns/RegisteredColumn/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
