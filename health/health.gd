@@ -12,27 +12,31 @@ var current: float
 
 
 func _ready() -> void:
-    current = maximum
+	current = maximum
 
 
 func take_damage(amount: float) -> float:
-    if amount <= 0.0 or is_depleted():
-        return 0.0
+	if amount <= 0.0 or is_depleted():
+		return 0.0
 
-    var previous := current
+	var previous := current
 
-    current = maxf(current - amount, 0.0)
+	current = maxf(current - amount, 0.0)
 
-    var applied_damage := previous - current
+	var applied_damage := previous - current
 
-    damaged.emit(applied_damage)
-    changed.emit(current, maximum)
+	damaged.emit(applied_damage)
+	changed.emit(current, maximum)
 
-    if is_depleted():
-        depleted.emit()
+	if is_depleted():
+		depleted.emit()
 
-    return applied_damage
+	return applied_damage
 
 
 func is_depleted() -> bool:
-    return current <= 0.0
+	return current <= 0.0
+
+func reset() -> void:
+	current = maximum
+	changed.emit(current, maximum)

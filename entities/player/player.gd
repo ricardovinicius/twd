@@ -1,4 +1,5 @@
 extends CharacterBody2D
+
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var horizontal_movement: HorizontalMovementComponent = $HorizontalMovement
 @onready var coyote_time: CoyoteTimeComponent = $CoyoteTimer
@@ -10,6 +11,7 @@ extends CharacterBody2D
 @onready var knockback: KnockbackComponent = $Knockback
 @onready var rigid_body_push: CharacterRigidBodyPushComponent = $RigidBodyPush
 @onready var health: Health = $Health
+@onready var inventory: Inventory = $Inventory
 
 @export var jump_velocity = -1050.0
 @export var facing_direction: Vector2 = Vector2.RIGHT
@@ -20,9 +22,26 @@ var dash_speed: float = 0.0
 var _is_playing_hit_animation: bool = false
 var _dash_generation: int = 0
 
+# Posição inicial do jogador
+var spawn_point: Vector2
+
+# Posição do último checkpoint ativado
+var checkpoint_position: Vector2
+
+var has_checkpoint: bool = false
+
 
 func _ready() -> void:
+	# Guarda a posição inicial do Player
+	spawn_point = global_position
+	checkpoint_position = spawn_point
+	has_checkpoint = false
+
+	print("PLAYER _READY")
+	print("SPAWN INICIAL: ", spawn_point)
+
 	health.damaged.connect(_on_health_damaged)
+	health.depleted.connect(_on_health_depleted)
 	animated_sprite_2d.animation_finished.connect(_on_animation_finished)
 
 
@@ -43,8 +62,6 @@ func _physics_process(delta: float) -> void:
 
 	coyote_time.update_floor_state(was_on_floor, is_on_floor())
 
-	# Floor contact is refreshed by move_and_slide(), so check again to consume
-	# a buffered jump on the exact frame the player lands.
 	if not is_dashing and not is_being_knocked_back:
 		_try_jump()
 
@@ -52,7 +69,6 @@ func _physics_process(delta: float) -> void:
 func _apply_normal_movement(delta: float) -> void:
 	_update_movement_animation()
 
-	# Add the gravity.
 	if not is_on_floor():
 		velocity = gravity.calculate_velocity(
 			velocity,
@@ -62,9 +78,8 @@ func _apply_normal_movement(delta: float) -> void:
 
 	_try_jump()
 
-
-	# Get the input direction and handle the movement/deceleration.
 	var direction := Input.get_axis("left", "right")
+
 	if direction:
 		facing_direction = Vector2(direction, 0.0)
 
@@ -97,8 +112,6 @@ func _try_jump() -> void:
 	coyote_time.consume_jump()
 	_play_animation(&"jump")
 
-	# A buffered tap should still produce a short jump if it was released
-	# before the player became able to jump.
 	if not Input.is_action_pressed("jump"):
 		velocity.y = variable_jump_height.cut_jump(velocity.y)
 
@@ -116,9 +129,8 @@ func _handle_jump_input() -> void:
 
 
 func _apply_dash_movement() -> void:
-	# During dash, we don't apply gravity or normal movement.
 	velocity = dash_direction * dash_speed
-	velocity.y = 0  # Ensure no vertical movement during dash
+	velocity.y = 0
 
 	_play_animation(&"jump")
 	_move_and_slide_with_rigid_body_push()
@@ -181,6 +193,14 @@ func _on_health_damaged(amount: float) -> void:
 	_play_hit_animation(true)
 
 
+func _on_health_depleted() -> void:
+	print("PLAYER MORREU")
+
+	Events.player_died.emit()
+
+	spawn_player()
+
+
 func _on_animation_finished() -> void:
 	if animated_sprite_2d.animation == &"hit":
 		_is_playing_hit_animation = false
@@ -220,7 +240,7 @@ func begin_dash(direction: Vector2, speed: float, duration: float) -> void:
 		return
 
 	is_dashing = false
-	velocity.x = 0  # Stop horizontal movement after dash
+	velocity.x = 0
 
 
 func _cancel_dash() -> void:
@@ -231,3 +251,40 @@ func _cancel_dash() -> void:
 	is_dashing = false
 	dash_direction = Vector2.ZERO
 	dash_speed = 0.0
+
+
+# ============================================================
+# CHECKPOINT
+# ============================================================
+
+func collect_item(item: ItemDefinition, amount: int = 1) -> void:
+	inventory.add_item(item, amount)
+	Events.item_collected.emit(item, inventory.get_quantity(item))
+
+func set_checkpoint(pos: Vector2) -> void:
+	checkpoint_position = pos
+	has_checkpoint = true
+
+	print("CHECKPOINT SALVO EM: ", checkpoint_position)
+
+
+func spawn_player() -> void:
+	print("RESPAWNANDO...")
+
+	if has_checkpoint:
+		print("VOLTANDO PARA CHECKPOINT: ", checkpoint_position)
+		global_position = checkpoint_position
+	else:
+		print("NENHUM CHECKPOINT. VOLTANDO PARA SPAWN INICIAL: ", spawn_point)
+		global_position = spawn_point
+
+	velocity = Vector2.ZERO
+
+	health.reset()
+
+	var camera := $Camera2D as Camera2D
+
+	if camera:
+		camera.reset_smoothing()
+
+	print("PLAYER AGORA ESTÁ EM: ", global_position)

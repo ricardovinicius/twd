@@ -2,24 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dm3mmrwk8wjl6"
-path.s3tc="res://.godot/imported/Prateleira test_Sprite-0004.png-2007bfcfc903e8d72ebf36025a15a77c.s3tc.ctex"
+uid="uid://82airhvyl0ix"
+path="res://.godot/imported/place_holder_stardust.webp-22542f5273a30d1e50ce8218fd8a1691.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
-}
-generator_parameters={
-"md5": "fd3c5a15b89a0dcdefad0c8371b442f8"
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/3Dmodels/Background/Prateleira test_Sprite-0004.png"
-dest_files=["res://.godot/imported/Prateleira test_Sprite-0004.png-2007bfcfc903e8d72ebf36025a15a77c.s3tc.ctex"]
+source_file="res://collective/place_holder_stardust.webp"
+dest_files=["res://.godot/imported/place_holder_stardust.webp-22542f5273a30d1e50ce8218fd8a1691.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -27,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -41,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1
