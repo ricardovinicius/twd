@@ -146,7 +146,6 @@ script = ExtResource("2_05uyy")
 modulate = Color(1, 1, 1, 0)
 material = SubResource("ShaderMaterial_4g4vn")
 layout_mode = 0
-anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -155,7 +154,6 @@ grow_vertical = 2
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1986551868]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -175,7 +173,7 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "resume"
 
-[node name="SpellRegistryButton" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="SpellRegistryButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1596770547]
 unique_name_in_owner = true
 layout_mode = 2
 text = "spell registry"
@@ -188,11 +186,10 @@ text = "restart"
 layout_mode = 2
 text = "quit"
 
-[node name="SpellRegistryWindow" type="PanelContainer" parent="."]
+[node name="SpellRegistryWindow" type="PanelContainer" parent="." unique_id=134122481]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
-anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -204,25 +201,24 @@ offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="SpellRegistryWindow"]
+[node name="MarginContainer" type="MarginContainer" parent="SpellRegistryWindow" unique_id=1645367650]
 layout_mode = 2
 theme_override_constants/margin_left = 18
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 18
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SpellRegistryWindow/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SpellRegistryWindow/MarginContainer" unique_id=1661502953]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="SpellRegistryDebugUI" parent="SpellRegistryWindow/MarginContainer/VBoxContainer" instance=ExtResource("3_spell_registry")]
+[node name="SpellRegistryDebugUI" parent="SpellRegistryWindow/MarginContainer/VBoxContainer" unique_id=1571176196 instance=ExtResource("3_spell_registry")]
 unique_name_in_owner = true
+
+[node name="HSeparator" type="HSeparator" parent="SpellRegistryWindow/MarginContainer/VBoxContainer" unique_id=1936515302]
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="SpellRegistryWindow/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CloseSpellRegistry" type="Button" parent="SpellRegistryWindow/MarginContainer/VBoxContainer"]
+[node name="CloseSpellRegistry" type="Button" parent="SpellRegistryWindow/MarginContainer/VBoxContainer" unique_id=1640381212]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 42)
 layout_mode = 2

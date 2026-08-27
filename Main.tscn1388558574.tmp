@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://155xx7s6y6ta"]
 
 [ext_resource type="PackedScene" uid="uid://6uw7wsvlc7y2" path="res://levels/level_01/Level01.tscn" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://dioi0bgwchvn6" path="res://select_menu.gd" id="3_fos0i"]
 [ext_resource type="PackedScene" uid="uid://byp0dycr0lg5s" path="res://ui/pause_menu/PauseMenu.tscn" id="3_pause_menu"]
 [ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://collective/coin.tscn" id="4_cm0pq"]
 [ext_resource type="Script" uid="uid://dj6eyinmd4aea" path="res://collective/label.gd" id="4_fos0i"]
-[ext_resource type="PackedScene" uid="uid://8xl8jaiae467" path="res://ui/select_menu/select.tscn" id="5_fos0i"]
 
 [node name="Main" type="Node2D" unique_id=1783851588]
 process_mode = 1
@@ -19,6 +19,15 @@ layer = 10
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=1613493885 instance=ExtResource("3_pause_menu")]
 metadata/_edit_use_anchors_ = true
 
+[node name="SelectMenuLayer" type="CanvasLayer" parent="." unique_id=838513715]
+
+[node name="SelectMenu" type="Control" parent="SelectMenuLayer" unique_id=2103332282]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_fos0i")
+
 [node name="coin" type="Node2D" parent="." unique_id=353597701]
 
 [node name="coin" parent="coin" unique_id=2125175977 instance=ExtResource("4_cm0pq")]
@@ -32,17 +41,6 @@ position = Vector2(1934, 898)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1364656620]
 
-[node name="Select" parent="CanvasLayer" unique_id=1897178014 instance=ExtResource("5_fos0i")]
-offset_left = -2.0
-offset_top = 3.0
-offset_right = -2.0
-offset_bottom = 3.0
-
-[node name="Button2" type="Button" parent="CanvasLayer/Select" unique_id=1774789516]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-
 [node name="Label" type="Label" parent="CanvasLayer" unique_id=1788065863]
 anchors_preset = 1
 anchor_left = 1.0
@@ -55,5 +53,3 @@ grow_horizontal = 0
 text = "Stardust: 0"
 script = ExtResource("4_fos0i")
 metadata/_edit_use_anchors_ = true
-
-[connection signal="pressed" from="CanvasLayer/Select/Button2" to="CanvasLayer/Select" method="_on_button_2_pressed"]

@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://hs6dswbvecbt"]
+
+[ext_resource type="Script" uid="uid://ctvgcsbihpujx" path="res://collective/coin.gd" id="1_lf8ff"]
+[ext_resource type="Texture2D" uid="uid://82airhvyl0ix" path="res://collective/place_holder_stardust.webp" id="2_ytmkh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mq0e"]
+atlas = ExtResource("2_ytmkh")
+region = Rect2(304, 304, 304, 304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yep6v"]
+atlas = ExtResource("2_ytmkh")
+region = Rect2(608, 304, 304, 304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lf8ff"]
+atlas = ExtResource("2_ytmkh")
+region = Rect2(304, 304, 304, 304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ytmkh"]
+atlas = ExtResource("2_ytmkh")
+region = Rect2(608, 304, 304, 304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h63pn"]
+atlas = ExtResource("2_ytmkh")
+region = Rect2(608, 608, 304, 304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_arlxo"]
+atlas = ExtResource("2_ytmkh")
+region = Rect2(304, 608, 304, 304)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5im18"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mq0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yep6v")
+}],
+"loop": 0,
+"name": &"collected",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lf8ff")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ytmkh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h63pn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_arlxo")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5im18"]
+radius = 17.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qg34q"]
+radius = 163.01227
+
+[node name="coin" type="Area2D" unique_id=2125175977]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_lf8ff")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1215811723]
+scale = Vector2(0.078947365, 0.078947365)
+sprite_frames = SubResource("SpriteFrames_5im18")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1782408853]
+shape = SubResource("CircleShape2D_5im18")
+
+[node name="AttractionArea" type="Area2D" parent="." unique_id=1147007879]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttractionArea" unique_id=151131000]
+shape = SubResource("CircleShape2D_qg34q")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="AttractionArea" to="." method="_on_attraction_area_body_entered"]
