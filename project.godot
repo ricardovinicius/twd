@@ -21,6 +21,10 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="viewport"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 left={
@@ -104,4 +108,17 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+shading/overrides/force_vertex_shading=true
+anti_aliasing/screen_space_roughness_limiter/enabled=false
 2d/snap/snap_2d_transforms_to_pixel=true
+
+[shader_globals]
+
+resolution={
+"type": "vec2",
+"value": Vector2(320, 240)
+}
+color_depth={
+"type": "float",
+"value": 32.0
+}
