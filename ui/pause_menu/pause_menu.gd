@@ -45,9 +45,7 @@ func _toggle_pause() -> void:
 func pause_game() -> void:
 	_show_main_menu()
 	visible = true
-	
 	get_tree().paused = true
-	
 	animation_player.play(&"blur")
 	resume_button.grab_focus()
 
@@ -83,8 +81,7 @@ func _on_restart_pressed() -> void:
 
 
 func _on_quit_pressed() -> void:
-	get_tree().paused = false
-	get_tree().change_scene_to_file("res://Main_menu/main_menu.tscn")
+	get_tree().quit()
 
 
 func _show_main_menu() -> void:
