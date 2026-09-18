@@ -10,12 +10,14 @@
 [ext_resource type="PackedScene" uid="uid://c07v06tcl5mos" path="res://entities/items/BottleTriangle.tscn" id="5_aqob7"]
 [ext_resource type="Texture2D" uid="uid://dqj25qt1gdarj" path="res://assets/tilemap/destructive_block_2.png" id="6_qu0in"]
 [ext_resource type="Texture2D" uid="uid://cwct6cm77rk3i" path="res://assets/tilemap/chandelier.png" id="8_6aend"]
+[ext_resource type="Script" uid="uid://ughfcn5adrqx" path="res://levels/level_01/checkpoint.gd" id="9_uld3a"]
 [ext_resource type="PackedScene" uid="uid://voymbcvjwcmq" path="res://entities/items/BottleLine.tscn" id="10_5dpqp"]
 [ext_resource type="PackedScene" uid="uid://cgaihek5qxa15" path="res://entities/enemies/basic_skeleton/BasicSkeleton.tscn" id="10_upmp1"]
 [ext_resource type="PackedScene" path="res://entities/interactive/lever/Lever.tscn" id="11_lever"]
 [ext_resource type="PackedScene" uid="uid://c4iwhpprq4xb5" path="res://entities/interactive/door/Door.tscn" id="12_door"]
 [ext_resource type="Script" uid="uid://kqq5ql8icjqo" path="res://entities/interactive/door/door_controller.gd" id="15_6aend"]
-[ext_resource type="PackedScene" uid="uid://ly5pn5ri2yxo" path="res://node_3d.tscn" id="16_uld3a"]
+[ext_resource type="Script" uid="uid://dlo81gifjljid" path="res://entities/manager/enemy_manager.gd" id="16_n4hfu"]
+[ext_resource type="PackedScene" uid="uid://chuh85ml5k8s7" path="res://entities/items/definitions/item.tscn" id="18_6qj1r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b3jm5"]
 texture = ExtResource("1_thp0t")
@@ -684,35 +686,10 @@ sources/0 = SubResource("TileSetAtlasSource_ng00s")
 sources/1 = SubResource("TileSetAtlasSource_ehlne")
 sources/2 = SubResource("TileSetAtlasSource_anxy3")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6aend"]
+size = Vector2(73, 60)
+
 [node name="LevelRoot" type="Node2D" unique_id=39161027]
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1070818621]
-offset_left = -446.0
-offset_top = 193.0
-offset_right = 833.0
-offset_bottom = 918.0
-mouse_filter = 2
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1820475664]
-handle_input_locally = false
-size = Vector2i(1279, 725)
-render_target_update_mode = 4
-
-[node name="Node3D" parent="SubViewportContainer/SubViewport" unique_id=1593389714 node_paths=PackedStringArray("camera_2d", "camera_3d") instance=ExtResource("16_uld3a")]
-camera_2d = NodePath("../../../Player/Camera2D")
-camera_3d = NodePath("Camera3D")
-
-[node name="Cube_004" parent="SubViewportContainer/SubViewport/Node3D" index="0" unique_id=937849545]
-transform = Transform3D(0.11667153, 0, 0.109880574, 0, 0.676, 0, -0.48619723, 0, 0.026367767, 1.458996, 0.48723686, -5.275502)
-
-[node name="Prateleira test" parent="SubViewportContainer/SubViewport/Node3D" index="2" unique_id=295670379]
-transform = Transform3D(0.2806114, 0, 0.4138324, 0, 0.5, 0, -0.4138324, 0, 0.2806114, 2.408003, 0.35320425, -5.4796915)
-
-[node name="Camera3D" parent="SubViewportContainer/SubViewport/Node3D" index="3" unique_id=2087540423]
-transform = Transform3D(-0.9975641, 0, 0.06975647, 0, 1, 0, -0.06975647, 0, -0.9975641, 2.332188, 0.36572504, -8.9637785)
-projection = 1
-size = 5.545
 
 [node name="TileMapFundo1" type="TileMapLayer" parent="." unique_id=1875558897]
 texture_filter = 1
@@ -733,8 +710,27 @@ scale = Vector2(3, 3)
 tile_map_data = PackedByteArray("AADx/xIAAgAAAAAAAADx/xMAAgAAAAEAAADx/xQAAgAAAAIAAADx/xUAAgAAAAMAAADy/xIAAgABAAAAAADy/xMAAgABAAEAAADy/xQAAgABAAIAAADy/xUAAgABAAMAAAA=")
 tile_set = SubResource("TileSet_ticvn")
 
+[node name="checkpoint" type="Area2D" parent="." unique_id=1649291570]
+collision_layer = 5
+collision_mask = 7
+script = ExtResource("9_uld3a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="checkpoint" unique_id=386619942]
+position = Vector2(94.5, 3187)
+shape = SubResource("RectangleShape2D_6aend")
+
+[node name="Marker2D" type="Marker2D" parent="checkpoint" unique_id=1718514267]
+position = Vector2(95, 3187)
+
+[node name="ColorRect" type="ColorRect" parent="checkpoint" unique_id=1701746993]
+offset_left = 57.0
+offset_top = 3157.0
+offset_right = 132.0
+offset_bottom = 3218.0
+metadata/_edit_use_anchors_ = true
+
 [node name="Player" parent="." unique_id=599257793 instance=ExtResource("3_dm0pi")]
-position = Vector2(189, 579)
+position = Vector2(198, 583)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1177485573]
 offset = Vector2(0, -20)
@@ -746,6 +742,10 @@ position_smoothing_speed = 20.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_top_margin = 0.8
+
+[node name="Item" parent="." unique_id=2075180168 instance=ExtResource("18_6qj1r")]
+position = Vector2(1057, 975)
+collision_layer = 5
 
 [node name="Lever_2" parent="." unique_id=1189508911 instance=ExtResource("11_lever")]
 position = Vector2(5371, 1778)
@@ -773,30 +773,6 @@ position = Vector2(5281, 654)
 
 [node name="BottleLine2" parent="." unique_id=1069525285 instance=ExtResource("10_5dpqp")]
 position = Vector2(5345, 639)
-
-[node name="BasicMob" parent="." unique_id=807228014 instance=ExtResource("10_upmp1")]
-position = Vector2(-562, 946)
-collision_mask = 5
-
-[node name="BasicMob2" parent="." unique_id=1482072956 instance=ExtResource("10_upmp1")]
-position = Vector2(3503.0002, 1732.0001)
-collision_mask = 5
-
-[node name="BasicMob3" parent="." unique_id=567108536 instance=ExtResource("10_upmp1")]
-position = Vector2(1442, 1735.0001)
-collision_mask = 5
-
-[node name="BasicMob4" parent="." unique_id=705642612 instance=ExtResource("10_upmp1")]
-position = Vector2(2414, 1533)
-collision_mask = 5
-
-[node name="BasicMob5" parent="." unique_id=1826279901 instance=ExtResource("10_upmp1")]
-position = Vector2(2977, 1733.0001)
-collision_mask = 5
-
-[node name="BasicMob6" parent="." unique_id=39197674 instance=ExtResource("10_upmp1")]
-position = Vector2(672, 1736)
-collision_mask = 5
 
 [node name="DoorController" type="Node2D" parent="." unique_id=1932270721]
 script = ExtResource("15_6aend")
@@ -826,7 +802,36 @@ position = Vector2(5182, 1306)
 node_a = NodePath("")
 node_b = NodePath("")
 
-[editable path="SubViewportContainer/SubViewport/Node3D"]
+[node name="Node2D" type="Node2D" parent="." unique_id=1668798102]
+script = ExtResource("16_n4hfu")
+
+[node name="BasicMob" parent="Node2D" unique_id=807228014 instance=ExtResource("10_upmp1")]
+position = Vector2(-562, 946)
+collision_mask = 5
+
+[node name="BasicMob2" parent="Node2D" unique_id=1482072956 instance=ExtResource("10_upmp1")]
+position = Vector2(3503.0002, 1732.0001)
+collision_mask = 5
+
+[node name="BasicMob3" parent="Node2D" unique_id=567108536 instance=ExtResource("10_upmp1")]
+position = Vector2(1442, 1735.0001)
+collision_mask = 5
+
+[node name="BasicMob4" parent="Node2D" unique_id=705642612 instance=ExtResource("10_upmp1")]
+position = Vector2(2414, 1533)
+collision_mask = 5
+
+[node name="BasicMob5" parent="Node2D" unique_id=1826279901 instance=ExtResource("10_upmp1")]
+position = Vector2(2977, 1733.0001)
+collision_mask = 5
+
+[node name="BasicMob6" parent="Node2D" unique_id=39197674 instance=ExtResource("10_upmp1")]
+position = Vector2(672, 1736)
+collision_mask = 5
+
+[connection signal="body_entered" from="checkpoint" to="checkpoint" method="_on_body_entered"]
+[connection signal="body_exited" from="checkpoint" to="checkpoint" method="_on_body_exited"]
+
 [editable path="Lever_2"]
 [editable path="Door_2"]
 [editable path="Door_3"]

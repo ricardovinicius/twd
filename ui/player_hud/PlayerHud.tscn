@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dffa4ttnwtmpx" path="res://ui/player_hud/player_hud.gd" id="1_j2wd1"]
 [ext_resource type="Texture2D" uid="uid://bljaubfwtp4jj" path="res://ui/player_hud/sprites/health_bar_frame.png" id="1_qgh1g"]
 [ext_resource type="PackedScene" path="res://spells/ui/CooldownUI.tscn" id="3_cooldown_ui"]
+[ext_resource type="Script" uid="uid://bd342qffyhv23" path="res://ui/player_hud/item_notification.gd" id="4_4n4mh"]
 
 [sub_resource type="Gradient" id="Gradient_d3s28"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -54,7 +55,7 @@ nine_patch_stretch = true
 texture_under = SubResource("GradientTexture2D_ik31s")
 texture_progress = SubResource("GradientTexture2D_j2wd1")
 
-[node name="CooldownUI" parent="." instance=ExtResource("3_cooldown_ui")]
+[node name="CooldownUI" parent="." unique_id=1289391614 instance=ExtResource("3_cooldown_ui")]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -62,3 +63,24 @@ anchor_right = 1.0
 offset_top = 52.0
 offset_bottom = 100.0
 grow_horizontal = 2
+
+[node name="ItemNotification" type="Control" parent="." unique_id=1407306961]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_4n4mh")
+
+[node name="TextureRect" type="TextureRect" parent="ItemNotification" unique_id=110485865]
+layout_mode = 0
+offset_left = 1127.0
+offset_top = 647.0
+offset_right = 1237.0
+offset_bottom = 687.0
+
+[node name="Label" type="Label" parent="ItemNotification" unique_id=1363125381]
+layout_mode = 0
+offset_left = 1127.0
+offset_top = 647.0
+offset_right = 1225.0
+offset_bottom = 670.0
+text = "Regular Ring"

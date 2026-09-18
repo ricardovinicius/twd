@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://8xl8jaiae467"]
+
+[ext_resource type="Script" uid="uid://egcehpw0acsb" path="res://ui/select_menu/select.gd" id="1_wpesc"]
+
+[node name="Select" type="Control" unique_id=1897178014]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wpesc")
+
+[node name="Button" type="Button" parent="." unique_id=889421156]
+layout_mode = 0
+offset_left = -136.0
+offset_top = -64.0
+offset_right = 134.0
+offset_bottom = 60.0
+text = "Back"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
