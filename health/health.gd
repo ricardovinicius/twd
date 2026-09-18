@@ -36,3 +36,7 @@ func take_damage(amount: float) -> float:
 
 func is_depleted() -> bool:
 	return current <= 0.0
+
+func reset() -> void:
+	current = maximum
+	changed.emit(current, maximum)
