@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://xk70q4op8aj3"]
+
+[ext_resource type="Texture2D" uid="uid://82airhvyl0ix" path="res://collective/place_holder_stardust.webp" id="1_5smbb"]
+[ext_resource type="Script" uid="uid://dmpaysoyt02nv" path="res://entities/items/core/definition.gd" id="1_njr80"]
+
+[resource]
+script = ExtResource("1_njr80")
+id = &"ring"
+display_name = "Ring"
+icon = ExtResource("1_5smbb")
+metadata/_custom_type_script = "uid://dmpaysoyt02nv"

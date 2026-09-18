@@ -6,13 +6,13 @@ extends Node
 
 
 func _ready() -> void:
-    # Guard Rails
-    assert(health != null, "DestroyOnDeath: Health is not assigned.")
-    assert(target != null, "DestroyOnDeath: Target is not assigned.")
+	# Guard Rails
+	assert(health != null, "DestroyOnDeath: Health is not assigned.")
+	assert(target != null, "DestroyOnDeath: Target is not assigned.")
 
-    health.depleted.connect(_on_health_depleted)
+	health.depleted.connect(_on_health_depleted)
 
 
 func _on_health_depleted() -> void:
-    # This could trigger an animation and sound as well
-    target.queue_free()
+	# This could trigger an animation and sound as well
+	target.queue_free()
