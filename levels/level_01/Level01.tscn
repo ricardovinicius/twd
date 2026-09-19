@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://ughfcn5adrqx" path="res://levels/level_01/checkpoint.gd" id="9_uld3a"]
 [ext_resource type="PackedScene" uid="uid://voymbcvjwcmq" path="res://entities/items/BottleLine.tscn" id="10_5dpqp"]
 [ext_resource type="PackedScene" uid="uid://cgaihek5qxa15" path="res://entities/enemies/basic_skeleton/BasicSkeleton.tscn" id="10_upmp1"]
+[ext_resource type="Script" uid="uid://d23erex8ajwk" path="res://levels/level_01/camera_2d.gd" id="11_0euej"]
 [ext_resource type="PackedScene" path="res://entities/interactive/lever/Lever.tscn" id="11_lever"]
 [ext_resource type="PackedScene" uid="uid://c4iwhpprq4xb5" path="res://entities/interactive/door/Door.tscn" id="12_door"]
 [ext_resource type="Script" uid="uid://kqq5ql8icjqo" path="res://entities/interactive/door/door_controller.gd" id="15_6aend"]
@@ -742,6 +743,7 @@ position_smoothing_speed = 20.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_top_margin = 0.8
+script = ExtResource("11_0euej")
 
 [node name="Item" parent="." unique_id=2075180168 instance=ExtResource("18_6qj1r")]
 position = Vector2(1057, 975)
