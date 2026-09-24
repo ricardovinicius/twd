@@ -32,6 +32,8 @@
 [ext_resource type="Script" uid="uid://dte6ycwdulbav" path="res://spells/core/spell_registry.gd" id="24_spell_registry"]
 [ext_resource type="Resource" path="res://spells/spell_database.tres" id="25_spell_database"]
 [ext_resource type="Script" uid="uid://sfpdv7sc074o" path="res://components/movement/spell_jump_component.gd" id="26_spell_jump"]
+[ext_resource type="Script" uid="uid://crlhc3qckseu0" path="res://entities/player/PlayerStats.gd" id="33_wbbrj"]
+[ext_resource type="Script" uid="uid://l7j7wtqu0rs0" path="res://entities/player/Equipament.gd" id="34_m1mwl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -850,3 +852,9 @@ knockback = NodePath("../../Knockback")
 [node name="PlayerHud" parent="PlayerHudLayer" unique_id=589008531 node_paths=PackedStringArray("health", "cooldowns") instance=ExtResource("22_player_hud")]
 health = NodePath("../../Health")
 cooldowns = NodePath("../../SpellCooldowns")
+
+[node name="Stats" type="Node" parent="." unique_id=295121150]
+script = ExtResource("33_wbbrj")
+
+[node name="Equipment" type="Node" parent="." unique_id=2029650158]
+script = ExtResource("34_m1mwl")

@@ -2,6 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://c3kxdepblmhwf" path="res://ui/pause_menu/pause_menu.gdshader" id="1_nwcfo"]
 [ext_resource type="Script" uid="uid://bfol328bs7tdj" path="res://ui/pause_menu/pause_menu.gd" id="2_05uyy"]
+[ext_resource type="Script" uid="uid://bidhor7sa843l" path="res://ui/pause_menu/equipment_panel.gd" id="3_hkmon"]
 [ext_resource type="PackedScene" path="res://spells/ui/SpellRegistryDebugUI.tscn" id="3_spell_registry"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4g4vn"]
@@ -175,6 +176,13 @@ focus_neighbor_top = NodePath("../Quit")
 focus_neighbor_bottom = NodePath("../SpellRegistryButton")
 text = "resume"
 
+[node name="EquipmentButton" type="Button" parent="PanelContainer/VBoxContainer/Resume" unique_id=1483669009]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Item"
+
 [node name="SpellRegistryButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1596770547]
 unique_name_in_owner = true
 layout_mode = 2
@@ -188,6 +196,117 @@ text = "restart"
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../Resume")
 text = "quit"
+
+[node name="EquipmentWindow" type="PanelContainer" parent="." unique_id=1128045795]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -157.0
+offset_top = -119.5
+offset_right = 157.0
+offset_bottom = 119.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_hkmon")
+
+[node name="EquipmentContent" type="VBoxContainer" parent="EquipmentWindow" unique_id=614693889]
+layout_mode = 2
+
+[node name="CloseEquipmentButton" type="Button" parent="EquipmentWindow/EquipmentContent" unique_id=970081411]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="EquipmentWindow/EquipmentContent" unique_id=648528397]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EquipmentWindow/EquipmentContent/MarginContainer" unique_id=975435369]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer" unique_id=1981709022]
+layout_mode = 2
+
+[node name="Slot0" type="Button" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer/VBoxContainer" unique_id=176379289]
+unique_name_in_owner = true
+layout_mode = 2
+text = "item"
+
+[node name="Slot1" type="Button" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer/VBoxContainer" unique_id=2033229724]
+unique_name_in_owner = true
+layout_mode = 2
+text = "item"
+
+[node name="Slot2" type="Button" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1938300177]
+unique_name_in_owner = true
+layout_mode = 2
+text = "item"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer" unique_id=1802067918]
+layout_mode = 2
+
+[node name="WeightLabel" type="Label" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=504698832]
+unique_name_in_owner = true
+layout_mode = 2
+text = "WEI"
+
+[node name="ShieldLabel" type="Label" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=390452484]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SHI"
+
+[node name="ResistanceArcLabel" type="Label" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=397035616]
+unique_name_in_owner = true
+layout_mode = 2
+text = "ARC RES"
+
+[node name="ResistanceSanLabel" type="Label" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=839477539]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SAN RES"
+
+[node name="ResistanceColLabel" type="Label" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1614718724]
+unique_name_in_owner = true
+layout_mode = 2
+text = "COL RES"
+
+[node name="ResistanceFleLabel" type="Label" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1872039940]
+unique_name_in_owner = true
+layout_mode = 2
+text = "FLE RES"
+
+[node name="ResistanceMelLabel" type="Label" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=751535387]
+unique_name_in_owner = true
+layout_mode = 2
+text = "MEL RES"
+
+[node name="MoveSpeedLabel" type="Label" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=462787829]
+unique_name_in_owner = true
+layout_mode = 2
+text = "MOV"
+
+[node name="InsightLabel" type="Label" parent="EquipmentWindow/EquipmentContent/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=514169471]
+unique_name_in_owner = true
+layout_mode = 2
+text = "INS"
+
+[node name="ItemListWindow" type="PanelContainer" parent="EquipmentWindow" unique_id=19459977]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CloseItemListButton" type="Button" parent="EquipmentWindow/ItemListWindow" unique_id=696809447]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="EquipmentWindow/ItemListWindow" unique_id=1323593276]
+layout_mode = 2
+
+[node name="ItemListContainer" type="VBoxContainer" parent="EquipmentWindow/ItemListWindow/ScrollContainer" unique_id=5901790]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="SpellRegistryWindow" type="PanelContainer" parent="." unique_id=134122481]
 unique_name_in_owner = true
@@ -232,6 +351,7 @@ text = "back"
 libraries/ = SubResource("AnimationLibrary_d3xb4")
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Resume/EquipmentButton" to="." method="_on_equipment_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/SpellRegistryButton" to="." method="_on_spell_registry_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

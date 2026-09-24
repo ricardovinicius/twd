@@ -17,6 +17,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			close_select()
 		else:
 			open_select()
+		return
+
+	if is_open and event.is_action_pressed("pause"):
+		get_viewport().set_input_as_handled()
+		close_select()
 
 
 func open_select() -> void:
