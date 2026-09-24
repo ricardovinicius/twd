@@ -24,10 +24,10 @@ metadata/_edit_use_anchors_ = true
 [node name="coin" type="Node2D" parent="." unique_id=353597701]
 
 [node name="coin" parent="coin" unique_id=2125175977 instance=ExtResource("4_cm0pq")]
-position = Vector2(1087, 997)
+position = Vector2(932, 994)
 
 [node name="coin2" parent="coin" unique_id=1685875329 instance=ExtResource("4_cm0pq")]
-position = Vector2(1235, 997)
+position = Vector2(1310, 998)
 
 [node name="coin3" parent="coin" unique_id=1488848976 instance=ExtResource("4_cm0pq")]
 position = Vector2(1934, 898)

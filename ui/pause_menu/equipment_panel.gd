@@ -46,13 +46,19 @@ func _refresh_slots() -> void:
 	for i in slot_buttons.size():
 		var item := equipment.slots[i]
 		slot_buttons[i].text = item.display_name if item != null else "Item"
-		slot_buttons[i].icon = item.icon if item != null else null
+
+		if item != null and item.icon:
+			slot_buttons[i].icon = item.icon
+			slot_buttons[i].expand_icon = true
+			slot_buttons[i].add_theme_constant_override("icon_max_width", 24)
+		else:
+			slot_buttons[i].icon = null
 
 
 func _refresh_status() -> void:
 	var totals := equipment.get_total_bonus()
 
-	weight_label.text = "PESO: %s" % _format_bonus(stats.base_weight + totals.weight)
+	weight_label.text = "PESO: %s" % _format_bonus(equipment.get_final_weight())
 	shield_label.text = "SHIELD: %.0f/%.0f" % [health.shield_current, health.shield_maximum]
 	resistance_arc_label.text = "Res. ARC: %s" % _format_bonus(stats.base_resistance_arc + totals.resistance_arc)
 	resistance_san_label.text = "Res. SAN: %s" % _format_bonus(stats.base_resistance_san + totals.resistance_san)

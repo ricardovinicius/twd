@@ -41,6 +41,7 @@ func unequip(slot_index: int) -> void:
 func get_total_bonus() -> Dictionary:
 	var totals := {
 		"weight": 0.0,
+		"weight_multiplier": 1.0,
 		"shield": 0.0,
 		"resistance_arc": 0.0,
 		"resistance_san": 0.0,
@@ -56,6 +57,7 @@ func get_total_bonus() -> Dictionary:
 			continue
 
 		totals.weight += item.bonus_weight
+		totals.weight_multiplier *= item.weight_multiplier
 		totals.shield += item.bonus_shield
 		totals.resistance_arc += item.bonus_resistance_arc
 		totals.resistance_san += item.bonus_resistance_san
@@ -66,6 +68,11 @@ func get_total_bonus() -> Dictionary:
 		totals.insight += item.bonus_insight
 
 	return totals
+
+
+func get_final_weight() -> float:
+	var totals := get_total_bonus()
+	return (stats.base_weight + totals.weight) * totals.weight_multiplier
 
 
 func _apply_totals() -> void:

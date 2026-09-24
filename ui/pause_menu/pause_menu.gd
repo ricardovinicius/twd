@@ -161,9 +161,13 @@ func _populate_item_list() -> void:
 		var quantity: int = items[item]
 		var item_button := Button.new()
 		item_button.text = "%s (x%d)" % [item.display_name, quantity]
+		item_button.custom_minimum_size = Vector2(0, 32)
+		item_button.add_theme_font_size_override("font_size", 14)
 
 		if item.icon:
 			item_button.icon = item.icon
+			item_button.expand_icon = true
+			item_button.add_theme_constant_override("icon_max_width", 20)
 
 		item_button.pressed.connect(_on_item_selected.bind(item))
 		item_list_container.add_child(item_button)

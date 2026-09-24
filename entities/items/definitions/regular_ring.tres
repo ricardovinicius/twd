@@ -8,4 +8,5 @@ script = ExtResource("1_njr80")
 id = &"ring"
 display_name = "Ring"
 icon = ExtResource("1_5smbb")
+bonus_move_speed = 50.0
 metadata/_custom_type_script = "uid://dmpaysoyt02nv"

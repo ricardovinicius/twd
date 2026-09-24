@@ -749,6 +749,14 @@ script = ExtResource("11_0euej")
 position = Vector2(1057, 975)
 collision_layer = 5
 
+[node name="Item2" parent="." unique_id=1389185190 instance=ExtResource("18_6qj1r")]
+position = Vector2(1211, 976)
+collision_layer = 5
+
+[node name="Item3" parent="." unique_id=229662061 instance=ExtResource("18_6qj1r")]
+position = Vector2(1351, 975)
+collision_layer = 5
+
 [node name="Lever_2" parent="." unique_id=1189508911 instance=ExtResource("11_lever")]
 position = Vector2(5371, 1778)
 rotation = -6.2831855

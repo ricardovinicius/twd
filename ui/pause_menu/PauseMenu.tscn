@@ -214,6 +214,7 @@ grow_vertical = 2
 script = ExtResource("3_hkmon")
 
 [node name="EquipmentContent" type="VBoxContainer" parent="EquipmentWindow" unique_id=614693889]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="CloseEquipmentButton" type="Button" parent="EquipmentWindow/EquipmentContent" unique_id=970081411]
