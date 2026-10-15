@@ -7,7 +7,7 @@ var attraction_speed := 300.0
 var collected := false
 
 
-func _process(delta):
+func _physics_process(delta):
 	if player != null:
 		global_position = global_position.move_toward(
 			player.global_position,

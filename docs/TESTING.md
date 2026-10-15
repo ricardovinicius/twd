@@ -18,7 +18,7 @@ Set `GODOT_BIN` to select a Godot executable. Each suite uses `tests/run_suite.s
 | `cooldown_ui` | Cooldown entry presentation, ordering, lifecycle, and rejection. |
 | `doors_and_levers` | Switch state, lever physics, push interactions, door transitions, obstruction safety, and level wiring. |
 | `spell_registry` | Catalogue queries, per-player availability, dynamic casting, and registry UI. |
-| `double_jump` | Grounded and airborne casting, cooldowns, and movement-mode coordination. |
+| `double_jump` | Grounded and airborne casting, the single air charge and its recharge on landing, cooldowns, and movement-mode coordination. |
 | `jump_down` | One-way platform traversal and collision restoration. |
 | `checkpoint` | Reusable checkpoint placement, menu focus, Save/Back, duplicate protection, and player spawn integration. |
 | `standards` | Integration regressions for lifecycle signals, explicit dependencies, cooldown reconnection, inventory, and equipment. |

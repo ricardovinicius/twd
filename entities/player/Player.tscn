@@ -35,6 +35,7 @@
 [ext_resource type="Script" uid="uid://crlhc3qckseu0" path="res://entities/player/player_stats.gd" id="33_wbbrj"]
 [ext_resource type="Script" uid="uid://l7j7wtqu0rs0" path="res://entities/player/equipment.gd" id="34_m1mwl"]
 [ext_resource type="Script" path="res://entities/player/respawn/respawn_on_death.gd" id="35_respawn"]
+[ext_resource type="Script" path="res://components/contact/character_prop_push_component.gd" id="35_prop_push"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -737,6 +738,11 @@ script = ExtResource("20_rigid_body_push")
 character = NodePath("..")
 impulse_factor = 0.1
 maximum_impulse = 1.0
+
+[node name="PropPush" type="Node" parent="." node_paths=PackedStringArray("character", "shape")]
+script = ExtResource("35_prop_push")
+character = NodePath("..")
+shape = NodePath("../CollisionShape2D")
 
 [node name="VariableJumpHeight" type="Node" parent="." unique_id=1967477122]
 script = ExtResource("4_variable_jump")

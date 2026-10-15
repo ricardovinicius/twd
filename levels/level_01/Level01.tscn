@@ -716,14 +716,10 @@ camera = NodePath("Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1177485573]
 offset = Vector2(0, -20)
+process_callback = 0
 limit_right = 900000
 limit_bottom = 900000
 limit_smoothed = true
-position_smoothing_enabled = true
-position_smoothing_speed = 20.0
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_top_margin = 0.8
 script = ExtResource("11_0euej")
 
 [node name="Item" parent="." unique_id=2075180168 instance=ExtResource("18_6qj1r")]
@@ -748,18 +744,16 @@ rotation = -6.2831855
 switch = NodePath("../Lever2/SwitchComponent")
 
 [node name="BottleTriangle" parent="." unique_id=1087390374 instance=ExtResource("5_aqob7")]
-position = Vector2(5359, 980)
-mass = 0.01
+position = Vector2(5359, 1001)
 
 [node name="BottleTriangle2" parent="." unique_id=2092237300 instance=ExtResource("5_aqob7")]
-position = Vector2(97, 589)
-mass = 0.482
+position = Vector2(97, 617)
 
 [node name="BottleLine" parent="." unique_id=31910361 instance=ExtResource("10_5dpqp")]
-position = Vector2(5281, 654)
+position = Vector2(5281, 665)
 
 [node name="BottleLine2" parent="." unique_id=1069525285 instance=ExtResource("10_5dpqp")]
-position = Vector2(5345, 639)
+position = Vector2(5306, 665)
 
 [node name="Door3" parent="." unique_id=465776971 node_paths=PackedStringArray("switch") instance=ExtResource("12_door")]
 position = Vector2(5041, 1057)

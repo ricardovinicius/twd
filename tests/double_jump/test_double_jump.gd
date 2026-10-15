@@ -29,6 +29,7 @@ func _run() -> void:
 	await _test_definition_and_registration()
 	await _test_grounded_cast()
 	await _test_repeated_airborne_casts_and_cooldown_ui()
+	await _test_air_jump_recharges_on_landing()
 	await _test_movement_mode_coordination()
 	await _test_command_failures()
 
@@ -115,28 +116,15 @@ func _test_definition_and_registration() -> void:
 
 
 func _test_grounded_cast() -> void:
-	var fixture := Node2D.new()
-	var floor := StaticBody2D.new()
-	var floor_shape := CollisionShape2D.new()
-	var rectangle := RectangleShape2D.new()
-	rectangle.size = Vector2(400.0, 20.0)
-	floor_shape.shape = rectangle
-	floor.add_child(floor_shape)
-	floor.position = Vector2(0.0, 100.0)
-	fixture.add_child(floor)
-
+	var fixture := _create_floor_fixture()
 	var player := player_scene.instantiate()
 	fixture.add_child(player)
 	root.add_child(fixture)
 
-	var grounded := false
-	for _frame in 120:
-		await physics_frame
-		if player.is_on_floor():
-			grounded = true
-			break
-
-	_check(grounded, "The grounded spell fixture must place the player on a floor.")
+	_check(
+		await _wait_until_grounded(player),
+		"The grounded spell fixture must place the player on a floor."
+	)
 	player.set_physics_process(false)
 	var caster: SequenceCaster = player.get_node("SequenceCaster")
 	_cast_double_jump(caster)
@@ -212,20 +200,52 @@ func _test_repeated_airborne_casts_and_cooldown_ui() -> void:
 	_cast_double_jump(caster)
 	await process_frame
 	_check(
-		is_equal_approx(player.velocity.y, EXPECTED_JUMP_VELOCITY),
-		"A second airborne cast must succeed after cooldown without landing."
-	)
-
-	await create_timer(COOLDOWN_WAIT).timeout
-	player.velocity.y = 700.0
-	_cast_double_jump(caster)
-	await process_frame
-	_check(
-		is_equal_approx(player.velocity.y, EXPECTED_JUMP_VELOCITY),
-		"A third airborne cast must succeed after cooldown without landing."
+		is_equal_approx(player.velocity.y, 600.0),
+		"A second airborne cast without landing must not jump again."
 	)
 
 	await _free_node(player)
+
+
+func _test_air_jump_recharges_on_landing() -> void:
+	var fixture := _create_floor_fixture()
+	var player := player_scene.instantiate()
+	fixture.add_child(player)
+	root.add_child(fixture)
+	var caster: SequenceCaster = player.get_node("SequenceCaster")
+
+	_check(await _wait_until_grounded(player), "The landing fixture must start on the floor.")
+
+	_cast_double_jump(caster)
+	await create_timer(COOLDOWN_WAIT).timeout
+	_check(not player.is_on_floor(), "A grounded cast must lift the player off the floor.")
+	_cast_double_jump(caster)
+	await process_frame
+	_check(
+		_is_fresh_spell_jump(player.velocity.y),
+		"A grounded cast must not spend the single airborne Double Jump."
+	)
+
+	await create_timer(COOLDOWN_WAIT).timeout
+	var falling_velocity: float = player.velocity.y
+	_cast_double_jump(caster)
+	await physics_frame
+	_check(
+		player.velocity.y >= falling_velocity,
+		"A second airborne Double Jump must be rejected until the player lands."
+	)
+
+	_check(await _wait_until_grounded(player), "The player must land after the jumps.")
+	_cast_double_jump(caster)
+	await create_timer(COOLDOWN_WAIT).timeout
+	_cast_double_jump(caster)
+	await process_frame
+	_check(
+		_is_fresh_spell_jump(player.velocity.y),
+		"Landing must recharge the airborne Double Jump."
+	)
+
+	await _free_node(fixture)
 
 
 func _test_movement_mode_coordination() -> void:
@@ -248,6 +268,7 @@ func _test_movement_mode_coordination() -> void:
 		"An interrupted dash coroutine must not erase the spell jump later."
 	)
 
+	_recharge_air_spell_jump(player)
 	var jump_down: JumpDownComponent = player.get_node("JumpDown")
 	_check(jump_down.begin(true), "The movement fixture must begin jump-down state.")
 	_check(jump_down.is_active(), "Jump down must be active before spell interruption.")
@@ -258,6 +279,7 @@ func _test_movement_mode_coordination() -> void:
 		"Cancelling jump down must restore one-way platform collision."
 	)
 
+	_recharge_air_spell_jump(player)
 	var knockback: KnockbackComponent = player.get_node("Knockback")
 	_check(
 		knockback.begin_knockback(Vector2.RIGHT, 420.0, 0.25),
@@ -308,6 +330,38 @@ func _test_command_failures() -> void:
 	)
 	await process_frame
 	await _free_node(unsupported_caster)
+
+
+func _create_floor_fixture() -> Node2D:
+	var fixture := Node2D.new()
+	var floor := StaticBody2D.new()
+	var floor_shape := CollisionShape2D.new()
+	var rectangle := RectangleShape2D.new()
+	rectangle.size = Vector2(400.0, 20.0)
+	floor_shape.shape = rectangle
+	floor.add_child(floor_shape)
+	floor.position = Vector2(0.0, 100.0)
+	fixture.add_child(floor)
+	return fixture
+
+
+func _wait_until_grounded(player: CharacterBody2D) -> bool:
+	for _frame in 300:
+		await physics_frame
+		if player.is_on_floor():
+			return true
+
+	return false
+
+
+func _is_fresh_spell_jump(vertical_velocity: float) -> bool:
+	# Allows a few physics frames of gravity after the impulse was applied.
+	return vertical_velocity <= EXPECTED_JUMP_VELOCITY * 0.8
+
+
+func _recharge_air_spell_jump(player: CharacterBody2D) -> void:
+	# Respawning restores the single airborne Double Jump, like landing does.
+	player.spawn_player()
 
 
 func _cast_double_jump(caster: SequenceCaster) -> void:

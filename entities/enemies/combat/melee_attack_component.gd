@@ -41,7 +41,7 @@ func _ready() -> void:
 	assert(visual != null, "MeleeAttackComponent: Visual is not assigned.")
 
 	_rest_position = visual.position
-	set_process(false)
+	set_physics_process(false)
 
 
 func begin_attack(source: Node2D, direction: Vector2) -> bool:
@@ -65,7 +65,7 @@ func begin_attack(source: Node2D, direction: Vector2) -> bool:
 		windup_duration,
 		_rest_position - _direction * windup_distance
 	)
-	set_process(true)
+	set_physics_process(true)
 	attack_started.emit(_direction)
 	return true
 
@@ -74,7 +74,7 @@ func is_attacking() -> bool:
 	return _phase != Phase.IDLE
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	_phase_elapsed += delta
 
 	var progress := minf(_phase_elapsed / _phase_duration, 1.0)
@@ -121,7 +121,7 @@ func _complete_attack() -> void:
 	visual.position = _rest_position
 	_source = null
 	_phase = Phase.IDLE
-	set_process(false)
+	set_physics_process(false)
 	attack_finished.emit()
 
 

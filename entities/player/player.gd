@@ -10,6 +10,7 @@ extends CharacterBody2D
 @onready var gravity: GravityComponent = $Gravity
 @onready var knockback: KnockbackComponent = $Knockback
 @onready var rigid_body_push: CharacterRigidBodyPushComponent = $RigidBodyPush
+@onready var prop_push: CharacterPropPushComponent = $PropPush
 @onready var health: Health = $Health
 @onready var inventory: Inventory = $Inventory
 @onready var respawn: RespawnOnDeath = $RespawnOnDeath
@@ -24,6 +25,8 @@ var dash_speed: float = 0.0
 var _is_playing_hit_animation: bool = false
 var _dash_generation: int = 0
 
+# Pulo duplo: só um pulo mágico no ar por vez; recarrega ao tocar o chão
+var _has_air_spell_jump: bool = true
 
 func _ready() -> void:
 	health.damaged.connect(_on_health_damaged)
@@ -48,6 +51,9 @@ func _physics_process(delta: float) -> void:
 		_apply_dash_movement()
 
 	coyote_time.update_floor_state(was_on_floor, is_on_floor())
+
+	if is_on_floor():
+		_has_air_spell_jump = true
 
 	if not is_dashing and not is_being_knocked_back:
 		_try_jump()
@@ -143,6 +149,7 @@ func _move_and_slide_with_rigid_body_push() -> void:
 	var intended_velocity := velocity
 	move_and_slide()
 	rigid_body_push.push_slide_collisions(intended_velocity)
+	prop_push.push_overlapping_props()
 
 
 func _update_movement_animation() -> void:
@@ -186,11 +193,19 @@ func _on_animation_finished() -> void:
 
 
 func try_spell_jump() -> bool:
+	var is_air_jump := not is_on_floor()
+
+	if is_air_jump and not _has_air_spell_jump:
+		return false
+
 	_cancel_dash()
 	jump_down.cancel()
 
 	if not spell_jump.jump():
 		return false
+
+	if is_air_jump:
+		_has_air_spell_jump = false
 
 	_play_animation(&"jump")
 	return true
@@ -253,10 +268,13 @@ func _reset_movement_for_respawn() -> void:
 	jump_down.cancel()
 	jump_buffer.consume_jump()
 	coyote_time.consume_jump()
+	_has_air_spell_jump = true
 	_is_playing_hit_animation = false
 	_play_animation(&"idle")
 
 
 func _on_respawned() -> void:
+	# Teleporte: não interpolar entre a posição antiga e o ponto de respawn.
+	reset_physics_interpolation()
 	if camera != null:
 		camera.reset_smoothing()

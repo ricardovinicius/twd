@@ -53,6 +53,7 @@ func launch(
 
 	global_position = origin
 	rotation = _direction.angle()
+	reset_physics_interpolation()
 
 	_launched = true
 	_debug_log(

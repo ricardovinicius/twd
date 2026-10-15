@@ -113,11 +113,13 @@ interaction={
 2d_physics/layer_3="Entities"
 2d_physics/layer_4="Action Receivers"
 2d_physics/layer_5="Attack Receivers"
+2d_physics/layer_6="Props"
 
 [physics]
 
 3d/physics_engine="Jolt Physics"
 2d/default_gravity=2500.0
+common/physics_interpolation=true
 
 [rendering]
 

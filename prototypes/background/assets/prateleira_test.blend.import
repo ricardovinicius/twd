@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bimml50gx62ix"
-path="res://.godot/imported/Prateleira test.blend-dcf2b8cdebb76162e6ad9175648d453e.scn"
+path="res://.godot/imported/prateleira_test.blend-00e5b0691f192ae29a49eaa463f70e20.scn"
 
 [deps]
 
 source_file="res://prototypes/background/assets/prateleira_test.blend"
-dest_files=["res://.godot/imported/Prateleira test.blend-dcf2b8cdebb76162e6ad9175648d453e.scn"]
+dest_files=["res://.godot/imported/prateleira_test.blend-00e5b0691f192ae29a49eaa463f70e20.scn"]
 
 [params]
 
