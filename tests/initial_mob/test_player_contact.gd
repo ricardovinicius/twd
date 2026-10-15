@@ -1,9 +1,7 @@
 extends SceneTree
 
-const PLAYER_SCENE := preload("res://entities/player/Player.tscn")
-const BASIC_MOB_SCENE := preload(
-	"res://entities/enemies/basic_skeleton/BasicSkeleton.tscn"
-)
+var player_scene: PackedScene
+var basic_mob_scene: PackedScene
 
 const PHYSICS_TIMEOUT_FRAMES := 180
 
@@ -16,13 +14,16 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	player_scene = load("res://entities/player/Player.tscn")
+	basic_mob_scene = load("res://entities/enemies/basic_skeleton/BasicSkeleton.tscn")
+
 	await _test_player_owns_health_hud()
 	await _test_melee_damage_plays_and_completes_hit_animation()
 	await _test_contact_payloads_deduplication_and_cooldown()
 	await _test_knockback_moves_away_while_gravity_continues()
 	await _test_player_falling_on_mob_receives_contact_impact()
 	await _test_mob_falling_on_player_delivers_contact_impact()
-	await _test_player_death_reloads_current_scene()
+	await _test_player_death_respawns_at_checkpoint()
 
 	if _failures.is_empty():
 		print("PASS: %d player/contact initial-mob checks" % _passed)
@@ -253,36 +254,41 @@ func _test_mob_falling_on_player_delivers_contact_impact() -> void:
 	await _free_node(player)
 
 
-func _test_player_death_reloads_current_scene() -> void:
-	var player := await _spawn_player()
-	current_scene = player
-	var previous_player_id := player.get_instance_id()
+func _test_player_death_respawns_at_checkpoint() -> void:
+	var player := await _spawn_player(Vector2(40.0, -100.0))
+	player.set_physics_process(false)
 	var health: Health = player.get_node("Health")
-
+	var knockback: KnockbackComponent = player.get_node("Knockback")
+	var jump_down: JumpDownComponent = player.get_node("JumpDown")
+	var jump_buffer: JumpBufferComponent = player.get_node("JumpBufferTimer")
+	var source := CharacterBody2D.new()
+	root.add_child(source)
+	var checkpoint := Vector2(200.0, -300.0)
+	player.set_checkpoint(checkpoint)
+	player.begin_dash(Vector2.RIGHT, 800.0, 0.1)
+	knockback.begin_knockback(Vector2.RIGHT, 400.0, 1.0, source)
+	jump_down.begin(true)
+	jump_buffer.buffer_jump()
 	health.take_damage(health.maximum)
-	var reloaded := await _wait_until(
-		func() -> bool:
-			return (
-				is_instance_valid(current_scene)
-				and current_scene.get_instance_id() != previous_player_id
-				and current_scene.scene_file_path == PLAYER_SCENE.resource_path
-			)
-	)
-	_check(reloaded, "Depleting player health must reload the current scene.")
-
-	if is_instance_valid(current_scene):
-		var reloaded_health: Health = current_scene.get_node("Health")
-		_check(
-			is_equal_approx(reloaded_health.current, reloaded_health.maximum),
-			"Reloaded player scene must start with full health."
-		)
-		var reloaded_player := current_scene
-		current_scene = null
-		await _free_node(reloaded_player)
+	await process_frame
+	await process_frame
+	_check(player.global_position == checkpoint, "Death must respawn at the saved checkpoint.")
+	_check(is_equal_approx(health.current, health.maximum), "Respawning must restore full health.")
+	_check(player.velocity == Vector2.ZERO, "Respawning must clear velocity.")
+	_check(not player.is_dashing, "Respawning must cancel dash.")
+	_check(not knockback.is_active(), "Respawning must cancel knockback.")
+	_check(not player.get_collision_exceptions().has(source), "Respawning must clear collision exceptions.")
+	_check(not jump_down.is_active(), "Respawning must cancel jump-down.")
+	_check(player.get_collision_mask_value(2), "Respawning must restore platform collision.")
+	_check(not jump_buffer.is_jump_buffered(), "Respawning must clear buffered jumps.")
+	await create_timer(0.15).timeout
+	_check(player.velocity == Vector2.ZERO, "An old dash timer must not change respawned movement.")
+	await _free_node(source)
+	await _free_node(player)
 
 
 func _spawn_player(position: Vector2 = Vector2.ZERO) -> CharacterBody2D:
-	var player := PLAYER_SCENE.instantiate() as CharacterBody2D
+	var player := player_scene.instantiate() as CharacterBody2D
 	player.global_position = position
 	root.add_child(player)
 	await process_frame
@@ -290,7 +296,7 @@ func _spawn_player(position: Vector2 = Vector2.ZERO) -> CharacterBody2D:
 
 
 func _spawn_mob(position: Vector2 = Vector2.ZERO) -> CharacterBody2D:
-	var mob := BASIC_MOB_SCENE.instantiate() as CharacterBody2D
+	var mob := basic_mob_scene.instantiate() as CharacterBody2D
 	mob.global_position = position
 	root.add_child(mob)
 	await process_frame

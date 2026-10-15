@@ -3,37 +3,38 @@
 [ext_resource type="Texture2D" uid="uid://bixxj1ouy6j1r" path="res://entities/player/sprites/hit_32x32.png" id="1_dqkch"]
 [ext_resource type="Script" uid="uid://c3ubxpp10k6x6" path="res://entities/player/player.gd" id="1_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://c87uh023ahrv1" path="res://spells/ui/SequenceUI.tscn" id="2_7thud"]
-[ext_resource type="Script" uid="uid://lfreu1uvss2b" path="res://components/movement/coyote_time_component.gd" id="2_coyote"]
+[ext_resource type="Script" uid="uid://lfreu1uvss2b" path="res://entities/player/movement/coyote_time_component.gd" id="2_coyote"]
 [ext_resource type="Texture2D" uid="uid://dg143newr0o2e" path="res://entities/player/sprites/base.png" id="2_tuyoq"]
 [ext_resource type="Script" uid="uid://bmouqvprw5wyj" path="res://components/movement/horizontal_movement_component.gd" id="3_horizontal"]
-[ext_resource type="Script" uid="uid://c0ubcaxscurux" path="res://components/movement/variable_jump_height_component.gd" id="4_variable_jump"]
+[ext_resource type="Script" uid="uid://c0ubcaxscurux" path="res://entities/player/movement/variable_jump_height_component.gd" id="4_variable_jump"]
 [ext_resource type="Texture2D" uid="uid://drp51vif56qby" path="res://entities/player/sprites/idle.png" id="5_afbqv"]
-[ext_resource type="Script" uid="uid://donfkuablatda" path="res://components/movement/jump_buffer_component.gd" id="5_jump_buffer"]
+[ext_resource type="Script" uid="uid://donfkuablatda" path="res://entities/player/movement/jump_buffer_component.gd" id="5_jump_buffer"]
 [ext_resource type="Texture2D" uid="uid://d23ri4s1gm75k" path="res://entities/player/sprites/jump_animation.png" id="6_afbqv"]
 [ext_resource type="Script" uid="uid://2htj0e4va8nl" path="res://components/movement/gravity_component.gd" id="6_gravity"]
 [ext_resource type="Script" uid="uid://bg2bws5epjtcv" path="res://spells/core/sequence_caster.gd" id="7_26q78"]
 [ext_resource type="Texture2D" uid="uid://dqumptbjwn0jm" path="res://entities/player/sprites/walk_sprite_sheet.png" id="8_afbqv"]
 [ext_resource type="Script" uid="uid://bc80n76e2yidq" path="res://spells/core/spell_invoker.gd" id="8_bectd"]
-[ext_resource type="Texture2D" uid="uid://b8iicct70ra1w" path="res://ui/icons/TWD_forfex.png" id="10_5qbdv"]
+[ext_resource type="Texture2D" uid="uid://b8iicct70ra1w" path="res://ui/icons/twd_forfex_icon.png" id="10_5qbdv"]
 [ext_resource type="Script" uid="uid://b6ijjdasfwcco" path="res://spells/core/spell_cooldowns.gd" id="10_cooldowns"]
-[ext_resource type="Texture2D" uid="uid://dr7ad5nnv315m" path="res://ui/icons/TWD_saxum.png" id="11_wbbrj"]
-[ext_resource type="Texture2D" uid="uid://dqe4v5rbpdits" path="res://ui/icons/TWD_charta.png" id="12_m1mwl"]
+[ext_resource type="Texture2D" uid="uid://dr7ad5nnv315m" path="res://ui/icons/twd_saxum_icon.png" id="11_wbbrj"]
+[ext_resource type="Texture2D" uid="uid://dqe4v5rbpdits" path="res://ui/icons/twd_charta_icon.png" id="12_m1mwl"]
 [ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="13_health"]
 [ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="14_receiver"]
 [ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="15_damage"]
-[ext_resource type="Script" uid="uid://gvpwl4q5fqvh" path="res://components/movement/knockback_component.gd" id="17_knockback"]
+[ext_resource type="Script" uid="uid://gvpwl4q5fqvh" path="res://entities/player/movement/knockback_component.gd" id="17_knockback"]
 [ext_resource type="Script" uid="uid://crruxwaa1lwq2" path="res://components/action_reactions/action_receiver.gd" id="18_action_receiver"]
-[ext_resource type="Script" uid="uid://b4gvtml86rgjw" path="res://components/action_reactions/push/character_body_push_reaction.gd" id="19_push_reaction"]
+[ext_resource type="Script" uid="uid://b4gvtml86rgjw" path="res://entities/player/reactions/character_body_push_reaction.gd" id="19_push_reaction"]
 [ext_resource type="Script" uid="uid://dcyo2wectun74" path="res://entities/player/inventory.gd" id="20_m3vrt"]
 [ext_resource type="Script" uid="uid://dsjaapsgk0ke3" path="res://components/contact/character_rigid_body_push_component.gd" id="20_rigid_body_push"]
-[ext_resource type="Script" uid="uid://i7wmgxll2lvl" path="res://components/input/aim_input_component.gd" id="21_aim_input"]
+[ext_resource type="Script" uid="uid://i7wmgxll2lvl" path="res://entities/player/input/aim_input_component.gd" id="21_aim_input"]
 [ext_resource type="PackedScene" uid="uid://gwxkdc61j1ld" path="res://ui/player_hud/PlayerHud.tscn" id="22_player_hud"]
-[ext_resource type="Script" uid="uid://dxhjj8wjk7wr4" path="res://components/movement/jump_down_component.gd" id="23_jump_down"]
+[ext_resource type="Script" uid="uid://dxhjj8wjk7wr4" path="res://entities/player/movement/jump_down_component.gd" id="23_jump_down"]
 [ext_resource type="Script" uid="uid://dte6ycwdulbav" path="res://spells/core/spell_registry.gd" id="24_spell_registry"]
 [ext_resource type="Resource" path="res://spells/spell_database.tres" id="25_spell_database"]
-[ext_resource type="Script" uid="uid://sfpdv7sc074o" path="res://components/movement/spell_jump_component.gd" id="26_spell_jump"]
-[ext_resource type="Script" uid="uid://crlhc3qckseu0" path="res://entities/player/PlayerStats.gd" id="33_wbbrj"]
-[ext_resource type="Script" uid="uid://l7j7wtqu0rs0" path="res://entities/player/Equipament.gd" id="34_m1mwl"]
+[ext_resource type="Script" uid="uid://sfpdv7sc074o" path="res://entities/player/movement/spell_jump_component.gd" id="26_spell_jump"]
+[ext_resource type="Script" uid="uid://crlhc3qckseu0" path="res://entities/player/player_stats.gd" id="33_wbbrj"]
+[ext_resource type="Script" uid="uid://l7j7wtqu0rs0" path="res://entities/player/equipment.gd" id="34_m1mwl"]
+[ext_resource type="Script" path="res://entities/player/respawn/respawn_on_death.gd" id="35_respawn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -793,8 +794,9 @@ script = ExtResource("24_spell_registry")
 database = ExtResource("25_spell_database")
 initial_spell_ids = Array[StringName]([&"magic_arrow", &"push", &"dash", &"double_jump"])
 
-[node name="SequenceCaster" type="Node" parent="." unique_id=788599091 node_paths=PackedStringArray("registry", "caster", "spell_origin", "effect_parent", "projectile_aim")]
+[node name="SequenceCaster" type="Node" parent="." unique_id=788599091 node_paths=PackedStringArray("registry", "caster", "spell_origin", "effect_parent", "projectile_aim", "spell_invoker")]
 script = ExtResource("7_26q78")
+spell_invoker = NodePath("../SpellInvoker")
 registry = NodePath("../SpellRegistry")
 caster = NodePath("..")
 spell_origin = NodePath("../SpellOrigin")
@@ -819,7 +821,10 @@ script = ExtResource("2_coyote")
 [node name="Health" type="Node" parent="." unique_id=1003559884]
 script = ExtResource("13_health")
 
-[node name="ReloadSceneOnDeath" type="Node" parent="." unique_id=2061136104]
+[node name="RespawnOnDeath" type="Node" parent="." unique_id=2061136104 node_paths=PackedStringArray("body", "health")]
+script = ExtResource("35_respawn")
+body = NodePath("..")
+health = NodePath("../Health")
 
 [node name="AttackReceiver" type="Area2D" parent="." unique_id=1458623947]
 collision_layer = 16
@@ -856,5 +861,8 @@ cooldowns = NodePath("../../SpellCooldowns")
 [node name="Stats" type="Node" parent="." unique_id=295121150]
 script = ExtResource("33_wbbrj")
 
-[node name="Equipment" type="Node" parent="." unique_id=2029650158]
+[node name="Equipment" type="Node" parent="." unique_id=2029650158 node_paths=PackedStringArray("stats", "health", "horizontal_movement")]
 script = ExtResource("34_m1mwl")
+stats = NodePath("../Stats")
+health = NodePath("../Health")
+horizontal_movement = NodePath("../HorizontalMovement")

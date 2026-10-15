@@ -1,14 +1,14 @@
 extends SceneTree
 
 const ATTACK_DATA_SCRIPT = preload("res://spells/attack/core/attack_data.gd")
-const ATTACK_HITBOX_SCRIPT = preload("res://components/attack_reactions/attack_hitbox.gd")
+const ATTACK_HITBOX_SCRIPT = preload("res://entities/enemies/combat/attack_hitbox.gd")
 const ATTACK_RECEIVER_SCRIPT = preload("res://components/attack_reactions/attack_receiver.gd")
 const HEALTH_DAMAGE_REACTION_SCRIPT = preload(
 	"res://components/attack_reactions/health/health_damage_reaction.gd"
 )
 const HEALTH_SCRIPT = preload("res://health/health.gd")
-const MELEE_ATTACK_SCRIPT = preload("res://components/attack_reactions/melee_attack_component.gd")
-const AIM_INPUT_SCRIPT = preload("res://components/input/aim_input_component.gd")
+const MELEE_ATTACK_SCRIPT = preload("res://entities/enemies/combat/melee_attack_component.gd")
+const AIM_INPUT_SCRIPT = preload("res://entities/player/input/aim_input_component.gd")
 const SKELETON_SCENE = preload(
 	"res://entities/enemies/basic_skeleton/BasicSkeleton.tscn"
 )

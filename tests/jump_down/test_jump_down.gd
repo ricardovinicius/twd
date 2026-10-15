@@ -1,8 +1,8 @@
 extends SceneTree
 
-const PLAYER_SCENE := preload("res://entities/player/Player.tscn")
-const MOB_SCENE := preload("res://entities/enemies/basic_skeleton/BasicSkeleton.tscn")
-const LEVEL_SCENE := preload("res://levels/level_01/Level01.tscn")
+var player_scene: PackedScene
+var mob_scene: PackedScene
+var level_scene: PackedScene
 
 const WORLD_LAYER := 1
 const ONE_WAY_PLATFORM_LAYER := 2
@@ -17,6 +17,10 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	player_scene = load("res://entities/player/Player.tscn")
+	mob_scene = load("res://entities/enemies/basic_skeleton/BasicSkeleton.tscn")
+	level_scene = load("res://levels/level_01/Level01.tscn")
+
 	await process_frame
 
 	await _test_component_collision_mask_lifecycle()
@@ -87,7 +91,7 @@ func _test_component_collision_mask_lifecycle() -> void:
 
 
 func _test_level_uses_separate_one_way_physics_layer() -> void:
-	var level := LEVEL_SCENE.instantiate()
+	var level := level_scene.instantiate()
 	var tile_map: TileMapLayer = level.get_node("TileMapPrincipal1")
 	var tile_set := tile_map.tile_set
 
@@ -197,7 +201,7 @@ func _test_mob_lands_on_one_way_platform() -> void:
 	var platform := _make_platform(ONE_WAY_PLATFORM_LAYER, true)
 	fixture_root.add_child(platform)
 
-	var mob := MOB_SCENE.instantiate() as CharacterBody2D
+	var mob := mob_scene.instantiate() as CharacterBody2D
 	mob.position = Vector2.ZERO
 	fixture_root.add_child(mob)
 
@@ -223,7 +227,7 @@ func _make_platform_fixture(collision_layer_number: int, one_way: bool) -> Dicti
 	var platform := _make_platform(collision_layer_number, one_way)
 	fixture_root.add_child(platform)
 
-	var player := PLAYER_SCENE.instantiate() as CharacterBody2D
+	var player := player_scene.instantiate() as CharacterBody2D
 	player.position = Vector2(0.0, 0.0)
 	fixture_root.add_child(player)
 

@@ -1,12 +1,12 @@
 extends SceneTree
 
-const LEVER_SCENE := preload("res://entities/interactive/lever/Lever.tscn")
-const DOOR_SCENE := preload("res://entities/interactive/door/Door.tscn")
-const LEVEL_SCENE := preload("res://levels/level_01/Level01.tscn")
-const PLAYER_SCENE := preload("res://entities/player/Player.tscn")
-const PUSH_SPELL_SCENE := preload("res://spells/action/push/PushSpell.tscn")
-const BOTTLE_LINE_SCENE := preload("res://entities/items/BottleLine.tscn")
-const BOTTLE_TRIANGLE_SCENE := preload("res://entities/items/BottleTriangle.tscn")
+var lever_scene: PackedScene
+var door_scene: PackedScene
+var level_scene: PackedScene
+var player_scene: PackedScene
+var push_spell_scene: PackedScene
+var bottle_line_scene: PackedScene
+var bottle_triangle_scene: PackedScene
 
 const MAXIMUM_FRAMES := 120
 const PUSH_STRENGTH := 200.0
@@ -20,6 +20,14 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	lever_scene = load("res://entities/interactive/lever/Lever.tscn")
+	door_scene = load("res://entities/interactive/door/Door.tscn")
+	level_scene = load("res://levels/level_01/Level01.tscn")
+	player_scene = load("res://entities/player/Player.tscn")
+	push_spell_scene = load("res://spells/action/push/PushSpell.tscn")
+	bottle_line_scene = load("res://entities/items/BottleLine.tscn")
+	bottle_triangle_scene = load("res://entities/items/BottleTriangle.tscn")
+
 	await process_frame
 
 	_test_switch_component()
@@ -71,9 +79,9 @@ func _test_switch_component() -> void:
 
 
 func _test_player_and_spell_force_configuration() -> void:
-	var player := PLAYER_SCENE.instantiate()
+	var player := player_scene.instantiate()
 	var player_push: CharacterRigidBodyPushComponent = player.get_node("RigidBodyPush")
-	var push_spell := PUSH_SPELL_SCENE.instantiate() as PushSpell
+	var push_spell := push_spell_scene.instantiate() as PushSpell
 	_check(
 		is_equal_approx(player_push.impulse_factor, 0.1),
 		"The player must use a bottle-capable rigid-body contact impulse factor."
@@ -91,7 +99,7 @@ func _test_player_and_spell_force_configuration() -> void:
 
 
 func _test_initial_active_lever_pose() -> void:
-	var lever := LEVER_SCENE.instantiate() as Lever
+	var lever := lever_scene.instantiate() as Lever
 	lever.position = Vector2(-300, -300)
 	var switch: SwitchComponent = lever.get_node("SwitchComponent")
 	switch.active = true
@@ -110,7 +118,7 @@ func _test_one_real_push_spell_activates_lever() -> void:
 	var fixture := Node2D.new()
 	root.add_child(fixture)
 
-	var lever := LEVER_SCENE.instantiate() as Lever
+	var lever := lever_scene.instantiate() as Lever
 	lever.position = Vector2(-300, -500)
 	fixture.add_child(lever)
 
@@ -118,7 +126,7 @@ func _test_one_real_push_spell_activates_lever() -> void:
 	caster.position = Vector2(-355, -529)
 	caster.scale = Vector2(3, 3)
 	fixture.add_child(caster)
-	var push_spell := PUSH_SPELL_SCENE.instantiate() as PushSpell
+	var push_spell := push_spell_scene.instantiate() as PushSpell
 	caster.add_child(push_spell)
 	await physics_frame
 
@@ -153,7 +161,7 @@ func _test_one_real_push_spell_activates_lever() -> void:
 
 
 func _test_lever_push_reaction() -> void:
-	var lever := LEVER_SCENE.instantiate() as Lever
+	var lever := lever_scene.instantiate() as Lever
 	lever.position = Vector2(-300, 0)
 	root.add_child(lever)
 	await physics_frame
@@ -215,7 +223,7 @@ func _test_lever_push_reaction() -> void:
 
 
 func _test_rigid_body_collision_activates_lever() -> void:
-	var lever := LEVER_SCENE.instantiate() as Lever
+	var lever := lever_scene.instantiate() as Lever
 	lever.position = Vector2(-300, 300)
 	root.add_child(lever)
 	await physics_frame
@@ -251,7 +259,7 @@ func _test_rigid_body_collision_activates_lever() -> void:
 
 
 func _test_character_collision_does_not_activate_lever() -> void:
-	var lever := LEVER_SCENE.instantiate() as Lever
+	var lever := lever_scene.instantiate() as Lever
 	lever.position = Vector2(-300, 600)
 	root.add_child(lever)
 	await physics_frame
@@ -287,7 +295,7 @@ func _test_character_collision_does_not_activate_lever() -> void:
 
 
 func _test_character_collision_moves_bottles() -> void:
-	for bottle_scene: PackedScene in [BOTTLE_LINE_SCENE, BOTTLE_TRIANGLE_SCENE]:
+	for bottle_scene: PackedScene in [bottle_line_scene, bottle_triangle_scene]:
 		var fixture := Node2D.new()
 		root.add_child(fixture)
 
@@ -304,7 +312,7 @@ func _test_character_collision_moves_bottles() -> void:
 		fixture.add_child(bottle)
 		var initial_x := bottle.position.x
 
-		var player := PLAYER_SCENE.instantiate() as CharacterBody2D
+		var player := player_scene.instantiate() as CharacterBody2D
 		player.position = Vector2(-75, -25)
 		fixture.add_child(player)
 		player.set_physics_process(false)
@@ -435,16 +443,25 @@ func _test_one_switch_controls_multiple_doors() -> void:
 
 
 func _test_level_wiring() -> void:
-	var level := LEVEL_SCENE.instantiate()
-	var lever: Lever = level.get_node("Lever")
-	var door: DoorController = level.get_node("Door")
-	var switch: SwitchComponent = lever.get_node("SwitchComponent")
-	_check(door.switch == switch, "Level01's example door must reference its placed lever switch.")
+	var level := level_scene.instantiate()
+	var door_count := 0
+	for child in level.get_children():
+		var door := child as DoorController
+		if door == null:
+			continue
+		door_count += 1
+		_check(door.switch != null, "%s must reference a placed lever switch." % door.name)
+		if door.switch != null:
+			_check(
+				level.is_ancestor_of(door.switch),
+				"%s must use a switch in this level." % door.name
+			)
+	_check(door_count > 0, "Level01 must contain a configured door encounter.")
 	level.free()
 
 
 func _make_door(switch: SwitchComponent) -> DoorController:
-	var door := DOOR_SCENE.instantiate() as DoorController
+	var door := door_scene.instantiate() as DoorController
 	door.switch = switch
 	return door
 

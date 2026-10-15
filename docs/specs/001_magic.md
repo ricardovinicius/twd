@@ -115,9 +115,9 @@ This will be on top of the player's character, and will display the button icons
 
 ## Initial Spells
 
-The spell implementation will be self-contained, and they will be singletons that will be registered in the mapping. 
+Each spell implementation is a self-contained command scene instantiated for an accepted cast. Its shared `SpellDefinition` stores configuration without runtime state.
 
-The design pattern used for the spell implementation will be the Factory Method pattern, which will allow for easy creation of new spells or abilities by simply creating new implementations of the spell interface and adding them to the mapping.
+`SpellInvoker` creates commands from the definition's `PackedScene`. New spells provide a command scene and definition and are catalogued in `SpellDatabase`; each player's `SpellRegistry` controls which sequences may resolve.
 
 
 ### Projectile Spell (X)
@@ -138,6 +138,6 @@ Note: for now, we do not will implement the cooldown period, but it will be adde
 
 All the components of the Sequence Casting system will be unit tested to ensure that they function correctly and as expected. This will include testing the mapping of button sequences to spells, the sequence detection system and the timeout mechanism.
 
-We should use the GUT (Godot Unit Test) framework to create and run the unit tests for the Sequence Casting system. This will allow us to easily test the different components of the system and ensure that they are working correctly.
+The current suites use standalone `SceneTree` scripts and headless shell runners under `tests/`. Load scene fixtures from the deferred test entry point so autoloads are registered before scripts that reference them compile. The shared runner must reject script errors, engine errors, unsuccessful process exits, and missing completion markers even when Godot otherwise exits with status zero.
 
 

@@ -1,13 +1,15 @@
 extends Node2D
 
-@onready var player: CharacterBody2D = $LevelRoot/Player
-@onready var pause_menu: PauseMenu = $PauseMenuLayer/PauseMenu
+@export var pause_menu: PauseMenu
+@export var spell_registry: SpellRegistry
+@export var equipment: Equipment
+@export var stats: PlayerStats
+@export var health: Health
+@export var inventory: Inventory
 
 
 func _ready() -> void:
-	print("MAIN READY - player: ", player, " pause_menu: ", pause_menu)
-	pause_menu.equipment_panel.equipment = player.get_node("Equipment")
-	pause_menu.equipment_panel.stats = player.get_node("Stats")
-	pause_menu.equipment_panel.health = player.get_node("Health")
-	pause_menu.equipment_panel.inventory = player.get_node("Inventory")
-	print("EQUIPMENT ATRIBUIDO: ", pause_menu.equipment_panel.equipment)
+	if pause_menu == null:
+		push_error("Main: PauseMenu is not assigned.")
+		return
+	pause_menu.setup(spell_registry, equipment, stats, health, inventory)

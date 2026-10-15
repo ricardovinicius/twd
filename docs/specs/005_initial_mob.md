@@ -190,6 +190,12 @@ Player
 - Reloading the current level when player health is depleted is an acceptable temporary MVP death behavior.
 - A health UI, checkpoint system, general invulnerability frames, and a complete player death sequence are outside this feature.
 
+### Current Player Integration
+
+The current player includes checkpoint respawning beyond this original MVP. `RespawnOnDeath` owns the spawn position and optional checkpoint, observes `Health.depleted`, and restores position and health after the physics callback. It emits `respawning` before changing position and `respawned` after restoring health.
+
+The player coordinates its movement components on `respawning`: cancel dash, knockback, and jump-down; remove temporary collision exceptions; restore platform collision; clear buffered jumps and coyote time; and reset hit presentation. A pending dash timer cannot change the respawned player's velocity. Camera smoothing is reset after respawning through an explicitly assigned camera reference. Death and checkpoint state remain in the respawn component rather than the movement controller.
+
 ## Mob Health and Death
 
 - The initial mob must use the existing `Health`, `AttackReceiver`, `HealthDamageReaction`, and `DestroyOnDeath` components.

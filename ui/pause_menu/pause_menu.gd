@@ -36,6 +36,21 @@ func _ready() -> void:
 	close_item_list_button.pressed.connect(close_item_list)
 
 
+func setup(
+	player_registry: SpellRegistry,
+	player_equipment: Equipment,
+	player_stats: PlayerStats,
+	player_health: Health,
+	player_inventory: Inventory
+) -> void:
+	spell_registry = player_registry
+	spell_registry_debug_ui.setup(spell_registry)
+	equipment_panel.equipment = player_equipment
+	equipment_panel.stats = player_stats
+	equipment_panel.health = player_health
+	equipment_panel.inventory = player_inventory
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed(&"pause"):
 		return
@@ -180,7 +195,7 @@ func _on_restart_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://Main_menu/main_menu.tscn")
+	get_tree().change_scene_to_file("res://ui/main_menu/MainMenu.tscn")
 
 
 func _show_main_menu() -> void:

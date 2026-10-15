@@ -3,13 +3,18 @@ extends Node
 
 signal item_added(item: ItemDefinition, new_quantity: int)
 
-var _quantities: Dictionary = {}  # ItemDefinition -> int
+var _quantities: Dictionary[ItemDefinition, int] = {}
 
 
-func add_item(item: ItemDefinition, amount: int = 1) -> void:
+func add_item(item: ItemDefinition, amount: int = 1) -> bool:
+	if item == null or amount <= 0:
+		push_warning("Inventory: An item and a positive quantity are required.")
+		return false
+
 	var current: int = _quantities.get(item, 0)
 	_quantities[item] = current + amount
 	item_added.emit(item, _quantities[item])
+	return true
 
 
 func get_quantity(item: ItemDefinition) -> int:

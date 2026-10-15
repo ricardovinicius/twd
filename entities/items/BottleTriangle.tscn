@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://c07v06tcl5mos"]
 
 [ext_resource type="Script" uid="uid://crruxwaa1lwq2" path="res://components/action_reactions/action_receiver.gd" id="2_760k3"]
-[ext_resource type="Script" uid="uid://bdw0c8r5ijn77" path="res://components/action_reactions/push/debug_push_reaction.gd" id="3_ng57n"]
-[ext_resource type="Script" uid="uid://c2sq8ch4tw1q4" path="res://components/action_reactions/push/rigid_body_push_reaction.gd" id="4_13f6v"]
-[ext_resource type="Texture2D" uid="uid://74mek0r2wdo" path="res://assets/objects/bottle_triangle.png" id="4_cu6jg"]
+[ext_resource type="Script" uid="uid://bdw0c8r5ijn77" path="res://entities/items/reactions/debug_push_reaction.gd" id="3_ng57n"]
+[ext_resource type="Script" uid="uid://c2sq8ch4tw1q4" path="res://entities/items/reactions/rigid_body_push_reaction.gd" id="4_13f6v"]
+[ext_resource type="Texture2D" uid="uid://74mek0r2wdo" path="res://entities/items/sprites/bottle_triangle.png" id="4_cu6jg"]
 [ext_resource type="PhysicsMaterial" uid="uid://tgymsrc4icws" path="res://entities/items/bottle_physics_material.tres" id="5_physics"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dm0pi"]

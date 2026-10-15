@@ -12,9 +12,11 @@ extends CharacterBody2D
 @onready var rigid_body_push: CharacterRigidBodyPushComponent = $RigidBodyPush
 @onready var health: Health = $Health
 @onready var inventory: Inventory = $Inventory
+@onready var respawn: RespawnOnDeath = $RespawnOnDeath
 
 @export var jump_velocity = -1050.0
 @export var facing_direction: Vector2 = Vector2.RIGHT
+@export var camera: Camera2D
 
 var is_dashing: bool = false
 var dash_direction: Vector2 = Vector2.ZERO
@@ -22,26 +24,11 @@ var dash_speed: float = 0.0
 var _is_playing_hit_animation: bool = false
 var _dash_generation: int = 0
 
-# Posição inicial do jogador
-var spawn_point: Vector2
-
-# Posição do último checkpoint ativado
-var checkpoint_position: Vector2
-
-var has_checkpoint: bool = false
-
 
 func _ready() -> void:
-	# Guarda a posição inicial do Player
-	spawn_point = global_position
-	checkpoint_position = spawn_point
-	has_checkpoint = false
-
-	print("PLAYER _READY")
-	print("SPAWN INICIAL: ", spawn_point)
-
 	health.damaged.connect(_on_health_damaged)
-	health.depleted.connect(_on_health_depleted)
+	respawn.respawning.connect(_reset_movement_for_respawn)
+	respawn.respawned.connect(_on_respawned)
 	animated_sprite_2d.animation_finished.connect(_on_animation_finished)
 
 
@@ -193,14 +180,6 @@ func _on_health_damaged(amount: float) -> void:
 	_play_hit_animation(true)
 
 
-func _on_health_depleted() -> void:
-	print("PLAYER MORREU")
-
-	Events.player_died.emit()
-
-	spawn_player()
-
-
 func _on_animation_finished() -> void:
 	if animated_sprite_2d.animation == &"hit":
 		_is_playing_hit_animation = false
@@ -253,38 +232,31 @@ func _cancel_dash() -> void:
 	dash_speed = 0.0
 
 
-# ============================================================
-# CHECKPOINT
-# ============================================================
-
-func collect_item(item: ItemDefinition, amount: int = 1) -> void:
-	inventory.add_item(item, amount)
+func collect_item(item: ItemDefinition, amount: int = 1) -> bool:
+	if not inventory.add_item(item, amount):
+		return false
 	Events.item_collected.emit(item, inventory.get_quantity(item))
+	return true
+
 
 func set_checkpoint(pos: Vector2) -> void:
-	checkpoint_position = pos
-	has_checkpoint = true
-
-	print("CHECKPOINT SALVO EM: ", checkpoint_position)
+	respawn.set_checkpoint(pos)
 
 
 func spawn_player() -> void:
-	print("RESPAWNANDO...")
+	respawn.respawn()
 
-	if has_checkpoint:
-		print("VOLTANDO PARA CHECKPOINT: ", checkpoint_position)
-		global_position = checkpoint_position
-	else:
-		print("NENHUM CHECKPOINT. VOLTANDO PARA SPAWN INICIAL: ", spawn_point)
-		global_position = spawn_point
 
-	velocity = Vector2.ZERO
+func _reset_movement_for_respawn() -> void:
+	_cancel_dash()
+	knockback.cancel()
+	jump_down.cancel()
+	jump_buffer.consume_jump()
+	coyote_time.consume_jump()
+	_is_playing_hit_animation = false
+	_play_animation(&"idle")
 
-	health.reset()
 
-	var camera := $Camera2D as Camera2D
-
-	if camera:
+func _on_respawned() -> void:
+	if camera != null:
 		camera.reset_smoothing()
-
-	print("PLAYER AGORA ESTÁ EM: ", global_position)

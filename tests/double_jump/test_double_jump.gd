@@ -1,7 +1,7 @@
 extends SceneTree
 
-const PLAYER_SCENE := preload("res://entities/player/Player.tscn")
-const DOUBLE_JUMP_SCENE := preload("res://spells/double_jump/DoubleJumpSpell.tscn")
+var player_scene: PackedScene
+var double_jump_scene: PackedScene
 const DOUBLE_JUMP_DEFINITION := preload(
 	"res://spells/double_jump/double_jump_spell_definition.tres"
 )
@@ -20,6 +20,9 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	player_scene = load("res://entities/player/Player.tscn")
+	double_jump_scene = load("res://spells/double_jump/DoubleJumpSpell.tscn")
+
 	await process_frame
 
 	await _test_spell_jump_component()
@@ -95,7 +98,7 @@ func _test_definition_and_registration() -> void:
 	_check(definition.command_scene != null, "Double Jump must reference its command scene.")
 	_check(definition.icon != null, "Double Jump must provide a cooldown HUD icon.")
 
-	var player := PLAYER_SCENE.instantiate()
+	var player := player_scene.instantiate()
 	root.add_child(player)
 	await process_frame
 	player.set_physics_process(false)
@@ -122,7 +125,7 @@ func _test_grounded_cast() -> void:
 	floor.position = Vector2(0.0, 100.0)
 	fixture.add_child(floor)
 
-	var player := PLAYER_SCENE.instantiate()
+	var player := player_scene.instantiate()
 	fixture.add_child(player)
 	root.add_child(fixture)
 
@@ -147,7 +150,7 @@ func _test_grounded_cast() -> void:
 
 
 func _test_repeated_airborne_casts_and_cooldown_ui() -> void:
-	var player := PLAYER_SCENE.instantiate()
+	var player := player_scene.instantiate()
 	root.add_child(player)
 	await process_frame
 	player.set_physics_process(false)
@@ -226,7 +229,7 @@ func _test_repeated_airborne_casts_and_cooldown_ui() -> void:
 
 
 func _test_movement_mode_coordination() -> void:
-	var player := PLAYER_SCENE.instantiate()
+	var player := player_scene.instantiate()
 	root.add_child(player)
 	await process_frame
 	player.set_physics_process(false)
@@ -277,7 +280,7 @@ func _test_movement_mode_coordination() -> void:
 
 
 func _test_command_failures() -> void:
-	var missing_caster_command := DOUBLE_JUMP_SCENE.instantiate() as DoubleJumpSpell
+	var missing_caster_command := double_jump_scene.instantiate() as DoubleJumpSpell
 	root.add_child(missing_caster_command)
 	var missing_reasons: Array[StringName] = []
 	missing_caster_command.failed.connect(
@@ -289,7 +292,7 @@ func _test_command_failures() -> void:
 
 	var unsupported_caster := Node2D.new()
 	root.add_child(unsupported_caster)
-	var unsupported_command := DOUBLE_JUMP_SCENE.instantiate() as DoubleJumpSpell
+	var unsupported_command := double_jump_scene.instantiate() as DoubleJumpSpell
 	root.add_child(unsupported_command)
 	var unsupported_reasons: Array[StringName] = []
 	unsupported_command.failed.connect(

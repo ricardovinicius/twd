@@ -41,6 +41,11 @@ func setup(spell_cooldowns: SpellCooldowns) -> void:
 
 	cooldowns.cooldown_started.connect(_on_cooldown_started)
 	cooldowns.cooldown_finished.connect(_on_cooldown_finished)
+	for spell in cooldowns.get_active_spells():
+		_on_cooldown_started(spell, cooldowns.get_duration(spell.id))
+		var entry := get_entry(spell.id)
+		if entry != null:
+			entry.set_remaining(cooldowns.get_remaining(spell.id))
 
 
 func get_entry(spell_id: StringName) -> CooldownEntry:

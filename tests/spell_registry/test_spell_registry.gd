@@ -1,7 +1,7 @@
 extends SceneTree
 
-const PLAYER_SCENE := preload("res://entities/player/Player.tscn")
-const PAUSE_MENU_SCENE := preload("res://ui/pause_menu/PauseMenu.tscn")
+var player_scene: PackedScene
+var pause_menu_scene: PackedScene
 const SPELL_DATABASE := preload("res://spells/spell_database.tres")
 
 var _checks: int = 0
@@ -13,6 +13,9 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	player_scene = load("res://entities/player/Player.tscn")
+	pause_menu_scene = load("res://ui/pause_menu/PauseMenu.tscn")
+
 	await process_frame
 
 	_test_database_queries_and_copying()
@@ -119,7 +122,7 @@ func _test_registries_are_independent() -> void:
 
 
 func _test_player_casting_and_cooldown_integration() -> void:
-	var player := PLAYER_SCENE.instantiate()
+	var player := player_scene.instantiate()
 	root.add_child(player)
 	await process_frame
 	player.set_physics_process(false)
@@ -169,14 +172,14 @@ func _test_player_casting_and_cooldown_integration() -> void:
 
 
 func _test_debug_ui_controls() -> void:
-	var player := PLAYER_SCENE.instantiate()
+	var player := player_scene.instantiate()
 	root.add_child(player)
 	await process_frame
 	player.set_physics_process(false)
 
 	var registry: SpellRegistry = player.get_node("SpellRegistry")
 	var hud: PlayerHud = player.get_node("PlayerHudLayer/PlayerHud")
-	var pause_menu := PAUSE_MENU_SCENE.instantiate() as PauseMenu
+	var pause_menu := pause_menu_scene.instantiate() as PauseMenu
 	pause_menu.spell_registry = registry
 	root.add_child(pause_menu)
 	await process_frame

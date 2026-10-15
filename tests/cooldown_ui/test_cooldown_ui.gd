@@ -1,8 +1,8 @@
 extends SceneTree
 
-const COOLDOWN_ENTRY_SCENE := preload("res://spells/ui/CooldownEntry.tscn")
-const COOLDOWN_UI_SCENE := preload("res://spells/ui/CooldownUI.tscn")
-const PLAYER_SCENE := preload("res://entities/player/Player.tscn")
+var cooldown_entry_scene: PackedScene
+var cooldown_ui_scene: PackedScene
+var player_scene: PackedScene
 const DASH_DEFINITION := preload("res://spells/dash/dash_spell_definition.tres")
 const DOUBLE_JUMP_DEFINITION := preload(
 	"res://spells/double_jump/double_jump_spell_definition.tres"
@@ -21,6 +21,10 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	cooldown_entry_scene = load("res://spells/ui/CooldownEntry.tscn")
+	cooldown_ui_scene = load("res://spells/ui/CooldownUI.tscn")
+	player_scene = load("res://entities/player/Player.tscn")
+
 	await process_frame
 
 	_test_initial_spell_icons()
@@ -49,7 +53,7 @@ func _test_initial_spell_icons() -> void:
 
 
 func _test_vertical_overlay_progress() -> void:
-	var entry := COOLDOWN_ENTRY_SCENE.instantiate() as CooldownEntry
+	var entry := cooldown_entry_scene.instantiate() as CooldownEntry
 	root.add_child(entry)
 	await process_frame
 
@@ -76,7 +80,7 @@ func _test_vertical_overlay_progress() -> void:
 
 func _test_cooldown_lifecycle_and_ordering() -> void:
 	var cooldowns := SpellCooldowns.new()
-	var cooldown_ui := COOLDOWN_UI_SCENE.instantiate() as CooldownUI
+	var cooldown_ui := cooldown_ui_scene.instantiate() as CooldownUI
 	root.add_child(cooldowns)
 	root.add_child(cooldown_ui)
 	await process_frame
@@ -137,7 +141,7 @@ func _test_cooldown_lifecycle_and_ordering() -> void:
 
 
 func _test_player_hud_integration() -> void:
-	var player := PLAYER_SCENE.instantiate()
+	var player := player_scene.instantiate()
 	root.add_child(player)
 	await process_frame
 	player.set_physics_process(false)
@@ -168,7 +172,7 @@ func _test_player_hud_integration() -> void:
 func _test_rejected_cast_does_not_restart_entry() -> void:
 	var cooldowns := SpellCooldowns.new()
 	var invoker := SpellInvoker.new()
-	var cooldown_ui := COOLDOWN_UI_SCENE.instantiate() as CooldownUI
+	var cooldown_ui := cooldown_ui_scene.instantiate() as CooldownUI
 	invoker.cooldowns = cooldowns
 	root.add_child(cooldowns)
 	root.add_child(invoker)

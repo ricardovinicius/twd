@@ -6,6 +6,11 @@ signal action_ignored(action: ActionData)
 
 
 func receive_action(action: ActionData) -> void:
+    if action == null:
+        push_warning("ActionReceiver: Received a null action.")
+        action_ignored.emit(action)
+        return
+
     var handled := false
 
     print("ActionReceiver: Received action of type '%s' from source '%s'" % [action.type, action.source])
@@ -19,13 +24,13 @@ func receive_action(action: ActionData) -> void:
 
         if not reaction.supports(action):
             continue
-        
+
         reaction.react(action)
         handled = true
-    
+
     if handled:
         action_received.emit(action)
     else:
         action_ignored.emit(action)
-    
-            
+
+

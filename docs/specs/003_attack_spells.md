@@ -56,6 +56,7 @@ sequenceDiagram
 - Add AttackReceiver and BasicMobDamage to an initial test entity (dummy)
 - Test no targets, one target, several targets, etc.
 - The projectile must be able to be destroyed when it collides with a target entity or other obstacle
+- The projectile is added under `SpellContext.effect_parent` but uses a top-level world-space transform. It preserves its configured scene scale and does not inherit the caster's movement, rotation, or scale after launch.
 
 ## Recommended order
 

@@ -99,7 +99,7 @@ DoubleJumpSpell (SpellCommand)
 
 ## SpellJumpComponent
 
-Create `components/movement/spell_jump_component.gd` with class name `SpellJumpComponent`. Its public contract should remain small:
+Create `entities/player/movement/spell_jump_component.gd` with class name `SpellJumpComponent`. Its public contract should remain small:
 
 ```gdscript
 class_name SpellJumpComponent

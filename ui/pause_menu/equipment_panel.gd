@@ -27,6 +27,10 @@ func _ready() -> void:
 
 
 func refresh() -> void:
+	if equipment == null or stats == null or health == null or inventory == null:
+		push_warning("EquipmentPanel: Equipment dependencies are not assigned.")
+		return
+
 	if not equipment.equipment_changed.is_connected(_on_equipment_changed):
 		equipment.equipment_changed.connect(_on_equipment_changed)
 
@@ -44,7 +48,7 @@ func _on_equipment_changed(_slot_index: int, _item: ItemDefinition) -> void:
 
 func _refresh_slots() -> void:
 	for i in slot_buttons.size():
-		var item := equipment.slots[i]
+		var item := equipment.get_item(i)
 		slot_buttons[i].text = item.display_name if item != null else "Item"
 
 		if item != null and item.icon:

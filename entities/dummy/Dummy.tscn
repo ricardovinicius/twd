@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://b1w4namq34for"]
 
-[ext_resource type="Script" uid="uid://cfbot3gkt04cq" path="res://health/damage_animation.gd" id="1_j521q"]
+[ext_resource type="Script" uid="uid://cfbot3gkt04cq" path="res://entities/dummy/damage_animation.gd" id="1_j521q"]
 [ext_resource type="Texture2D" uid="uid://6b612c4878w2" path="res://entities/dummy/sprites/hit_32x32.png" id="1_vlfdi"]
 [ext_resource type="Texture2D" uid="uid://e6aoi0oyj0bv" path="res://entities/dummy/sprites/idle_32x32.png" id="2_1mvqt"]
-[ext_resource type="Script" uid="uid://njnek1a4aq7p" path="res://health/destroy_on_death.gd" id="3_cshfw"]
+[ext_resource type="Script" uid="uid://crs540wacfv0j" path="res://health/destroy_on_death.gd" id="3_cshfw"]
 [ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="3_uo211"]
 [ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="4_cshfw"]
 [ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="6_wfdha"]
@@ -167,7 +167,7 @@ autoplay = "idle"
 script = ExtResource("3_cshfw")
 health = NodePath("../Health")
 target = NodePath("..")
-metadata/_custom_type_script = "uid://njnek1a4aq7p"
+metadata/_custom_type_script = "uid://crs540wacfv0j"
 
 [node name="Health" type="Node" parent="." unique_id=1466488222]
 script = ExtResource("3_uo211")

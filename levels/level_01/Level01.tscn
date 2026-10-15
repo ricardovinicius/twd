@@ -1,24 +1,23 @@
 [gd_scene format=4 uid="uid://6uw7wsvlc7y2"]
 
-[ext_resource type="Texture2D" uid="uid://q22j3hu1s068" path="res://assets/tilemap/tile_set_basic_background.png" id="1_thp0t"]
-[ext_resource type="Texture2D" uid="uid://c0fcp3xtcaspv" path="res://assets/tilemap/tile_set_books.png" id="2_b3jm5"]
-[ext_resource type="Texture2D" uid="uid://co4s2usu2ucjv" path="res://assets/tilemap/prateleira_madeira.png" id="3_aqob7"]
-[ext_resource type="Texture2D" uid="uid://b6i6d5545lwsf" path="res://assets/tilemap/tile_set_1.png" id="3_b3jm5"]
+[ext_resource type="Texture2D" uid="uid://q22j3hu1s068" path="res://levels/level_01/assets/tilemap/tile_set_basic_background.png" id="1_thp0t"]
+[ext_resource type="Texture2D" uid="uid://c0fcp3xtcaspv" path="res://levels/level_01/assets/tilemap/tile_set_books.png" id="2_b3jm5"]
+[ext_resource type="Texture2D" uid="uid://co4s2usu2ucjv" path="res://levels/level_01/assets/tilemap/prateleira_madeira.png" id="3_aqob7"]
+[ext_resource type="Texture2D" uid="uid://b6i6d5545lwsf" path="res://levels/level_01/assets/tilemap/tile_set_1.png" id="3_b3jm5"]
 [ext_resource type="PackedScene" uid="uid://be8qbmt0fe144" path="res://entities/player/Player.tscn" id="3_dm0pi"]
-[ext_resource type="Texture2D" uid="uid://cteob1i62bms7" path="res://assets/tilemap/tile_set_basic.png" id="4_upmp1"]
-[ext_resource type="Texture2D" uid="uid://dwaxefw00lsap" path="res://assets/tilemap/destructive_block_1.png" id="5_5dpqp"]
+[ext_resource type="Texture2D" uid="uid://cteob1i62bms7" path="res://levels/level_01/assets/tilemap/tile_set_basic.png" id="4_upmp1"]
+[ext_resource type="Texture2D" uid="uid://dwaxefw00lsap" path="res://levels/level_01/assets/tilemap/destructive_block_1.png" id="5_5dpqp"]
 [ext_resource type="PackedScene" uid="uid://c07v06tcl5mos" path="res://entities/items/BottleTriangle.tscn" id="5_aqob7"]
-[ext_resource type="Texture2D" uid="uid://dqj25qt1gdarj" path="res://assets/tilemap/destructive_block_2.png" id="6_qu0in"]
-[ext_resource type="Texture2D" uid="uid://cwct6cm77rk3i" path="res://assets/tilemap/chandelier.png" id="8_6aend"]
-[ext_resource type="Script" uid="uid://ughfcn5adrqx" path="res://levels/level_01/checkpoint.gd" id="9_uld3a"]
+[ext_resource type="Texture2D" uid="uid://dqj25qt1gdarj" path="res://levels/level_01/assets/tilemap/destructive_block_2.png" id="6_qu0in"]
+[ext_resource type="Texture2D" uid="uid://cwct6cm77rk3i" path="res://levels/level_01/assets/tilemap/chandelier.png" id="8_6aend"]
+[ext_resource type="PackedScene" path="res://entities/interactive/checkpoint/Checkpoint.tscn" id="9_checkpoint"]
 [ext_resource type="PackedScene" uid="uid://voymbcvjwcmq" path="res://entities/items/BottleLine.tscn" id="10_5dpqp"]
 [ext_resource type="PackedScene" uid="uid://cgaihek5qxa15" path="res://entities/enemies/basic_skeleton/BasicSkeleton.tscn" id="10_upmp1"]
 [ext_resource type="Script" uid="uid://d23erex8ajwk" path="res://levels/level_01/camera_2d.gd" id="11_0euej"]
 [ext_resource type="PackedScene" path="res://entities/interactive/lever/Lever.tscn" id="11_lever"]
 [ext_resource type="PackedScene" uid="uid://c4iwhpprq4xb5" path="res://entities/interactive/door/Door.tscn" id="12_door"]
-[ext_resource type="Script" uid="uid://kqq5ql8icjqo" path="res://entities/interactive/door/door_controller.gd" id="15_6aend"]
-[ext_resource type="Script" uid="uid://dlo81gifjljid" path="res://entities/manager/enemy_manager.gd" id="16_n4hfu"]
-[ext_resource type="PackedScene" uid="uid://chuh85ml5k8s7" path="res://entities/items/definitions/item.tscn" id="18_6qj1r"]
+[ext_resource type="Script" uid="uid://dlo81gifjljid" path="res://entities/enemies/respawn/enemy_respawner.gd" id="16_n4hfu"]
+[ext_resource type="PackedScene" uid="uid://chuh85ml5k8s7" path="res://entities/items/pickup/ItemPickup.tscn" id="18_6qj1r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b3jm5"]
 texture = ExtResource("1_thp0t")
@@ -687,9 +686,6 @@ sources/0 = SubResource("TileSetAtlasSource_ng00s")
 sources/1 = SubResource("TileSetAtlasSource_ehlne")
 sources/2 = SubResource("TileSetAtlasSource_anxy3")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6aend"]
-size = Vector2(73, 60)
-
 [node name="LevelRoot" type="Node2D" unique_id=39161027]
 
 [node name="TileMapFundo1" type="TileMapLayer" parent="." unique_id=1875558897]
@@ -711,27 +707,12 @@ scale = Vector2(3, 3)
 tile_map_data = PackedByteArray("AADx/xIAAgAAAAAAAADx/xMAAgAAAAEAAADx/xQAAgAAAAIAAADx/xUAAgAAAAMAAADy/xIAAgABAAAAAADy/xMAAgABAAEAAADy/xQAAgABAAIAAADy/xUAAgABAAMAAAA=")
 tile_set = SubResource("TileSet_ticvn")
 
-[node name="checkpoint" type="Area2D" parent="." unique_id=1649291570]
-collision_layer = 5
-collision_mask = 7
-script = ExtResource("9_uld3a")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="checkpoint" unique_id=386619942]
-position = Vector2(94.5, 3187)
-shape = SubResource("RectangleShape2D_6aend")
-
-[node name="Marker2D" type="Marker2D" parent="checkpoint" unique_id=1718514267]
+[node name="Checkpoint" parent="." unique_id=1649291570 instance=ExtResource("9_checkpoint")]
 position = Vector2(95, 3187)
 
-[node name="ColorRect" type="ColorRect" parent="checkpoint" unique_id=1701746993]
-offset_left = 57.0
-offset_top = 3157.0
-offset_right = 132.0
-offset_bottom = 3218.0
-metadata/_edit_use_anchors_ = true
-
-[node name="Player" parent="." unique_id=599257793 instance=ExtResource("3_dm0pi")]
+[node name="Player" parent="." unique_id=599257793 node_paths=PackedStringArray("camera") instance=ExtResource("3_dm0pi")]
 position = Vector2(198, 583)
+camera = NodePath("Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1177485573]
 offset = Vector2(0, -20)
@@ -757,18 +738,14 @@ collision_layer = 5
 position = Vector2(1351, 975)
 collision_layer = 5
 
-[node name="Lever_2" parent="." unique_id=1189508911 instance=ExtResource("11_lever")]
+[node name="Lever2" parent="." unique_id=1189508911 instance=ExtResource("11_lever")]
 position = Vector2(5371, 1778)
 rotation = -6.2831855
 
-[node name="PivotJoint" parent="Lever_2" index="3"]
-node_a = NodePath("")
-node_b = NodePath("")
-
-[node name="Door_2" parent="." unique_id=1577527833 node_paths=PackedStringArray("switch") instance=ExtResource("12_door")]
+[node name="Door2" parent="." unique_id=1577527833 node_paths=PackedStringArray("switch") instance=ExtResource("12_door")]
 position = Vector2(4944, 1776)
 rotation = -6.2831855
-switch = NodePath("../Lever_2/SwitchComponent")
+switch = NodePath("../Lever2/SwitchComponent")
 
 [node name="BottleTriangle" parent="." unique_id=1087390374 instance=ExtResource("5_aqob7")]
 position = Vector2(5359, 980)
@@ -784,67 +761,53 @@ position = Vector2(5281, 654)
 [node name="BottleLine2" parent="." unique_id=1069525285 instance=ExtResource("10_5dpqp")]
 position = Vector2(5345, 639)
 
-[node name="DoorController" type="Node2D" parent="." unique_id=1932270721]
-script = ExtResource("15_6aend")
-metadata/_custom_type_script = "uid://kqq5ql8icjqo"
-
-[node name="Door_3" parent="." unique_id=465776971 node_paths=PackedStringArray("switch") instance=ExtResource("12_door")]
+[node name="Door3" parent="." unique_id=465776971 node_paths=PackedStringArray("switch") instance=ExtResource("12_door")]
 position = Vector2(5041, 1057)
 rotation = 1.5707964
-switch = NodePath("../Lever_3/SwitchComponent")
+switch = NodePath("../Lever3/SwitchComponent")
 
-[node name="Lever_3" parent="." unique_id=93309998 instance=ExtResource("11_lever")]
+[node name="Lever3" parent="." unique_id=93309998 instance=ExtResource("11_lever")]
 position = Vector2(5470, 1018)
 
-[node name="PivotJoint" parent="Lever_3" index="3"]
-node_a = NodePath("")
-node_b = NodePath("")
-
-[node name="Door_4" parent="." unique_id=1452755879 node_paths=PackedStringArray("switch") instance=ExtResource("12_door")]
+[node name="Door4" parent="." unique_id=1452755879 node_paths=PackedStringArray("switch") instance=ExtResource("12_door")]
 position = Vector2(5619, 1344)
 rotation = -1.5707964
-switch = NodePath("../Lever_4/SwitchComponent")
+switch = NodePath("../Lever4/SwitchComponent")
 
-[node name="Lever_4" parent="." unique_id=1043681855 instance=ExtResource("11_lever")]
+[node name="Lever4" parent="." unique_id=1043681855 instance=ExtResource("11_lever")]
 position = Vector2(5182, 1306)
 
-[node name="PivotJoint" parent="Lever_4" index="3"]
-node_a = NodePath("")
-node_b = NodePath("")
-
-[node name="Node2D" type="Node2D" parent="." unique_id=1668798102]
+[node name="EnemyRespawner" type="Node2D" parent="." unique_id=1668798102]
 script = ExtResource("16_n4hfu")
 
-[node name="BasicMob" parent="Node2D" unique_id=807228014 instance=ExtResource("10_upmp1")]
+[node name="BasicMob" parent="EnemyRespawner" unique_id=807228014 instance=ExtResource("10_upmp1")]
 position = Vector2(-562, 946)
 collision_mask = 5
 
-[node name="BasicMob2" parent="Node2D" unique_id=1482072956 instance=ExtResource("10_upmp1")]
+[node name="BasicMob2" parent="EnemyRespawner" unique_id=1482072956 instance=ExtResource("10_upmp1")]
 position = Vector2(3503.0002, 1732.0001)
 collision_mask = 5
 
-[node name="BasicMob3" parent="Node2D" unique_id=567108536 instance=ExtResource("10_upmp1")]
+[node name="BasicMob3" parent="EnemyRespawner" unique_id=567108536 instance=ExtResource("10_upmp1")]
 position = Vector2(1442, 1735.0001)
 collision_mask = 5
 
-[node name="BasicMob4" parent="Node2D" unique_id=705642612 instance=ExtResource("10_upmp1")]
+[node name="BasicMob4" parent="EnemyRespawner" unique_id=705642612 instance=ExtResource("10_upmp1")]
 position = Vector2(2414, 1533)
 collision_mask = 5
 
-[node name="BasicMob5" parent="Node2D" unique_id=1826279901 instance=ExtResource("10_upmp1")]
+[node name="BasicMob5" parent="EnemyRespawner" unique_id=1826279901 instance=ExtResource("10_upmp1")]
 position = Vector2(2977, 1733.0001)
 collision_mask = 5
 
-[node name="BasicMob6" parent="Node2D" unique_id=39197674 instance=ExtResource("10_upmp1")]
+[node name="BasicMob6" parent="EnemyRespawner" unique_id=39197674 instance=ExtResource("10_upmp1")]
 position = Vector2(672, 1736)
 collision_mask = 5
 
-[connection signal="body_entered" from="checkpoint" to="checkpoint" method="_on_body_entered"]
-[connection signal="body_exited" from="checkpoint" to="checkpoint" method="_on_body_exited"]
 
-[editable path="Lever_2"]
-[editable path="Door_2"]
-[editable path="Door_3"]
-[editable path="Lever_3"]
-[editable path="Door_4"]
-[editable path="Lever_4"]
+[editable path="Lever2"]
+[editable path="Door2"]
+[editable path="Door3"]
+[editable path="Lever3"]
+[editable path="Door4"]
+[editable path="Lever4"]

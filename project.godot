@@ -17,10 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameController="*uid://cu2smiat1rxgp"
-EventController="*uid://b6huigtdprlmo"
-CoinManager="*uid://bfbn847lxt710"
-Events="*uid://bwny3uyxvp24b"
+CoinManager="*res://currency/coin_manager.gd"
+Events="*res://events.gd"
 
 [display]
 

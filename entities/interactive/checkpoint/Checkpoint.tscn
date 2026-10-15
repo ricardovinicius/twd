@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/interactive/checkpoint/checkpoint.gd" id="1_checkpoint"]
+[ext_resource type="PackedScene" path="res://entities/interactive/checkpoint/ui/CheckpointMenu.tscn" id="2_menu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_checkpoint"]
+size = Vector2(73, 60)
+
+[node name="Checkpoint" type="Area2D" node_paths=PackedStringArray("spawn_point")]
+collision_layer = 5
+collision_mask = 7
+script = ExtResource("1_checkpoint")
+spawn_point = NodePath("SpawnPoint")
+menu_scene = ExtResource("2_menu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_checkpoint")
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -38.0
+offset_top = -30.0
+offset_right = 37.0
+offset_bottom = 31.0
+mouse_filter = 2

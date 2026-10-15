@@ -5,6 +5,8 @@ signal cooldown_started(spell: SpellDefinition, duration: float)
 signal cooldown_finished(spell_id: StringName)
 
 var _ends_at_msec: Dictionary[StringName, int] = {}
+var _active_spells: Dictionary[StringName, SpellDefinition] = {}
+var _durations: Dictionary[StringName, float] = {}
 
 
 func _ready() -> void:
@@ -17,6 +19,8 @@ func _process(_delta: float) -> void:
 	for spell_id in _ends_at_msec.keys():
 		if now >= _ends_at_msec[spell_id]:
 			_ends_at_msec.erase(spell_id)
+			_active_spells.erase(spell_id)
+			_durations.erase(spell_id)
 			cooldown_finished.emit(spell_id)
 
 	if _ends_at_msec.is_empty():
@@ -28,10 +32,12 @@ func is_ready(spell: SpellDefinition) -> bool:
 
 
 func start(spell: SpellDefinition) -> void:
-	if spell == null or spell.cooldown <= 0.0:
+	if spell == null or spell.cooldown <= 0.0 or not is_ready(spell):
 		return
 
 	_ends_at_msec[spell.id] = Time.get_ticks_msec() + ceili(spell.cooldown * 1000.0)
+	_active_spells[spell.id] = spell
+	_durations[spell.id] = spell.cooldown
 	set_process(true)
 	cooldown_started.emit(spell, spell.cooldown)
 
@@ -44,6 +50,8 @@ func get_remaining(spell_id: StringName) -> float:
 
 	if remaining_msec <= 0:
 		_ends_at_msec.erase(spell_id)
+		_active_spells.erase(spell_id)
+		_durations.erase(spell_id)
 		cooldown_finished.emit(spell_id)
 
 		if _ends_at_msec.is_empty():
@@ -52,3 +60,16 @@ func get_remaining(spell_id: StringName) -> float:
 		return 0.0
 
 	return remaining_msec / 1000.0
+
+
+func get_active_spells() -> Array[SpellDefinition]:
+	var active_spells: Array[SpellDefinition] = []
+	# Dictionary insertion order preserves cooldown start order.
+	for spell_id in _ends_at_msec.keys():
+		if get_remaining(spell_id) > 0.0:
+			active_spells.append(_active_spells[spell_id])
+	return active_spells
+
+
+func get_duration(spell_id: StringName) -> float:
+	return _durations.get(spell_id, 0.0)

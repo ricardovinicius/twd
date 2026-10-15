@@ -42,7 +42,7 @@ func _execute() -> void:
 	var attack := _create_attack_data(projectile_direction)
 	var projectile_parent := _get_projectile_parent()
 
-	context.caster.add_sibling(projectile)
+	projectile_parent.add_child(projectile)
 
 	projectile.launch(
 		context.origin,

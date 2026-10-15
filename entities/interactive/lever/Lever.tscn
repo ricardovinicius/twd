@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://entities/interactive/lever/lever_handle.gd" id="3_handle"]
 [ext_resource type="Script" path="res://entities/interactive/lever/physics_lever_component.gd" id="4_physics"]
 [ext_resource type="Script" path="res://components/action_reactions/action_receiver.gd" id="5_receiver"]
-[ext_resource type="Script" path="res://components/action_reactions/lever/lever_impulse_reaction.gd" id="6_reaction"]
+[ext_resource type="Script" path="res://entities/interactive/lever/lever_impulse_reaction.gd" id="6_reaction"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_base"]
 size = Vector2(38, 12)

@@ -18,9 +18,9 @@ signal spell_selected(spell: SpellDefinition)
 @export var spell_origin: Marker2D
 @export var effect_parent: Node
 @export var projectile_aim: Node
+@export var spell_invoker: SpellInvoker
 
 @onready var timeout_timer: Timer = $TimeoutTimer
-@onready var spell_invoker: SpellInvoker = $"../SpellInvoker"
 
 var current_sequence: Array[StringName] = []
 
@@ -29,6 +29,11 @@ var sequence_to_spell: Dictionary[StringName, SpellDefinition] = {}
 
 
 func _ready() -> void:
+	if spell_invoker == null:
+		push_error("SequenceCaster: SpellInvoker is not assigned.")
+		set_process_unhandled_input(false)
+		return
+
 	timeout_timer.one_shot = true
 	timeout_timer.timeout.connect(_on_timeout)
 	spell_invoker.spell_rejected.connect(_on_spell_rejected)
@@ -64,6 +69,12 @@ func clear_sequence() -> void:
 
 
 func confirm_sequence() -> void:
+	if spell_invoker == null or not is_instance_valid(caster) or spell_origin == null:
+		push_error("SequenceCaster: Casting dependencies are not assigned.")
+		sequence_failed.emit(current_sequence.duplicate(), &"missing_cast_dependencies")
+		clear_sequence()
+		return
+
 	if current_sequence.is_empty():
 		push_warning("SequenceCaster::confirm_sequence() - No sequence to confirm.")
 		return

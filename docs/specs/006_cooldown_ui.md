@@ -106,6 +106,8 @@ The `cooldown_started` signal should provide enough metadata for the UI to creat
 
 `CooldownUI` should keep a dictionary from spell ID to entry for direct updates and removal, plus rely on the `HBoxContainer` child order for visual casting order. Since a spell cannot be accepted again while its cooldown is active, duplicate entries for one spell ID should not occur. The UI should nevertheless guard against a duplicate start signal and update the existing entry instead of adding another.
 
+When the HUD is attached or reconnected during active cooldowns, it reconstructs entries from `SpellCooldowns.get_active_spells()` in cooldown-start order. `get_duration(spell_id)` returns the duration captured when that cooldown began, and `get_remaining(spell_id)` supplies its current progress. These queries expose derived views without transferring gameplay state to the UI. Calling `start()` for an already active spell is an idempotent no-op.
+
 ## Progress Presentation
 
 Cooldown progress is normalized as:

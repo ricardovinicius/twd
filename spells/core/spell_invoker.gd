@@ -68,5 +68,5 @@ func cast(spell: SpellDefinition, context: SpellContext) -> SpellCommand:
 func _on_command_finished() -> void:
 	spell_finished.emit()
 
-func _on_command_failed(spell: SpellDefinition, command: SpellCommand, reason: StringName) -> void:
+func _on_command_failed(command: SpellCommand, reason: StringName, spell: SpellDefinition) -> void:
 	spell_failed.emit(spell, command, reason)
