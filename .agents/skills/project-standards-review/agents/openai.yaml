@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Standards Review"
+  short_description: "Review code against project instructions and specs"
+  default_prompt: "Use $project-standards-review to review this project against its AGENTS.md instructions and feature specs, and report actionable findings."
