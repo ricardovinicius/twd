@@ -31,6 +31,7 @@ entities/
   dummy/                          Combat test entity and its damage animation
 currency/
   coin_manager.gd                 Autoload owning the currency total
+  drop/                           Death-triggered Stardust drops composed into enemies
   pickup/                         Currency pickup scene and behavior
   ui/                             Currency display
 health/                           Shared health and generic death policies

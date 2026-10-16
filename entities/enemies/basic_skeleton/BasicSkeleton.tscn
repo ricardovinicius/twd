@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://cpav8kyar4bws" path="res://entities/enemies/basic_skeleton/sprites/attack.png" id="13_attack"]
 [ext_resource type="Script" uid="uid://dx4kugto8jvw2" path="res://entities/enemies/combat/contact_impact_component.gd" id="14_contact"]
 [ext_resource type="Script" uid="uid://dsjaapsgk0ke3" path="res://components/contact/character_rigid_body_push_component.gd" id="15_rigid_body_push"]
+[ext_resource type="Script" path="res://currency/drop/stardust_drop_on_death.gd" id="16_stardust_drop"]
+[ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://currency/pickup/CoinPickup.tscn" id="17_coin_pickup"]
 
 [sub_resource type="AtlasTexture" id="Attack00"]
 atlas = ExtResource("13_attack")
@@ -423,6 +425,14 @@ maximum = 50.0
 script = ExtResource("10_death")
 health = NodePath("../Health")
 target = NodePath("..")
+
+[node name="StardustDropOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "source")]
+script = ExtResource("16_stardust_drop")
+health = NodePath("../Health")
+source = NodePath("..")
+pickup_scene = ExtResource("17_coin_pickup")
+pickup_count = 2
+amount_per_pickup = 10
 
 [node name="AttackReceiver" type="Area2D" parent="." unique_id=1924509952]
 collision_layer = 16

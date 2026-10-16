@@ -6,5 +6,12 @@ var coins := 0
 
 
 func add_coin():
-	coins += 1
+	add_coins(1)
+
+
+func add_coins(amount: int) -> void:
+	if amount <= 0:
+		return
+
+	coins += amount
 	coins_changed.emit(coins)
