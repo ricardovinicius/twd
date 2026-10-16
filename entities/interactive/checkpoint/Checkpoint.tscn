@@ -7,8 +7,8 @@
 size = Vector2(73, 60)
 
 [node name="Checkpoint" type="Area2D" node_paths=PackedStringArray("spawn_point")]
-collision_layer = 5
-collision_mask = 7
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("1_checkpoint")
 spawn_point = NodePath("SpawnPoint")
 menu_scene = ExtResource("2_menu")

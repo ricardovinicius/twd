@@ -1,46 +1,52 @@
 class_name Checkpoint
-extends Area2D
+extends InteractionTarget
 
 @export var spawn_point: Marker2D
 @export var menu_scene: PackedScene
 
-var _player_inside: CharacterBody2D
 var _active_menu: CheckpointMenu
 
 
 func _ready() -> void:
+	super._ready()
+	prompt = "Use checkpoint"
+
 	if spawn_point == null or menu_scene == null:
 		push_error("Checkpoint: Spawn point and menu scene must be assigned.")
-		set_process_unhandled_input(false)
-		return
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
+		enabled = false
 
 
-func _on_body_entered(body: Node2D) -> void:
-	if body is CharacterBody2D and body.is_in_group(&"player") and body.has_method(&"set_checkpoint"):
-		_player_inside = body
+func can_interact(player: Node2D) -> bool:
+	return (
+		super.can_interact(player)
+		and player.has_method(&"set_checkpoint")
+		and not is_instance_valid(_active_menu)
+	)
 
 
-func _on_body_exited(body: Node2D) -> void:
-	if body == _player_inside:
-		_player_inside = null
+func try_interact(player: Node2D) -> bool:
+	if not can_interact(player) or get_tree().paused:
+		return false
 
+	var interactor := player.get_interactor() as PlayerInteractor
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not event.is_action_pressed(&"interaction") or not is_instance_valid(_player_inside):
-		return
-	if is_instance_valid(_active_menu):
-		return
+	if (
+		interactor != null
+		and is_instance_valid(interactor.dialogue_session)
+		and interactor.dialogue_session.is_active()
+	):
+		return false
 
 	var instance := menu_scene.instantiate()
 	var menu := instance as CheckpointMenu
+
 	if menu == null:
 		instance.queue_free()
 		push_error("Checkpoint: Menu scene must have a CheckpointMenu root.")
-		return
+		return false
 
 	_active_menu = menu
 	get_tree().root.add_child(menu)
-	menu.open(_player_inside, spawn_point.global_position)
-	get_viewport().set_input_as_handled()
+	menu.open(player, spawn_point.global_position)
+
+	return true

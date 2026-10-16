@@ -4,7 +4,8 @@ The existing checkpoint interaction is a reusable feature under `entities/intera
 
 # Behavior Rules
 
-- An overlapping player can open the menu with the `interaction` action.
+- An overlapping player can open the menu through `PlayerInteractor` with the `interaction` action (E / right shoulder). NPCs and checkpoints share selection and input routing as defined in `011_npcs_and_dialogue.md`.
+- `Checkpoint` implements the shared `InteractionTarget` contract using its existing area. It does not listen for input independently, and rejects interaction while dialogue is active.
 - Opening the menu pauses gameplay and focuses Save. Repeated interaction creates no duplicate menu.
 - Save calls the player's public `set_checkpoint()` capability with the marker's global position.
 - Back closes the menu without changing the saved checkpoint.
@@ -28,7 +29,7 @@ CheckpointMenu (CanvasLayer, created while interacting)
 
 | Component | Responsibility |
 | --- | --- |
-| `Checkpoint` | Track an eligible player and open one configured menu at a time. |
+| `Checkpoint` | Report player overlap through the shared interaction contract and open one configured menu at a time when selected. |
 | `SpawnPoint` | Provide the world-space respawn location. |
 | `CheckpointMenu` | Present Save and Back, request checkpoint changes through the player API, and restore gameplay on close. |
 | `RespawnOnDeath` | Own the player's saved checkpoint, health restoration, and respawn lifecycle. |

@@ -20,6 +20,7 @@ Set `GODOT_BIN` to select a Godot executable. Each suite uses `tests/run_suite.s
 | `spell_registry` | Catalogue queries, per-player availability, dynamic casting, and registry UI. |
 | `double_jump` | Grounded and airborne casting, the single air charge and its recharge on landing, cooldowns, and movement-mode coordination. |
 | `jump_down` | One-way platform traversal and collision restoration. |
+| `npcs_and_dialogue` | Shared target selection, dialogue lifecycle, live movement/casting, input, interruptions, and pause integration. |
 | `checkpoint` | Reusable checkpoint placement, menu focus, Save/Back, duplicate protection, and player spawn integration. |
 | `platform_crawler` | Perimeter loop geometry, front-only detection, charge speed, death drop, and respawn configuration. |
 | `stardust_drop` | Enemy Stardust drops, pickup amounts, player-only collection, and `CoinManager.add_coins`. |

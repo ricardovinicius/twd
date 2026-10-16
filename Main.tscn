@@ -7,7 +7,10 @@
 [ext_resource type="Script" uid="uid://dj6eyinmd4aea" path="res://currency/ui/currency_display.gd" id="4_fos0i"]
 [ext_resource type="PackedScene" uid="uid://8xl8jaiae467" path="res://ui/select_menu/SelectMenu.tscn" id="5_fos0i"]
 
-[node name="Main" type="Node2D" unique_id=1783851588 node_paths=PackedStringArray("pause_menu", "spell_registry", "equipment", "stats", "health", "inventory")]
+[ext_resource type="Script" path="res://dialogue/dialogue_session.gd" id="6_dialogue"]
+[ext_resource type="PackedScene" path="res://dialogue/ui/DialoguePanel.tscn" id="7_dialogue_panel"]
+
+[node name="Main" type="Node2D" unique_id=1783851588 node_paths=PackedStringArray("pause_menu", "spell_registry", "equipment", "stats", "health", "inventory", "interactor", "dialogue_session", "dialogue_interaction")]
 process_mode = 1
 script = ExtResource("1_3dxm6")
 pause_menu = NodePath("PauseMenuLayer/PauseMenu")
@@ -16,6 +19,9 @@ equipment = NodePath("LevelRoot/Player/Equipment")
 stats = NodePath("LevelRoot/Player/Stats")
 health = NodePath("LevelRoot/Player/Health")
 inventory = NodePath("LevelRoot/Player/Inventory")
+interactor = NodePath("LevelRoot/Player/PlayerInteractor")
+dialogue_session = NodePath("DialogueSession")
+dialogue_interaction = NodePath("LevelRoot/VillageGuide/DialogueInteraction")
 
 [node name="LevelRoot" parent="." unique_id=39161027 instance=ExtResource("2_0wfyh")]
 process_mode = 1
@@ -58,3 +64,13 @@ grow_horizontal = 0
 text = "Stardust: 0"
 script = ExtResource("4_fos0i")
 metadata/_edit_use_anchors_ = true
+
+[node name="DialogueSession" type="Node" parent="." node_paths=PackedStringArray("player", "health", "respawn")]
+script = ExtResource("6_dialogue")
+player = NodePath("../LevelRoot/Player")
+health = NodePath("../LevelRoot/Player/Health")
+respawn = NodePath("../LevelRoot/Player/RespawnOnDeath")
+
+[node name="DialoguePanel" parent="." node_paths=PackedStringArray("session", "interactor") instance=ExtResource("7_dialogue_panel")]
+session = NodePath("../DialogueSession")
+interactor = NodePath("../LevelRoot/Player/PlayerInteractor")

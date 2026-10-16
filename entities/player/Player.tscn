@@ -37,6 +37,9 @@
 [ext_resource type="Script" path="res://entities/player/respawn/respawn_on_death.gd" id="35_respawn"]
 [ext_resource type="Script" path="res://components/contact/character_prop_push_component.gd" id="35_prop_push"]
 
+[ext_resource type="Script" path="res://entities/player/interaction/player_interactor.gd" id="36_interactor"]
+[ext_resource type="Script" path="res://entities/player/interaction/ui/interaction_prompt.gd" id="37_prompt"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
 region = Rect2(0, 0, 32, 32)
@@ -872,3 +875,30 @@ script = ExtResource("34_m1mwl")
 stats = NodePath("../Stats")
 health = NodePath("../Health")
 horizontal_movement = NodePath("../HorizontalMovement")
+
+[node name="PlayerInteractor" type="Node" parent="." node_paths=PackedStringArray("player", "health")]
+script = ExtResource("36_interactor")
+player = NodePath("..")
+health = NodePath("../Health")
+
+[node name="InteractionPrompt" type="CanvasLayer" parent="PlayerInteractor" node_paths=PackedStringArray("interactor")]
+layer = 3
+script = ExtResource("37_prompt")
+interactor = NodePath("..")
+
+[node name="Prompt" type="Label" parent="PlayerInteractor/InteractionPrompt"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_right = 250.0
+offset_top = -70.0
+offset_bottom = -36.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.57, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1

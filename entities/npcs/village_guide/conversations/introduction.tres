@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="DialogueDefinition" format=3]
+
+[ext_resource type="Script" path="res://dialogue/dialogue_definition.gd" id="1_definition"]
+[ext_resource type="Script" path="res://dialogue/dialogue_line.gd" id="2_line"]
+
+[sub_resource type="Resource" id="Line_1"]
+script = ExtResource("2_line")
+speaker_name = "Village Guide"
+text = "A new face in the library! Keep your spells ready. These halls are not as quiet as they look."
+
+[sub_resource type="Resource" id="Line_2"]
+script = ExtResource("2_line")
+speaker_name = "Village Guide"
+text = "You can keep moving while we talk. If trouble finds you, look after yourself first."
+
+[sub_resource type="Resource" id="Line_3"]
+script = ExtResource("2_line")
+speaker_name = "Village Guide"
+text = "Look for checkpoints on your travels. They give you somewhere to return when a spell goes wrong. Good luck!"
+
+[resource]
+script = ExtResource("1_definition")
+lines = Array[ExtResource("2_line")]([SubResource("Line_1"), SubResource("Line_2"), SubResource("Line_3")])

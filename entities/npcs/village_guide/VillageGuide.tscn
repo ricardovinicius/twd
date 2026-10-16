@@ -1,0 +1,136 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://dialogue/interaction/dialogue_interaction.gd" id="1_dialogue"]
+[ext_resource type="Script" path="res://components/interaction/interaction_target.gd" id="2_target"]
+[ext_resource type="Resource" path="res://entities/npcs/village_guide/conversations/introduction.tres" id="3_conversation"]
+[ext_resource type="Texture2D" path="res://entities/npcs/village_guide/assets/idle_32x32.png" id="4_idle"]
+[ext_resource type="Script" path="res://entities/npcs/movement/stationary_npc_body.gd" id="5_body"]
+[ext_resource type="Script" path="res://components/movement/gravity_component.gd" id="6_gravity"]
+
+[sub_resource type="AtlasTexture" id="Idle_0"]
+atlas = ExtResource("4_idle")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Idle_1"]
+atlas = ExtResource("4_idle")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Idle_2"]
+atlas = ExtResource("4_idle")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Idle_3"]
+atlas = ExtResource("4_idle")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Idle_4"]
+atlas = ExtResource("4_idle")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Idle_5"]
+atlas = ExtResource("4_idle")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Idle_6"]
+atlas = ExtResource("4_idle")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Idle_7"]
+atlas = ExtResource("4_idle")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Idle_8"]
+atlas = ExtResource("4_idle")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Idle_9"]
+atlas = ExtResource("4_idle")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Idle_10"]
+atlas = ExtResource("4_idle")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="GuideFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Idle_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle_10")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="BodyShape"]
+size = Vector2(22, 24.333334)
+
+[sub_resource type="CircleShape2D" id="TalkingRange"]
+radius = 63.333333
+
+[node name="VillageGuide" type="CharacterBody2D"]
+scale = Vector2(3, 3)
+collision_layer = 4
+collision_mask = 7
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("GuideFrames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3.833333)
+shape = SubResource("BodyShape")
+
+[node name="Gravity" type="Node" parent="."]
+script = ExtResource("6_gravity")
+
+[node name="StationaryNpcBody" type="Node" parent="." node_paths=PackedStringArray("body", "gravity")]
+script = ExtResource("5_body")
+body = NodePath("..")
+gravity = NodePath("../Gravity")
+
+[node name="InteractionTarget" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("2_target")
+prompt = "Talk to Village Guide"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionTarget"]
+shape = SubResource("TalkingRange")
+
+[node name="DialogueInteraction" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("1_dialogue")
+conversation = ExtResource("3_conversation")
+target = NodePath("../InteractionTarget")

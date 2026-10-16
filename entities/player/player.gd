@@ -12,6 +12,7 @@ extends CharacterBody2D
 @onready var rigid_body_push: CharacterRigidBodyPushComponent = $RigidBodyPush
 @onready var prop_push: CharacterPropPushComponent = $PropPush
 @onready var health: Health = $Health
+@onready var interactor: PlayerInteractor = $PlayerInteractor
 @onready var inventory: Inventory = $Inventory
 @onready var respawn: RespawnOnDeath = $RespawnOnDeath
 
@@ -278,3 +279,7 @@ func _on_respawned() -> void:
 	reset_physics_interpolation()
 	if camera != null:
 		camera.reset_smoothing()
+
+
+func get_interactor() -> PlayerInteractor:
+	return interactor

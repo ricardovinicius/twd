@@ -2,6 +2,7 @@
 
 - This project is a game built with the Godot engine.
 - Read the relevant feature specs in `docs/specs/` before implementing or changing gameplay behavior.
+- Follow [the code style guide](docs/CODE_STYLE.md) when writing or changing GDScript.
 
 # Project organization
 
@@ -18,6 +19,9 @@
 
 - Composition-over-inheritance: Use composition over inheritance to create flexible and reusable components. Instead of creating a deep inheritance hierarchy, favor composing objects with smaller, focused components that can be combined to achieve the desired behavior.
 - Keep components focused, with explicit contracts and clearly owned state. Entity scripts coordinate composed movement, detection, combat, health, and presentation components.
+- Prefer composing independent behavior in focused components over adding feature-specific forwarding methods to concrete entity scripts. A component should own the dependencies, configuration, and lifecycle needed for its behavior and work without depending on a particular entity class.
+- Use scene composition and explicit dependency wiring to attach behavior to an entity. Keep entity controllers for coordination that belongs to the entity itself; a scene does not need a root script when its composed components provide all required behavior.
+- Keep these components concrete and inside their owning feature initially. This preference does not require a generic framework, a shared base class, or moving components into shared directories before actual reuse warrants it.
 - Start with concrete implementations and small APIs. Extract shared abstractions when concrete reuse demonstrates a need; keep inheritance shallow where a shared contract is useful.
 
 # Responsibilities and spell lifecycle
@@ -52,6 +56,7 @@
 
 - Export gameplay tuning values and component references so they can be configured in scenes. Keep presentation settings configurable without changing gameplay logic.
 - Validate required dependencies and report clear configuration errors. Handle missing or invalid data safely.
+- Follow [the logging policy](docs/LOGGING.md) for severity, message formatting, and optional debug tracing.
 - Rejected operations must not apply effects or change unrelated state. For example, a cooldown rejection must not restart its timer or create another HUD entry.
 - Deduplicate hits, continuous contact effects, and lifecycle events as required by the feature rules.
 - Free temporary commands, projectiles, and UI entries when their lifecycle ends. Handle removed targets and signal dependencies safely.

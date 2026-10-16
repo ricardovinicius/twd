@@ -20,6 +20,8 @@
 [ext_resource type="PackedScene" uid="uid://chuh85ml5k8s7" path="res://entities/items/pickup/ItemPickup.tscn" id="18_6qj1r"]
 [ext_resource type="PackedScene" path="res://entities/enemies/platform_crawler/PlatformCrawler.tscn" id="19_platform_crawler"]
 
+[ext_resource type="PackedScene" path="res://entities/npcs/village_guide/VillageGuide.tscn" id="20_guide"]
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b3jm5"]
 texture = ExtResource("1_thp0t")
 8:0/0 = 0
@@ -815,3 +817,6 @@ direction = -1
 [editable path="Lever3"]
 [editable path="Door4"]
 [editable path="Lever4"]
+
+[node name="VillageGuide" parent="." instance=ExtResource("20_guide")]
+position = Vector2(300, 600)

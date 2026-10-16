@@ -33,11 +33,8 @@ func _test_checkpoint_menu_and_respawn() -> void:
 	root.add_child(checkpoint)
 	await process_frame
 
-	var interaction := InputEventAction.new()
-	interaction.action = &"interaction"
-	interaction.pressed = true
 	checkpoint.body_entered.emit(player)
-	checkpoint._unhandled_input(interaction)
+	_press_interaction(player.get_interactor())
 	var menu := _find_menu()
 	_check(menu != null, "An eligible player must be able to open the checkpoint menu.")
 	if menu == null:
@@ -48,7 +45,7 @@ func _test_checkpoint_menu_and_respawn() -> void:
 	_check(paused, "Opening the checkpoint menu must pause gameplay.")
 	var save_button := menu.get_node("MenuHolder/SaveButton") as Button
 	_check(save_button.has_focus(), "The checkpoint Save button must receive focus.")
-	checkpoint._unhandled_input(interaction)
+	_press_interaction(player.get_interactor())
 	_check(_menu_count() == 1, "Repeated interaction must not create another checkpoint menu.")
 	menu.get_node("MenuHolder/BackButton").pressed.emit()
 	await process_frame
@@ -58,7 +55,7 @@ func _test_checkpoint_menu_and_respawn() -> void:
 	player.spawn_player()
 	_check(player.global_position == initial_position, "Back must leave the spawn position unchanged.")
 
-	checkpoint._unhandled_input(interaction)
+	_press_interaction(player.get_interactor())
 	menu = _find_menu()
 	_check(menu != null, "A closed checkpoint menu must be reopenable.")
 	if menu != null:
@@ -70,7 +67,7 @@ func _test_checkpoint_menu_and_respawn() -> void:
 		_check(player.global_position == checkpoint.spawn_point.global_position, "Save must use the checkpoint's world-space spawn point.")
 
 	checkpoint.body_exited.emit(player)
-	checkpoint._unhandled_input(interaction)
+	_press_interaction(player.get_interactor())
 	_check(_find_menu() == null, "Leaving the checkpoint must disable interaction.")
 	player.queue_free()
 	checkpoint.queue_free()
@@ -108,3 +105,15 @@ func _check(condition: bool, message: String) -> void:
 	_checks += 1
 	if not condition:
 		_failures.append(message)
+
+
+func _press_interaction(interactor: PlayerInteractor) -> void:
+	var release := InputEventAction.new()
+	release.action = &"interaction"
+	release.pressed = false
+	interactor._input(release)
+
+	var press := InputEventAction.new()
+	press.action = &"interaction"
+	press.pressed = true
+	interactor._unhandled_input(press)

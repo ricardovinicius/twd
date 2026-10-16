@@ -10,9 +10,12 @@ events.gd                         Cross-feature event signals
 entities/
   player/                         Player controller, inventory, equipment, stats, sprites
     input/                        Player aim input
+    interaction/                  Nearby selection, input routing, and interaction prompt
     movement/                     Player jump and knockback components
     reactions/                    Player action reactions
     respawn/                      Player spawn/checkpoint state and death response
+  npcs/village_guide/             Stationary guide, copied sprite assets, and introduction dialogue
+  npcs/movement/                  NPC stationary body physics using shared gravity
   enemies/
     basic_skeleton/               Concrete enemy scene, controller, and sprites
     combat/                       Enemy melee, hitbox, and contact behavior
@@ -42,7 +45,10 @@ spells/
   attack/                         Attack contracts, spell commands, and projectiles
   dash/ / double_jump/            Concrete movement spells
   ui/                             Spell sequence, cooldown, and registry presentation
+dialogue/                         Shared dialogue resources, active session, and panel
+  interaction/                    Composed target-to-dialogue behavior
 components/                       Components with consumers across features
+  interaction/                    NPC/checkpoint interaction contract
 levels/level_01/                  Level composition, camera, and level artwork
 ui/                               General menus and the player HUD
 assets/pickups/                   Placeholder artwork shared by items and currency
@@ -59,6 +65,8 @@ docs/specs/                       Feature behavior and acceptance criteria
 | `SpellDatabase` | Shared catalogue of spell definitions. |
 | `SpellRegistry` | One player's registered spell IDs. |
 | `SpellCooldowns` | Active cooldown end times, accepted durations, and start order. |
+| `DialogueSession` | Active conversation, current line, interruption subscriptions, and completion. |
+| `PlayerInteractor` | Nearby interaction candidates, selected target, and interaction/cancel input. |
 | `Health` | Health, shield, and depletion events. |
 | `Inventory` / `Equipment` | Item quantities and equipped slots, changed through public APIs. |
 | `RespawnOnDeath` | Player spawn position, checkpoint, and respawn lifecycle. |
@@ -103,3 +111,9 @@ Commands and projectiles own their temporary lifetime. UI observes authoritative
 ## Working on a feature
 
 Read its specification, keep new files with its owner, and update explicit references when moving resources. Preserve script and asset UID sidecars during moves. Keep scripts beside their scenes or in focused subdirectories within the feature. Use `tests/` and `docs/specs/` for feature verification and contracts; see `TESTING.md` for execution details.
+
+## NPC interaction and dialogue
+
+`InteractionTarget` detects eligible player overlap and registers with the player's public `get_interactor()` capability. `PlayerInteractor` selects one nearby NPC or checkpoint and routes each interaction press once. NPC scenes compose `DialogueInteraction`, which binds their interaction target to a read-only `DialogueDefinition` and the `DialogueSession` composed in `Main`. The NPC root needs no dialogue script. The guide composes `StationaryNpcBody` with shared gravity, a solid character body, and an animated sprite copied into its own assets directory. `Main` supplies the session to the dialogue interaction component and player interactor; it also supplies the session with player health and respawn lifecycle dependencies.
+
+Dialogue keeps movement, casting, enemies, and physics active. The session observes range loss, health damage, respawn, and participant removal; the panel derives its display from session state. Existing menus retain pause ownership. During pause the active conversation is preserved and hidden, and dialogue input is suspended. See `specs/011_npcs_and_dialogue.md` for contracts and interruption rules.
