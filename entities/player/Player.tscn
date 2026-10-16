@@ -801,7 +801,7 @@ script = ExtResource("20_m3vrt")
 [node name="SpellRegistry" type="Node" parent="." unique_id=1878501060]
 script = ExtResource("24_spell_registry")
 database = ExtResource("25_spell_database")
-initial_spell_ids = Array[StringName]([&"magic_arrow", &"push", &"dash", &"double_jump"])
+initial_spell_ids = Array[StringName]([&"magic_arrow", &"push", &"dash", &"double_jump", &"dig"])
 
 [node name="SequenceCaster" type="Node" parent="." unique_id=788599091 node_paths=PackedStringArray("registry", "caster", "spell_origin", "effect_parent", "projectile_aim", "spell_invoker")]
 script = ExtResource("7_26q78")
