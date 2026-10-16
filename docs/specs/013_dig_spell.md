@@ -51,5 +51,5 @@ DiggableBlock (StaticBody2D, layer World, scale 3)
 
 - J + K, then I, with a yellow block in front breaks it in one cast.
 - Push does not break the block; Magic Arrow stops on it.
-- The spell appears in the spell registry and the player's initial loadout.
+- The spell is catalogued in the spell database and unlocked by buying it at a checkpoint (see `014_spell_shop.md`).
 - Automated coverage: `tests/dig/`.

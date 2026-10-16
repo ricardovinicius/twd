@@ -15,3 +15,17 @@ func add_coins(amount: int) -> void:
 
 	coins += amount
 	coins_changed.emit(coins)
+
+
+func can_afford(amount: int) -> bool:
+	return amount >= 0 and coins >= amount
+
+
+func spend_coins(amount: int) -> bool:
+	if amount <= 0 or not can_afford(amount):
+		return false
+
+	coins -= amount
+	coins_changed.emit(coins)
+
+	return true

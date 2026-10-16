@@ -25,6 +25,7 @@ Set `GODOT_BIN` to select a Godot executable. Each suite uses `tests/run_suite.s
 | `platform_crawler` | Perimeter loop geometry, front-only detection, charge speed, death drop, and respawn configuration. |
 | `stardust_drop` | Enemy Stardust drops, pickup amounts, player-only collection, and `CoinManager.add_coins`. |
 | `dig` | Dig spell definition and sequence, one-hit block breaking, unsupported actions, player casting, and Level 01 block placement. |
+| `spell_shop` | Shop offers, locked multi-token spells, Stardust spending and rejection, checkpoint menu purchase flow. |
 | `standards` | Integration regressions for lifecycle signals, explicit dependencies, cooldown reconnection, inventory, and equipment. |
 
 The runner fails on unsuccessful process exits, script or engine errors, or a missing `PASS:` completion marker. It ignores only the known macOS system certificate lookup diagnostic emitted in sandboxed headless runs. A frame limit prevents a stalled suite from running indefinitely.

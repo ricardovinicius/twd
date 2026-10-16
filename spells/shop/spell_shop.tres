@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SpellShop" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://spells/shop/spell_shop.gd" id="1_shop"]
+
+[resource]
+script = ExtResource("1_shop")
+price = 100
+min_sequence_length = 2

@@ -106,7 +106,11 @@ func _test_definition_and_registration() -> void:
 
 	var registry: SpellRegistry = player.get_node("SpellRegistry")
 	var caster: SequenceCaster = player.get_node("SequenceCaster")
-	_check(registry.has_spell(&"double_jump"), "The player must register Double Jump by default.")
+	_check(
+		not registry.has_spell(&"double_jump"),
+		"Double Jump must be locked until it is bought at a checkpoint."
+	)
+	registry.register_spell(&"double_jump")
 	_check(
 		caster.sequence_to_spell.get(&"move+interaction") == definition,
 		"SequenceCaster must resolve Circle, Triangle to Double Jump."
@@ -365,6 +369,10 @@ func _recharge_air_spell_jump(player: CharacterBody2D) -> void:
 
 
 func _cast_double_jump(caster: SequenceCaster) -> void:
+	# Double Jump is bought at checkpoints; unlock it for these fixtures.
+	if caster.registry != null:
+		caster.registry.register_spell(&"double_jump")
+
 	caster.current_sequence.append(&"move")
 	caster.current_sequence.append(&"interaction")
 	caster.confirm_sequence()

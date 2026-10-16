@@ -159,6 +159,10 @@ func _spawn_player_facing_block() -> Array[Node2D]:
 	player.global_position = Vector2.ZERO
 	player.set_physics_process(false)
 
+	# Dig is sold at checkpoints, so the fixture unlocks it directly.
+	var registry: SpellRegistry = player.get_node("SpellRegistry")
+	registry.register_spell(&"dig")
+
 	var block := block_scene.instantiate() as Node2D
 	root.add_child(block)
 	block.global_position = Vector2(100.0, 0.0)
