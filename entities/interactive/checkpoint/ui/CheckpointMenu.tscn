@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://csdy7m72q6fhc"]
 
 [ext_resource type="Script" uid="uid://cnda7fmw0kdjs" path="res://entities/interactive/checkpoint/ui/checkpoint_menu.gd" id="1_n3lmq"]
+[ext_resource type="Resource" path="res://spells/shop/spell_shop.tres" id="2_spell_shop"]
 
 [node name="CheckpointMenu" type="CanvasLayer" unique_id=1904977480]
 script = ExtResource("1_n3lmq")
+spell_shop = ExtResource("2_spell_shop")
 
 [node name="MenuHolder" type="Control" parent="." unique_id=1868996611]
 layout_mode = 3
@@ -19,30 +21,93 @@ grow_vertical = 2
 [node name="SaveButton" type="Button" parent="MenuHolder" unique_id=1420583591]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.340625
+anchor_left = 0.26
 anchor_top = 0.15151516
-anchor_right = 0.496875
+anchor_right = 0.4
 anchor_bottom = 0.6212121
 grow_horizontal = 2
 grow_vertical = 2
+focus_neighbor_right = NodePath("../SpellsButton")
+text = "SAVE"
+metadata/_edit_use_anchors_ = true
+
+[node name="SpellsButton" type="Button" parent="MenuHolder"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.43
+anchor_top = 0.15151516
+anchor_right = 0.57
+anchor_bottom = 0.6212121
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_left = NodePath("../SaveButton")
 focus_neighbor_right = NodePath("../BackButton")
-text = "SAVE
-"
+text = "SPELLS"
 metadata/_edit_use_anchors_ = true
 
 [node name="BackButton" type="Button" parent="MenuHolder" unique_id=4979879]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5054687
+anchor_left = 0.6
 anchor_top = 0.15151516
-anchor_right = 0.6617187
+anchor_right = 0.74
 anchor_bottom = 0.6212121
 grow_horizontal = 2
 grow_vertical = 2
-focus_neighbor_left = NodePath("../SaveButton")
-text = "BACK
-"
+focus_neighbor_left = NodePath("../SpellsButton")
+text = "BACK"
 metadata/_edit_use_anchors_ = true
 
+[node name="ShopPanel" type="PanelContainer" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -170.0
+offset_right = 300.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="ShopPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="Content" type="VBoxContainer" parent="ShopPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TitleLabel" type="Label" parent="ShopPanel/Margin/Content"]
+layout_mode = 2
+text = "SPELLS"
+horizontal_alignment = 1
+
+[node name="StardustLabel" type="Label" parent="ShopPanel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Stardust: 0"
+horizontal_alignment = 1
+
+[node name="OfferList" type="VBoxContainer" parent="ShopPanel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="ShopBackButton" type="Button" parent="ShopPanel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(160, 0)
+text = "BACK"
+
 [connection signal="pressed" from="MenuHolder/SaveButton" to="." method="_on_save_btn_pressed"]
+[connection signal="pressed" from="MenuHolder/SpellsButton" to="." method="_on_spells_btn_pressed"]
 [connection signal="pressed" from="MenuHolder/BackButton" to="." method="_on_back_btn_pressed"]
+[connection signal="pressed" from="ShopPanel/Margin/Content/ShopBackButton" to="." method="_on_shop_back_btn_pressed"]

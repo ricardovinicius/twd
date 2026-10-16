@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Texture2D" uid="uid://dqj25qt1gdarj" path="res://levels/level_01/assets/tilemap/destructive_block_2.png" id="1_texture"]
+[ext_resource type="Script" path="res://health/health.gd" id="2_health"]
+[ext_resource type="Script" path="res://health/destroy_on_death.gd" id="3_destroy"]
+[ext_resource type="Script" path="res://components/action_reactions/action_receiver.gd" id="4_receiver"]
+[ext_resource type="Script" path="res://entities/interactive/diggable_block/dig_reaction.gd" id="5_dig_reaction"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_block"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_receiver"]
+size = Vector2(32, 32)
+
+[node name="DiggableBlock" type="StaticBody2D"]
+scale = Vector2(3, 3)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_texture")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_block")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_health")
+maximum = 1.0
+
+[node name="DestroyOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "target")]
+script = ExtResource("3_destroy")
+health = NodePath("../Health")
+target = NodePath("..")
+
+[node name="ActionReceiver" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActionReceiver"]
+shape = SubResource("RectangleShape2D_receiver")
+
+[node name="DigReaction" type="Node" parent="ActionReceiver" node_paths=PackedStringArray("health")]
+script = ExtResource("5_dig_reaction")
+health = NodePath("../../Health")

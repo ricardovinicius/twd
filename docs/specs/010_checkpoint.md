@@ -9,6 +9,7 @@ The existing checkpoint interaction is a reusable feature under `entities/intera
 - Opening the menu pauses gameplay and focuses Save. Repeated interaction creates no duplicate menu.
 - Save calls the player's public `set_checkpoint()` capability with the marker's global position.
 - Back closes the menu without changing the saved checkpoint.
+- Spells opens the spell shop described in `014_spell_shop.md`.
 - Either action resumes gameplay and frees the menu.
 - Leaving the area disables interaction. A freed player cannot open the menu.
 - Player respawn continues to belong to `entities/player/respawn/`, independent of the checkpoint's presentation.

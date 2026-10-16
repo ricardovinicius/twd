@@ -17,8 +17,10 @@ func _execute() -> void:
 	
 	effect_query.global_position = context.origin
 
-	if not context.direction.is_zero_approx():
-		effect_query.rotation = context.direction.angle()
+	var effect_direction := _get_effect_direction()
+
+	if not effect_direction.is_zero_approx():
+		effect_query.rotation = effect_direction.angle()
 	
 	effect_query.force_shapecast_update()
 
@@ -66,7 +68,12 @@ func _belongs_to_caster(node: Node) -> bool:
 		return false
 
 	return node == context.caster or context.caster.is_ancestor_of(node)
-	
+
+
+# Direction used to orient the effect query. Subclasses may aim elsewhere,
+# such as the player's aim input.
+func _get_effect_direction() -> Vector2:
+	return context.direction
 
 func _create_action_for(_receiver: ActionReceiver) -> ActionData:
 	push_error("ActionSpell: _create_action_for() method must be implemented in subclasses.")

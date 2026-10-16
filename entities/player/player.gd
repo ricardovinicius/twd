@@ -15,6 +15,7 @@ extends CharacterBody2D
 @onready var interactor: PlayerInteractor = $PlayerInteractor
 @onready var inventory: Inventory = $Inventory
 @onready var respawn: RespawnOnDeath = $RespawnOnDeath
+@onready var spell_registry: SpellRegistry = $SpellRegistry
 
 @export var jump_velocity = -1050.0
 @export var facing_direction: Vector2 = Vector2.RIGHT
@@ -283,3 +284,7 @@ func _on_respawned() -> void:
 
 func get_interactor() -> PlayerInteractor:
 	return interactor
+
+
+func get_spell_registry() -> SpellRegistry:
+	return spell_registry
