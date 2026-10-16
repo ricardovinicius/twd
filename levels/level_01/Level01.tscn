@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://c4iwhpprq4xb5" path="res://entities/interactive/door/Door.tscn" id="12_door"]
 [ext_resource type="Script" uid="uid://dlo81gifjljid" path="res://entities/enemies/respawn/enemy_respawner.gd" id="16_n4hfu"]
 [ext_resource type="PackedScene" uid="uid://chuh85ml5k8s7" path="res://entities/items/pickup/ItemPickup.tscn" id="18_6qj1r"]
+[ext_resource type="PackedScene" path="res://entities/enemies/platform_crawler/PlatformCrawler.tscn" id="19_platform_crawler"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b3jm5"]
 texture = ExtResource("1_thp0t")
@@ -797,6 +798,15 @@ collision_mask = 5
 [node name="BasicMob6" parent="EnemyRespawner" unique_id=39197674 instance=ExtResource("10_upmp1")]
 position = Vector2(672, 1736)
 collision_mask = 5
+
+[node name="PlatformCrawler" parent="EnemyRespawner" instance=ExtResource("19_platform_crawler")]
+position = Vector2(-4319, 1592.2)
+platform_size = Vector2(192, 79.55)
+
+[node name="PlatformCrawler2" parent="EnemyRespawner" instance=ExtResource("19_platform_crawler")]
+position = Vector2(-3695, 3080.2)
+platform_size = Vector2(192, 79.55)
+direction = -1
 
 
 [editable path="Lever2"]

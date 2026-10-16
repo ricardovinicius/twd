@@ -18,6 +18,14 @@ func has_target(target: Node2D) -> bool:
 	return is_instance_valid(target) and _targets.has(target)
 
 
+func get_targets() -> Array[Node2D]:
+	var targets: Array[Node2D] = []
+	for target in _targets:
+		if is_instance_valid(target):
+			targets.append(target)
+	return targets
+
+
 func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group(target_group):
 		return

@@ -17,6 +17,7 @@ entities/
     basic_skeleton/               Concrete enemy scene, controller, and sprites
     combat/                       Enemy melee, hitbox, and contact behavior
     detection/                    Enemy target detection
+    platform_crawler/             Enemy that loops around one platform and charges forward
     respawn/                      Enemy recreation after player death
   interactive/
     checkpoint/                   Reusable checkpoint scene, logic, and menu

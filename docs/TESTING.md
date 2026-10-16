@@ -21,6 +21,7 @@ Set `GODOT_BIN` to select a Godot executable. Each suite uses `tests/run_suite.s
 | `double_jump` | Grounded and airborne casting, the single air charge and its recharge on landing, cooldowns, and movement-mode coordination. |
 | `jump_down` | One-way platform traversal and collision restoration. |
 | `checkpoint` | Reusable checkpoint placement, menu focus, Save/Back, duplicate protection, and player spawn integration. |
+| `platform_crawler` | Perimeter loop geometry, front-only detection, charge speed, death drop, and respawn configuration. |
 | `stardust_drop` | Enemy Stardust drops, pickup amounts, player-only collection, and `CoinManager.add_coins`. |
 | `standards` | Integration regressions for lifecycle signals, explicit dependencies, cooldown reconnection, inventory, and equipment. |
 
