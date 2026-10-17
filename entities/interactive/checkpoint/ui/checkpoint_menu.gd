@@ -195,9 +195,22 @@ func _on_buy_pressed(spell: SpellDefinition) -> void:
 	if spell_shop == null or not spell_shop.buy(_get_registry(), spell):
 		return
 
+	_save_purchase()
 	spell_purchased.emit(spell)
 	_refresh_shop()
 	_focus_shop()
+
+
+## Purchases are saved immediately so death or a restart never undoes them.
+## Without an earlier save, this checkpoint becomes the saved one.
+func _save_purchase() -> void:
+	if not is_instance_valid(_player):
+		return
+
+	if not _player.has_checkpoint():
+		_player.set_checkpoint(_checkpoint_position)
+
+	SaveGame.save_player(_player)
 
 
 func _on_coins_changed(_coins: int) -> void:
@@ -207,7 +220,11 @@ func _on_coins_changed(_coins: int) -> void:
 
 func _on_save_btn_pressed() -> void:
 	if is_instance_valid(_player):
-		_player.set_checkpoint(_checkpoint_position)
+		# Resting heals the player and respawns enemies (see RespawnOnDeath and
+		# EnemyRespawner); the save captures the rested state.
+		_player.rest_at_checkpoint(_checkpoint_position)
+		SaveGame.save_player(_player)
+
 	_close()
 
 

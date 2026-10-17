@@ -3,6 +3,7 @@ extends Node
 
 signal respawning
 signal respawned
+signal rested
 
 @export var body: CharacterBody2D
 @export var health: Health
@@ -23,6 +24,27 @@ func _ready() -> void:
 func set_checkpoint(position: Vector2) -> void:
 	_checkpoint_position = position
 	_has_checkpoint = true
+
+
+func has_checkpoint() -> bool:
+	return _has_checkpoint
+
+
+func get_checkpoint_position() -> Vector2:
+	return _checkpoint_position
+
+
+## Resting sets the checkpoint and fully restores health, then announces the
+## rest so other features (e.g. enemy respawning) can react.
+func rest_at(position: Vector2) -> void:
+	if not is_instance_valid(health):
+		return
+
+	set_checkpoint(position)
+	health.reset()
+
+	rested.emit()
+	Events.checkpoint_rested.emit()
 
 
 func respawn() -> void:

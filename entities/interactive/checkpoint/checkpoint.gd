@@ -19,7 +19,7 @@ func _ready() -> void:
 func can_interact(player: Node2D) -> bool:
 	return (
 		super.can_interact(player)
-		and player.has_method(&"set_checkpoint")
+		and player.has_method(&"rest_at_checkpoint")
 		and not is_instance_valid(_active_menu)
 	)
 

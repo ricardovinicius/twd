@@ -17,6 +17,17 @@ func add_coins(amount: int) -> void:
 	coins_changed.emit(coins)
 
 
+## Replaces the total, e.g. when loading a save or starting a new game.
+func set_coins(amount: int) -> void:
+	var new_total := maxi(amount, 0)
+
+	if new_total == coins:
+		return
+
+	coins = new_total
+	coins_changed.emit(coins)
+
+
 func can_afford(amount: int) -> bool:
 	return amount >= 0 and coins >= amount
 

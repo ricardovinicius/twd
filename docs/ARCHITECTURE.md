@@ -21,7 +21,7 @@ entities/
     combat/                       Enemy melee, hitbox, and contact behavior
     detection/                    Enemy target detection
     platform_crawler/             Enemy that loops around one platform and charges forward
-    respawn/                      Enemy recreation after player death
+    respawn/                      Enemy recreation after player death or checkpoint rest
   interactive/
     checkpoint/                   Reusable checkpoint scene, logic, and menu
     door/                         Door scene and controller
@@ -39,6 +39,7 @@ currency/
   pickup/                         Currency pickup scene and behavior
   ui/                             Currency display
 health/                           Shared health and generic death policies
+save/                             SaveGame autoload: persists progress when resting at checkpoints
 spells/
   core/                           Casting, definitions, registry, database, cooldowns
   action/                         Action contracts and concrete action spells
@@ -73,10 +74,11 @@ docs/specs/                       Feature behavior and acceptance criteria
 | `EnemyRespawner` | Placed enemy definitions and transforms used for recreation. |
 | `SwitchComponent` | Discrete switch state consumed by doors. |
 | `CoinManager` | Currency total and its change signal. |
+| `SaveGame` | The save file; captures and restores other owners' state only through their public APIs. |
 
 `Main` composes the level and application UI and supplies player dependencies to the pause menu. Features exchange data through public methods, typed data objects, signals, and explicitly assigned references. Components do not discover unrelated nodes by traversing arbitrary paths.
 
-The player owns its movement coordination and exposes narrow capabilities such as `try_spell_jump()`, `collect_item()`, and `set_checkpoint()`. Checkpoints request a saved destination through that capability; they do not modify player health or movement state. `RespawnOnDeath` emits lifecycle signals so the player can clear movement modes before position and health are restored.
+The player owns its movement coordination and exposes narrow capabilities such as `try_spell_jump()`, `collect_item()`, and `set_checkpoint()`. Checkpoints request a rest through `rest_at_checkpoint()`; `RespawnOnDeath` owns the resulting checkpoint and health restoration, and announces it with `Events.checkpoint_rested`. `RespawnOnDeath` emits lifecycle signals so the player can clear movement modes before position and health are restored.
 
 The `Events` autoload publishes `player_died` and `item_collected`. The enemy respawner and item-notification display subscribe to those public events. It owns no gameplay state. The `CoinManager` autoload is the currency feature's application-lifetime state owner.
 

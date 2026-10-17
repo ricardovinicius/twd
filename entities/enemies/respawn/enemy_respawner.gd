@@ -9,6 +9,7 @@ func _ready() -> void:
 		_register_enemy(child)
 
 	Events.player_died.connect(respawn_all)
+	Events.checkpoint_rested.connect(respawn_all)
 
 
 func _register_enemy(enemy: Node2D) -> void:

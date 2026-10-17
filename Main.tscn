@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://dialogue/dialogue_session.gd" id="6_dialogue"]
 [ext_resource type="PackedScene" path="res://dialogue/ui/DialoguePanel.tscn" id="7_dialogue_panel"]
 
-[node name="Main" type="Node2D" unique_id=1783851588 node_paths=PackedStringArray("pause_menu", "spell_registry", "equipment", "stats", "health", "inventory", "interactor", "dialogue_session", "dialogue_interaction")]
+[node name="Main" type="Node2D" unique_id=1783851588 node_paths=PackedStringArray("pause_menu", "spell_registry", "equipment", "stats", "health", "inventory", "interactor", "dialogue_session", "dialogue_interaction", "player")]
 process_mode = 1
 script = ExtResource("1_3dxm6")
 pause_menu = NodePath("PauseMenuLayer/PauseMenu")
@@ -22,6 +22,7 @@ inventory = NodePath("LevelRoot/Player/Inventory")
 interactor = NodePath("LevelRoot/Player/PlayerInteractor")
 dialogue_session = NodePath("DialogueSession")
 dialogue_interaction = NodePath("LevelRoot/VillageGuide/DialogueInteraction")
+player = NodePath("LevelRoot/Player")
 
 [node name="LevelRoot" parent="." unique_id=39161027 instance=ExtResource("2_0wfyh")]
 process_mode = 1

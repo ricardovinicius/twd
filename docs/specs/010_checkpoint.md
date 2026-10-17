@@ -7,7 +7,7 @@ The existing checkpoint interaction is a reusable feature under `entities/intera
 - An overlapping player can open the menu through `PlayerInteractor` with the `interaction` action (E / right shoulder). NPCs and checkpoints share selection and input routing as defined in `011_npcs_and_dialogue.md`.
 - `Checkpoint` implements the shared `InteractionTarget` contract using its existing area. It does not listen for input independently, and rejects interaction while dialogue is active.
 - Opening the menu pauses gameplay and focuses Save. Repeated interaction creates no duplicate menu.
-- Save calls the player's public `set_checkpoint()` capability with the marker's global position.
+- Save rests the player through the public `rest_at_checkpoint()` capability with the marker's global position (sets the checkpoint, restores health, respawns enemies) and then persists progress. See `015_save_system.md`.
 - Back closes the menu without changing the saved checkpoint.
 - Spells opens the spell shop described in `014_spell_shop.md`.
 - Either action resumes gameplay and frees the menu.
@@ -40,7 +40,7 @@ CheckpointMenu (CanvasLayer, created while interacting)
 
 # Scope
 
-This extraction preserves the original level's checkpoint location, collision area, appearance, input, and save behavior. Persistent save files, multiple-player checkpoint selection, new artwork, and a redesigned pause flow are outside this change.
+This extraction preserves the original level's checkpoint location, collision area, appearance, input, and save behavior. Multiple-player checkpoint selection, new artwork, and a redesigned pause flow are outside this change.
 
 # Implementation Plan
 

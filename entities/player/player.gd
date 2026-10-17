@@ -16,6 +16,7 @@ extends CharacterBody2D
 @onready var inventory: Inventory = $Inventory
 @onready var respawn: RespawnOnDeath = $RespawnOnDeath
 @onready var spell_registry: SpellRegistry = $SpellRegistry
+@onready var equipment: Equipment = $Equipment
 
 @export var jump_velocity = -1050.0
 @export var facing_direction: Vector2 = Vector2.RIGHT
@@ -260,6 +261,18 @@ func set_checkpoint(pos: Vector2) -> void:
 	respawn.set_checkpoint(pos)
 
 
+func rest_at_checkpoint(pos: Vector2) -> void:
+	respawn.rest_at(pos)
+
+
+func has_checkpoint() -> bool:
+	return respawn.has_checkpoint()
+
+
+func get_checkpoint_position() -> Vector2:
+	return respawn.get_checkpoint_position()
+
+
 func spawn_player() -> void:
 	respawn.respawn()
 
@@ -288,3 +301,11 @@ func get_interactor() -> PlayerInteractor:
 
 func get_spell_registry() -> SpellRegistry:
 	return spell_registry
+
+
+func get_inventory() -> Inventory:
+	return inventory
+
+
+func get_equipment() -> Equipment:
+	return equipment
