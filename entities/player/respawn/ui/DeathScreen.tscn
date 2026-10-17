@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/player/respawn/ui/death_screen.gd" id="1_death_screen"]
+[ext_resource type="Script" path="res://entities/player/respawn/ui/loading_spinner.gd" id="2_spinner"]
+
+[node name="DeathScreen" type="CanvasLayer"]
+process_mode = 3
+layer = 50
+script = ExtResource("1_death_screen")
+
+[node name="Overlay" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0, 0, 0, 1)
+
+[node name="Loading" type="HBoxContainer" parent="."]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -240.0
+offset_top = -76.0
+offset_right = -32.0
+offset_bottom = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 14
+alignment = 2
+
+[node name="LoadingLabel" type="Label" parent="Loading"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Loading"
+
+[node name="Spinner" type="Control" parent="Loading"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+script = ExtResource("2_spinner")

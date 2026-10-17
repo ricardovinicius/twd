@@ -40,6 +40,7 @@ currency/
   ui/                             Currency display
 health/                           Shared health and generic death policies
 save/                             SaveGame autoload: persists progress when resting at checkpoints
+settings/                         Settings autoload: volume, fullscreen, and key bindings
 spells/
   core/                           Casting, definitions, registry, database, cooldowns
   action/                         Action contracts and concrete action spells
@@ -74,6 +75,7 @@ docs/specs/                       Feature behavior and acceptance criteria
 | `EnemyRespawner` | Placed enemy definitions and transforms used for recreation. |
 | `SwitchComponent` | Discrete switch state consumed by doors. |
 | `CoinManager` | Currency total and its change signal. |
+| `Settings` | Player options and keyboard bindings, applied to the engine and saved to disk. |
 | `SaveGame` | The save file; captures and restores other owners' state only through their public APIs. |
 
 `Main` composes the level and application UI and supplies player dependencies to the pause menu. Features exchange data through public methods, typed data objects, signals, and explicitly assigned references. Components do not discover unrelated nodes by traversing arbitrary paths.

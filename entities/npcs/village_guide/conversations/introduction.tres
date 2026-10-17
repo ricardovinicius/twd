@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="DialogueDefinition" format=3]
+[gd_resource type="Resource" script_class="DialogueDefinition" format=3 uid="uid://dmgtdw0b0ykn1"]
 
-[ext_resource type="Script" path="res://dialogue/dialogue_definition.gd" id="1_definition"]
-[ext_resource type="Script" path="res://dialogue/dialogue_line.gd" id="2_line"]
+[ext_resource type="Script" uid="uid://dlufj0j813iom" path="res://dialogue/dialogue_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://dkrv4tieoudhx" path="res://dialogue/dialogue_line.gd" id="2_line"]
 
 [sub_resource type="Resource" id="Line_1"]
 script = ExtResource("2_line")
