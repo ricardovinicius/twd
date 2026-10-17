@@ -146,3 +146,8 @@ func _latch_active(state: PhysicsDirectBodyState2D, active_stop: float) -> void:
 
 func _angle_direction() -> float:
 	return -1.0 if mirrored else 1.0
+
+
+## +1 when a positive (clockwise) rotation moves the handle toward active.
+func get_angle_direction() -> float:
+	return _angle_direction()

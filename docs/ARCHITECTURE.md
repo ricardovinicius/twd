@@ -27,6 +27,7 @@ entities/
     checkpoint/                   Reusable checkpoint scene, logic, and menu
     door/                         Door scene and controller
     lever/                        Physical lever, presentation, and push reaction
+    elevator/                     Lever-called elevator platform
   items/
     item_definition.gd            Public item metadata contract
     definitions/                  Concrete item resources

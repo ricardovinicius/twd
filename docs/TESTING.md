@@ -27,6 +27,7 @@ Set `GODOT_BIN` to select a Godot executable. Each suite uses `tests/run_suite.s
 | `dig` | Dig spell definition and sequence, one-hit block breaking, unsupported actions, player casting, and Level 01 block placement. |
 | `spell_shop` | Shop offers, locked multi-token spells, Stardust spending and rejection, checkpoint menu purchase flow. |
 | `save_system` | Resting at checkpoints (health, enemy recreation), save/load round trip, missing saves, and the checkpoint Save button. |
+| `elevator` | Elevator trips, crush guard, riding, toggle and pass-through levers, Level 01 placement and opened shaft, WASD menu navigation. |
 | `spell_effects` | Push reaching receivers in every direction and pushing them away, push radius, Magic Arrow passing through walls and stopping on the first enemy. |
 | `pause_menu` | Pause menu tabs and navigation, inventory artifacts and status, sections, monster guide, spell details, settings tab, and quit actions. |
 | `options_and_death` | Startup scene, settings persistence, key rebinding and swaps, options menu, and the death loading screen. |

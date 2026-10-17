@@ -1,0 +1,60 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/interactive/elevator/elevator.gd" id="1_elevator"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
+size = Vector2(380, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_guard"]
+size = Vector2(360, 30)
+
+[node name="Elevator" type="Node2D" node_paths=PackedStringArray("platform", "crush_guard", "cables")]
+script = ExtResource("1_elevator")
+platform = NodePath("Platform")
+crush_guard = NodePath("Platform/CrushGuard")
+cables = [NodePath("Platform/CableLeft"), NodePath("Platform/CableRight")]
+
+[node name="Platform" type="AnimatableBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="Deck" type="Polygon2D" parent="Platform"]
+color = Color(0.2, 0.19, 0.24, 1)
+polygon = PackedVector2Array(-190, 0, 190, 0, 190, 24, -190, 24)
+
+[node name="Trim" type="Polygon2D" parent="Platform"]
+color = Color(0.96, 0.78, 0.3, 1)
+polygon = PackedVector2Array(-190, 0, 190, 0, 190, 5, -190, 5)
+
+[node name="Underside" type="Polygon2D" parent="Platform"]
+color = Color(0.12, 0.11, 0.15, 1)
+polygon = PackedVector2Array(-170, 24, 170, 24, 150, 40, -150, 40)
+
+[node name="Rune" type="Polygon2D" parent="Platform"]
+color = Color(0.45, 0.65, 1, 0.9)
+polygon = PackedVector2Array(0, 8, 9, 13, 0, 18, -9, 13)
+
+[node name="CableLeft" type="Line2D" parent="Platform"]
+z_index = -1
+points = PackedVector2Array(-170, 0, -170, -480)
+width = 3.0
+default_color = Color(0.55, 0.5, 0.42, 0.85)
+
+[node name="CableRight" type="Line2D" parent="Platform"]
+z_index = -1
+points = PackedVector2Array(170, 0, 170, -480)
+width = 3.0
+default_color = Color(0.55, 0.5, 0.42, 0.85)
+
+[node name="CrushGuard" type="Area2D" parent="Platform"]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/CrushGuard"]
+position = Vector2(0, 40)
+shape = SubResource("RectangleShape2D_guard")

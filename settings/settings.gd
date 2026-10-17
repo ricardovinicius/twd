@@ -34,6 +34,15 @@ const REMAPPABLE_ACTIONS: Array[Dictionary] = [
 	{"action": &"pause", "label": "Pausar / Menu"},
 ]
 
+## Menu navigation follows the movement keys (WASD by default), in addition
+## to the arrow keys and controller inputs Godot already maps.
+const MENU_NAVIGATION: Dictionary[StringName, StringName] = {
+	&"ui_up": &"aim_up",
+	&"ui_down": &"aim_down",
+	&"ui_left": &"left",
+	&"ui_right": &"right",
+}
+
 ## Overridable so tests can write to an isolated file.
 var settings_path: String = SETTINGS_PATH
 
@@ -43,6 +52,7 @@ var vsync: bool = DEFAULT_VSYNC
 
 var _bindings: Dictionary[StringName, Key] = {}
 var _default_bindings: Dictionary[StringName, Key] = {}
+var _menu_navigation_events: Dictionary[StringName, InputEventKey] = {}
 
 
 func _ready() -> void:
@@ -123,6 +133,7 @@ func set_binding(action: StringName, key: Key) -> bool:
 
 	_bindings[action] = key
 	_write_key(action, key)
+	_sync_menu_navigation()
 	changed.emit()
 
 	return true
@@ -140,6 +151,7 @@ func reset_to_defaults() -> void:
 	_apply_volume()
 	_apply_fullscreen()
 	_apply_vsync()
+	_sync_menu_navigation()
 	changed.emit()
 
 
@@ -182,6 +194,7 @@ func load_settings() -> void:
 	_apply_volume()
 	_apply_fullscreen()
 	_apply_vsync()
+	_sync_menu_navigation()
 	changed.emit()
 
 
@@ -210,6 +223,41 @@ func _apply_vsync() -> void:
 
 	var mode := DisplayServer.VSYNC_ENABLED if vsync else DisplayServer.VSYNC_DISABLED
 	DisplayServer.window_set_vsync_mode(mode)
+
+
+## Mirrors the movement keys onto the ui_* navigation actions. Only the keys
+## this autoload added are replaced; built-in arrows and controller inputs stay.
+func _sync_menu_navigation() -> void:
+	for ui_action: StringName in MENU_NAVIGATION:
+		if not InputMap.has_action(ui_action):
+			continue
+
+		var previous: InputEventKey = _menu_navigation_events.get(ui_action)
+
+		if previous != null and InputMap.action_has_event(ui_action, previous):
+			InputMap.action_erase_event(ui_action, previous)
+
+		_menu_navigation_events.erase(ui_action)
+
+		var key := get_binding(MENU_NAVIGATION[ui_action])
+
+		if key == KEY_NONE or _ui_action_has_key(ui_action, key):
+			continue
+
+		var event := InputEventKey.new()
+		event.physical_keycode = key
+		InputMap.action_add_event(ui_action, event)
+		_menu_navigation_events[ui_action] = event
+
+
+func _ui_action_has_key(ui_action: StringName, key: Key) -> bool:
+	for event in InputMap.action_get_events(ui_action):
+		var key_event := event as InputEventKey
+
+		if key_event != null and (key_event.physical_keycode == key or key_event.keycode == key):
+			return true
+
+	return false
 
 
 ## Returns the action's keyboard key, preferring the physical keycode.
