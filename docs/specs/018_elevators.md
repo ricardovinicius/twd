@@ -1,6 +1,6 @@
 # Feature Overview
 
-Two vertical shafts in Level 01 are elevators. Each has a platform that travels between a bottom and a top stop and one lever at each landing. Pushing either lever (Push spell) sends the platform to the other stop. Menus can also be navigated with the movement keys (WASD by default).
+Three vertical shafts in Level 01 are elevators. Each has a platform that travels between a bottom and a top stop and one lever at each landing. Pushing either lever (Push spell) sends the platform to the other stop. Menus can also be navigated with the movement keys (WASD by default).
 
 # Behavior Rules
 
@@ -23,8 +23,15 @@ Two vertical shafts in Level 01 are elevators. Each has a platform that travels 
 
 | Elevator | Shaft (x) | Bottom stop (y) | Top stop (y) | Levers |
 | --- | --- | --- | --- | --- |
-| `ElevatorA` | 1872–2256 | 5376 (left exit) | 3312 (left exit) | `ElevatorALeverBottom` (1830, 5376), `ElevatorALeverTop` (1830, 3312) |
-| `ElevatorB` | −1296 to −912 | 3216 (right exit) | 1008 (upper corridor) | `ElevatorBLeverBottom` (−870, 3216), `ElevatorBLeverTop` (−1340, 1008) |
+| `ElevatorA` | 1872–2256 | 5376 (shaft floor, left exit) | 3328.5 (left exit) | `ElevatorALeverBottom` (1830, 5392.5), `ElevatorALeverTop` (1830, 3328.5) |
+| `ElevatorB` | −1296 to −912 | 3216 (shaft floor, right exit) | 1024.5 (upper corridor) | `ElevatorBLeverBottom` (−870, 3232.5), `ElevatorBLeverTop` (−1340, 1024.5), `ElevatorBLeverTopRight` (−868, 1024.5) |
+| `ElevatorC` | 2640–3024 | 2736 (shaft floor, left exit) | 1792.5 (long corridor) | `ElevatorCLeverBottom` (2598, 2752.5), `ElevatorCLeverTopLeft` (2598, 1792.5), `ElevatorCLeverTopRight` (3066, 1792.5) |
+
+Landing floors collide 16.5 px below the drawn tile top, while the shaft floors collide at the tile top. Top stops are flush with the landing collision. At the bottom, `ElevatorABottomStep` / `ElevatorBBottomStep` are small invisible ramps over the 16.5 px step so the player walks into and out of the shaft.
+
+Shaft C was sealed by a 10-tile-deep block under the long corridor; its 80 tiles (`TileMapPrincipal1` cells x 55…62, y 37…46) were removed and `ElevatorCBottomStep` covers its bottom step. `BasicMob5` spawns on top of shaft C, so it rides the platform when the elevator moves.
+
+`ElevatorB` and `ElevatorC` start at the top so their corridors are continuous by default, and the corridor has a lever on each side of the shaft. Switches are locked while an elevator travels, so a lever pushed mid-trip springs back instead of showing a request that would be ignored.
 
 Shaft B was capped by the upper corridor's floor. The 16 floor tiles over the shaft (`TileMapPrincipal1` cells x −27…−20, y 21–22) were removed so the platform reaches the corridor; while the elevator is below, that opening is a drop into the shaft. The striped tiles inside both shafts are decorative and have no collision.
 

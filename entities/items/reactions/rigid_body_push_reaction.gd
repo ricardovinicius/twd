@@ -20,5 +20,4 @@ func react(action: ActionData) -> void:
     var force_vector = action.direction * action.strength / resistance
     var max_impulse := max_push_speed * body.mass
     force_vector = force_vector.limit_length(max_impulse)
-    print("RigidBodyPushReaction: Applying force vector %s to body %s" % [force_vector, body])
     body.apply_central_impulse(force_vector)

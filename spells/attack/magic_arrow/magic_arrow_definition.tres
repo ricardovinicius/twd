@@ -8,7 +8,7 @@
 script = ExtResource("1_23l15")
 id = &"magic_arrow"
 display_name = "Magic Arrow"
-description = "Dispara um projétil mágico na direção mirada que atravessa paredes e chão e causa 10 de dano ao primeiro inimigo atingido."
+description = "Fires a magic projectile in the aimed direction. It passes through walls and floors and deals 10 damage to the first enemy it hits."
 icon = ExtResource("2_icon")
 cooldown = 1.5
 sequence = Array[StringName]([&"attack"])

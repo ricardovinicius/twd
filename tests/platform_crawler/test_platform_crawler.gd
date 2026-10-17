@@ -38,8 +38,9 @@ func _test_perimeter_samples() -> void:
 		is_equal_approx(movement.get_perimeter_length(), 280.0 + TAU * 10.0),
 		"The loop length must be 2w + 2h + 2πr."
 	)
-	_check_sample(movement, 0.0, Vector2(-50.0, -30.0 - 10.0), 0.0, "start of the top edge")
-	_check_sample(movement, 50.0, Vector2(0.0, -40.0), 0.0, "middle of the top edge")
+	# Top edge: half height (20) + clearance (10) above the centre, like the other edges.
+	_check_sample(movement, 0.0, Vector2(-50.0, -30.0), 0.0, "start of the top edge")
+	_check_sample(movement, 50.0, Vector2(0.0, -30.0), 0.0, "middle of the top edge")
 	_check_sample(movement, 100.0 + arc + 20.0, Vector2(60.0, 0.0), 90.0, "middle of the right edge")
 	_check_sample(movement, 100.0 + arc * 2.0 + 40.0 + 50.0, Vector2(0.0, 30.0), 180.0, "middle of the bottom edge")
 	_check_sample(movement, 100.0 * 2.0 + arc * 3.0 + 40.0 + 20.0, Vector2(-60.0, 0.0), 270.0, "middle of the left edge")

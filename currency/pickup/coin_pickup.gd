@@ -12,6 +12,10 @@ var attraction_speed := 300.0
 var collected := false
 
 
+func _ready() -> void:
+	PersistentPickup.register(self)
+
+
 func _physics_process(delta):
 	if not is_instance_valid(player):
 		player = null
@@ -36,6 +40,7 @@ func _on_body_entered(body):
 	collected = true
 
 	CoinManager.add_coins(amount)
+	SaveGame.mark_collected(self)
 
 	animated_sprite_2d.play("collected")
 

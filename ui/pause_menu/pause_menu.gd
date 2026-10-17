@@ -119,6 +119,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		_on_pause_pressed()
 		return
 
+	# B / Esc goes back like Pause: closes a section, then resumes.
+	if visible and not _is_transitioning and event.is_action_pressed(&"ui_cancel"):
+		get_viewport().set_input_as_handled()
+		_on_pause_pressed()
+		return
+
 	if not visible or _is_transitioning or overlay.visible or spell_registry_window.visible:
 		return
 
@@ -159,6 +165,9 @@ func pause_game() -> void:
 
 	overlay.visible = false
 	spell_registry_window.visible = false
+	restart_button.text = (
+		"Restart from last checkpoint" if SaveGame.has_save() else "Restart from the beginning"
+	)
 	select_tab(Tab.INVENTORY)
 	animation_player.play(&"blur")
 
@@ -231,10 +240,10 @@ func refresh_inventory() -> void:
 		var item := equipment.get_item(i)
 		var slot := artifact_slots[i]
 
-		slot.text = item.display_name if item != null else "Vazio"
+		slot.text = item.display_name if item != null else "Empty"
 		slot.icon = item.icon if item != null else null
 
-	channeler_slot.text = "Vazio"
+	channeler_slot.text = "Empty"
 	_refresh_stats()
 
 
@@ -246,7 +255,7 @@ func get_stat_text(stat: String) -> String:
 func _build_stat_rows() -> void:
 	var rows: Array[Array] = [
 		["hp", "HP"],
-		["shield", "ESCUDO"],
+		["shield", "SHIELD"],
 		["insight", "INSIGHT"],
 	]
 
@@ -256,7 +265,7 @@ func _build_stat_rows() -> void:
 	for element in ELEMENTS:
 		rows.append(["res_" + element, "Res. " + element.to_upper()])
 
-	rows.append(["weight", "PESO"])
+	rows.append(["weight", "WEIGHT"])
 	rows.append(["move_speed", "MOVESPEED"])
 
 	for row in rows:
@@ -334,20 +343,32 @@ func open_item_picker(slot_index: int) -> void:
 		return
 
 	_pending_slot_index = slot_index
-	_open_overlay("Artefato %d" % (slot_index + 1))
+	_open_overlay("Artifact %d" % (slot_index + 1))
 
 	var items := inventory.get_items()
+	var has_choice := false
 
 	for item: ItemDefinition in items:
-		var button := _add_overlay_button("%s  x%d" % [item.display_name, items[item]], item.icon)
+		if item == equipment.get_item(slot_index):
+			continue
+
+		var available := equipment.get_available_quantity(item, slot_index)
+
+		if available <= 0:
+			continue
+
+		var button := _add_overlay_button("%s  (%d available)" % [item.display_name, available], item.icon)
 		button.pressed.connect(_on_item_selected.bind(item))
+		has_choice = true
 
 	if equipment.get_item(slot_index) != null:
-		var remove_button := _add_overlay_button("Remover artefato", null)
+		var remove_button := _add_overlay_button("Remove artifact", null)
 		remove_button.pressed.connect(_on_item_selected.bind(null))
 
 	if items.is_empty():
-		_add_overlay_text("Nenhum item no inventário.")
+		_add_overlay_text("No items in your inventory.")
+	elif not has_choice:
+		_add_overlay_text("All your items are already equipped.")
 
 	_focus_overlay()
 
@@ -365,13 +386,13 @@ func _on_item_selected(item: ItemDefinition) -> void:
 
 
 func open_chains() -> void:
-	_open_overlay("Correntes")
-	_add_overlay_text("Nenhuma corrente encontrada ainda.")
+	_open_overlay("Chains")
+	_add_overlay_text("No chains found yet.")
 	_focus_overlay()
 
 
 func open_general_items() -> void:
-	_open_overlay("Itens gerais")
+	_open_overlay("General items")
 
 	var items := inventory.get_items() if inventory != null else {}
 
@@ -380,13 +401,13 @@ func open_general_items() -> void:
 		row.focus_mode = Control.FOCUS_ALL
 
 	if items.is_empty():
-		_add_overlay_text("Nenhum item coletado.")
+		_add_overlay_text("No items collected.")
 
 	_focus_overlay()
 
 
 func open_monster_guide() -> void:
-	_open_overlay("Guia dos monstros")
+	_open_overlay("Monster guide")
 
 	var entries: Array[MonsterEntry] = bestiary.get_entries() if bestiary != null else []
 
@@ -396,7 +417,7 @@ func open_monster_guide() -> void:
 		button.pressed.connect(_show_monster.bind(entry))
 
 	if entries.is_empty():
-		_add_overlay_text("Nenhum monstro registrado.")
+		_add_overlay_text("No monsters recorded.")
 	else:
 		_show_monster(entries[0])
 
@@ -416,10 +437,10 @@ func _show_monster(entry: MonsterEntry) -> void:
 	overlay_detail.add_child(name_label)
 
 	for line in [
-		"Vida: %d" % roundi(entry.max_health),
-		"Dano: %d" % roundi(entry.damage),
+		"Health: %d" % roundi(entry.max_health),
+		"Damage: %d" % roundi(entry.damage),
 		"Stardust: %d" % entry.stardust_drop,
-		"Fraqueza: %s" % (entry.weakness if not entry.weakness.is_empty() else "?"),
+		"Weakness: %s" % (entry.weakness if not entry.weakness.is_empty() else "?"),
 	]:
 		var stat_label := Label.new()
 		stat_label.text = line
@@ -497,7 +518,7 @@ func refresh_spells() -> void:
 		var owned := spell_registry != null and spell_registry.has_spell(spell.id)
 		var button := Button.new()
 
-		button.text = spell.display_name if owned else "%s  (bloqueada)" % spell.display_name
+		button.text = spell.display_name if owned else "%s  (locked)" % spell.display_name
 		button.icon = spell.icon
 		button.expand_icon = true
 		button.add_theme_constant_override(&"icon_max_width", 28)
@@ -514,7 +535,7 @@ func refresh_spells() -> void:
 
 	if spells.is_empty():
 		var empty := Label.new()
-		empty.text = "Nenhuma magia."
+		empty.text = "No spells."
 		spell_list.add_child(empty)
 		_clear_spell_detail()
 	else:
@@ -531,15 +552,15 @@ func show_spell(spell: SpellDefinition) -> void:
 
 	spell_icon.texture = spell.icon
 	spell_name_label.text = spell.display_name
-	spell_status_label.text = "Aprendida" if owned else "Bloqueada: compre em uma bonfire"
+	spell_status_label.text = "Learned" if owned else "Locked: buy it at a checkpoint"
 	spell_status_label.add_theme_color_override(&"font_color", POSITIVE_COLOR if owned else DIM_COLOR)
-	spell_keys_label.text = "Botões:  %s" % Settings.format_sequence(spell.sequence)
+	spell_keys_label.text = "Keys:  %s" % Settings.format_sequence(spell.sequence)
 	spell_cooldown_label.text = (
 		"Cooldown:  %s s" % _format_number(spell.cooldown)
 		if spell.cooldown > 0.0
-		else "Cooldown:  nenhum"
+		else "Cooldown:  none"
 	)
-	spell_effect_label.text = spell.description if not spell.description.is_empty() else "Sem descrição."
+	spell_effect_label.text = spell.description if not spell.description.is_empty() else "No description."
 
 
 func get_spell_button(spell_id: StringName) -> Button:

@@ -870,11 +870,12 @@ cooldowns = NodePath("../../SpellCooldowns")
 [node name="Stats" type="Node" parent="." unique_id=295121150]
 script = ExtResource("33_wbbrj")
 
-[node name="Equipment" type="Node" parent="." unique_id=2029650158 node_paths=PackedStringArray("stats", "health", "horizontal_movement")]
+[node name="Equipment" type="Node" parent="." unique_id=2029650158 node_paths=PackedStringArray("stats", "health", "horizontal_movement", "inventory")]
 script = ExtResource("34_m1mwl")
 stats = NodePath("../Stats")
 health = NodePath("../Health")
 horizontal_movement = NodePath("../HorizontalMovement")
+inventory = NodePath("../Inventory")
 
 [node name="PlayerInteractor" type="Node" parent="." node_paths=PackedStringArray("player", "health")]
 script = ExtResource("36_interactor")

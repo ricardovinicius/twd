@@ -318,13 +318,12 @@ func _test_character_collision_moves_bottles() -> void:
 		player.set_physics_process(false)
 		await _wait_physics_frames(10)
 
-		var push_component: CharacterRigidBodyPushComponent = player.get_node("RigidBodyPush")
 		var movement: HorizontalMovementComponent = player.get_node("HorizontalMovement")
 		for _index in 120:
 			player.velocity.x = movement.calculate_velocity(player.velocity.x, 1.0, 1.0 / 60.0)
-			var intended_velocity := player.velocity
-			player.move_and_slide()
-			push_component.push_slide_collisions(intended_velocity)
+			# Same step the player runs in gameplay: slide, push rigid bodies, and
+			# kick props (bottles live on the Props layer the player passes through).
+			player._move_and_slide_with_rigid_body_push()
 			await physics_frame
 
 		_check(

@@ -47,7 +47,8 @@ func _ready() -> void:
 			push_error("Elevator: A switch reference is missing.")
 			continue
 
-		switch.state_changed.connect(_on_switch_state_changed)
+		if not switch.state_changed.is_connected(_on_switch_state_changed):
+			switch.state_changed.connect(_on_switch_state_changed)
 
 	_at_top = start_at_top
 	platform.position = _stop_position(_at_top)
@@ -92,6 +93,7 @@ func call_elevator() -> bool:
 	_to = _stop_position(not _at_top)
 	_progress = 0.0
 	_moving = true
+	_set_switches_locked(true)
 	departed.emit(not _at_top)
 
 	return true
@@ -99,6 +101,7 @@ func call_elevator() -> bool:
 
 func _finish_trip() -> void:
 	_moving = false
+	_set_switches_locked(false)
 	_at_top = not _at_top
 	platform.position = _stop_position(_at_top)
 	_update_cables()
@@ -126,6 +129,14 @@ func _is_blocked_below() -> bool:
 			return true
 
 	return false
+
+
+## Levers cannot be flipped while the elevator travels, so their state never
+## suggests a request that will be ignored.
+func _set_switches_locked(value: bool) -> void:
+	for switch in switches:
+		if switch != null:
+			switch.locked = value
 
 
 func _on_switch_state_changed(_active: bool) -> void:

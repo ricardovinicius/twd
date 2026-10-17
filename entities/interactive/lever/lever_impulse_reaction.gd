@@ -32,6 +32,9 @@ func react(action: ActionData) -> void:
 	if direction.is_zero_approx() or action.strength <= 0.0:
 		return
 
+	if not toggle_on_any_push and _is_behind_caster(action, direction):
+		return
+
 	var impulse := direction * action.strength * impulse_multiplier
 	var lever_arm := application_offset.rotated(handle.global_rotation)
 	var torque_impulse := lever_arm.cross(impulse)
@@ -50,3 +53,12 @@ func _toggle_torque(lever_arm: Vector2, impulse: Vector2) -> float:
 	var toward_active := 1.0 if not physics_component.switch.active else -1.0
 
 	return magnitude * toward_active * physics_component.get_angle_direction()
+
+
+## Ordinary levers only answer pushes aimed at them: a radial Push must not
+## flip a lever behind the caster (e.g. while pushing an enemy away).
+func _is_behind_caster(action: ActionData, direction: Vector2) -> bool:
+	if action.facing.is_zero_approx():
+		return false
+
+	return direction.dot(action.facing.normalized()) <= 0.0

@@ -7,8 +7,8 @@
 [resource]
 script = ExtResource("1_definition")
 id = &"dig"
-display_name = "Cavar"
-description = "Quebra blocos escaváveis na direção mirada com um único golpe."
+display_name = "Dig"
+description = "Breaks diggable blocks in the aimed direction with a single strike."
 icon = ExtResource("3_icon")
 sequence = Array[StringName]([&"attack", &"interaction"])
 command_scene = ExtResource("2_command")

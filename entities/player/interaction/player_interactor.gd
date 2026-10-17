@@ -9,12 +9,17 @@ signal bindings_changed
 @export var dialogue_session: DialogueSession
 @export var interaction_action: StringName = &"interaction"
 @export var cancel_action: StringName = &"dialogue_cancel"
+## "OK" button: also advances dialogue (A on controller, Enter/Space on keyboard).
+@export var accept_action: StringName = &"ui_accept"
 
 var _targets: Array[InteractionTarget] = []
 var _selected: InteractionTarget
 var _held_actions: Array[StringName] = []
 var _using_controller: bool = false
 var _prompt: String = ""
+## Set when a Jump press (A / Space) was used to advance or close dialogue, so
+## the player does not also jump from it.
+var _jump_used_by_dialogue: bool = false
 
 
 func _ready() -> void:
@@ -70,21 +75,48 @@ func get_prompt() -> String:
 	return _prompt
 
 
-func get_binding_label(action: StringName) -> String:
-	var labels: PackedStringArray = []
+const BUTTON_NAMES: Dictionary[JoyButton, String] = {
+	JOY_BUTTON_A: "A",
+	JOY_BUTTON_B: "B",
+	JOY_BUTTON_X: "X",
+	JOY_BUTTON_Y: "Y",
+	JOY_BUTTON_BACK: "Back",
+	JOY_BUTTON_START: "Start",
+	JOY_BUTTON_LEFT_STICK: "L3",
+	JOY_BUTTON_RIGHT_STICK: "R3",
+	JOY_BUTTON_LEFT_SHOULDER: "LB",
+	JOY_BUTTON_RIGHT_SHOULDER: "RB",
+	JOY_BUTTON_DPAD_UP: "D-pad Up",
+	JOY_BUTTON_DPAD_DOWN: "D-pad Down",
+	JOY_BUTTON_DPAD_LEFT: "D-pad Left",
+	JOY_BUTTON_DPAD_RIGHT: "D-pad Right",
+}
 
+
+## Label of the first binding for the device in use, e.g. "S" or "D-pad Down".
+func get_binding_label(action: StringName) -> String:
 	for event in InputMap.action_get_events(action):
 		if _using_controller and event is InputEventJoypadButton:
-			var description := event.as_text()
-			var button_name := description.get_slice("(", 1).get_slice(",", 0).trim_suffix(")")
-
-			labels.append(button_name if not button_name.is_empty() else description)
+			return BUTTON_NAMES.get(event.button_index, event.as_text())
 		elif not _using_controller and event is InputEventKey:
 			var code: Key = event.physical_keycode if event.physical_keycode != 0 else event.keycode
 
-			labels.append(OS.get_keycode_string(code))
+			return OS.get_keycode_string(code)
 
-	return " / ".join(labels)
+	return ""
+
+
+func is_in_dialogue() -> bool:
+	return is_instance_valid(dialogue_session) and dialogue_session.is_active()
+
+
+## True once after a Jump press (A / Space) advanced or closed the dialogue,
+## so that press does not also jump.
+func blocks_jump() -> bool:
+	var blocked := _jump_used_by_dialogue
+	_jump_used_by_dialogue = false
+
+	return blocked
 
 
 func _input(event: InputEvent) -> void:
@@ -97,7 +129,7 @@ func _input(event: InputEvent) -> void:
 			bindings_changed.emit()
 
 	# Observe releases even when menus consume input or the tree is paused.
-	for action in [interaction_action, cancel_action]:
+	for action in [interaction_action, cancel_action, accept_action]:
 		if event.is_action_released(action):
 			_held_actions.erase(action)
 		elif get_tree().paused and event.is_action_pressed(action):
@@ -113,7 +145,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	):
 		return
 
-	for action in [interaction_action, cancel_action]:
+	for action in [interaction_action, cancel_action, accept_action]:
 		if (
 			not event.is_action_pressed(action)
 			or event.is_echo()
@@ -124,6 +156,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_held_actions.append(action)
 		var active := is_instance_valid(dialogue_session) and dialogue_session.is_active()
 
+		if active and event.is_action_pressed(&"jump"):
+			_jump_used_by_dialogue = true
+
 		if action == cancel_action:
 			if active:
 				dialogue_session.cancel()
@@ -131,6 +166,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif active:
 			dialogue_session.advance()
 			get_viewport().set_input_as_handled()
+		elif action == accept_action:
+			# Outside dialogue, OK is not an interaction button.
+			_held_actions.erase(action)
+			continue
 		else:
 			_refresh_selection()
 			if is_instance_valid(_selected):

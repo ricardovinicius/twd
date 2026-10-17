@@ -15,6 +15,7 @@ func _create_action_for(receiver: ActionReceiver) -> ActionData:
 	action.source = context.caster
 	action.origin = context.origin
 	action.direction = _get_push_direction(receiver)
+	action.facing = context.direction.normalized()
 	action.strength = push_strength
 
 	return action

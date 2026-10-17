@@ -75,3 +75,10 @@ Out of scope for this change: multiple save slots, saving the current level (the
 9. Restart without a save resets Stardust to 0.
 
 Run `bash tests/save_system/run_tests.sh` for the automated checks.
+
+# Update: Level Pickups
+
+- Coins and items placed in a level (`CoinPickup`, `ItemPickup` with a scene owner) are tracked by `SaveGame`. Collecting one marks it pending; saving records it under `[world] collected` (paths relative to the running scene).
+- When `Main` starts, `SaveGame.apply_world_state()` removes pickups recorded in the save and forgets unsaved ones. Unsaved pickups therefore return on Restart together with the unsaved Stardust, and saved ones never return, so pickups cannot be farmed.
+- Runtime drops (enemy Stardust) have no scene owner and are not tracked; enemies respawn by design.
+- New Game asks for confirmation before deleting an existing save.

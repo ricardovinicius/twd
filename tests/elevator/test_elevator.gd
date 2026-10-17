@@ -51,11 +51,14 @@ func _test_travel_between_stops() -> void:
 	_check(elevator.is_moving(), "A switch change must start a trip.")
 
 	switch.set_active(false)
+	_check(switch.active, "Switches must be locked while the elevator travels.")
+
 	await _wait_until(func() -> bool: return not elevator.is_moving(), 300)
 	_check(elevator.is_at_top(), "The elevator must reach the top stop.")
 	_check(elevator.platform.position.is_equal_approx(Vector2(0.0, -300.0)), "The platform must stop exactly at the top.")
+	_check(not switch.locked, "Switches must unlock when the elevator arrives.")
 
-	switch.set_active(true)
+	switch.set_active(false)
 	await _wait_until(func() -> bool: return not elevator.is_moving(), 300)
 	_check(not elevator.is_at_top(), "The next switch change must bring it back down.")
 	_check(elevator.platform.position.is_equal_approx(Vector2.ZERO), "The platform must stop exactly at the bottom.")
@@ -183,22 +186,28 @@ func _test_level_placement() -> void:
 	root.add_child(level)
 	await process_frame
 
-	for key in ["A", "B"]:
+	for key in ["A", "B", "C"]:
 		var elevator := level.get_node_or_null("Elevator" + key) as Elevator
 		_check(elevator != null, "Level 01 must contain Elevator%s." % key)
 
 		if elevator == null:
 			continue
 
-		_check(elevator.switches.size() == 2, "Elevator%s must be called by two levers." % key)
+		_check(elevator.switches.size() == (2 if key == "A" else 3), "Elevator%s must have a lever at every landing side." % key)
+		_check(key == "A" or elevator.start_at_top, "Elevator%s must start at its corridor so the corridor is not open by default." % key)
 
 		for switch in elevator.switches:
 			_check(switch != null and switch.get_parent().toggle_on_any_push, "Elevator%s levers must flip from either side." % key)
 
 	var elevator_a := level.get_node("ElevatorA") as Elevator
 	var elevator_b := level.get_node("ElevatorB") as Elevator
-	_check(elevator_a.position == Vector2(2064, 5376) and elevator_a.travel == Vector2(0, -2064), "ElevatorA must span its shaft from y 5376 to 3312.")
-	_check(elevator_b.position == Vector2(-1104, 3216) and elevator_b.travel == Vector2(0, -2208), "ElevatorB must span its shaft from y 3216 to 1008.")
+	_check(elevator_a.position == Vector2(2064, 5376) and elevator_a.travel == Vector2(0, -2047.5), "ElevatorA must span its shaft from y 5376 to 3312.")
+	_check(elevator_b.position == Vector2(-1104, 3216) and elevator_b.travel == Vector2(0, -2191.5), "ElevatorB must span its shaft from y 3216 to 1008.")
+	_check(elevator_b.start_at_top, "ElevatorB must start at the corridor so it is not open by default.")
+
+	var left := level.get_node("ElevatorBLeverTop") as Node2D
+	var right := level.get_node("ElevatorBLeverTopRight") as Node2D
+	_check(left.position.x < -1296.0 and right.position.x > -912.0, "The upper corridor must have a lever on each side of the shaft.")
 
 	var tiles := level.get_node("TileMapPrincipal1") as TileMapLayer
 	var opened := true
@@ -209,6 +218,19 @@ func _test_level_placement() -> void:
 				opened = false
 
 	_check(opened, "The floor over shaft B must be open so the elevator reaches the corridor.")
+
+	var elevator_c := level.get_node("ElevatorC") as Elevator
+	_check(elevator_c.position == Vector2(2832, 2736) and elevator_c.travel == Vector2(0, -943.5), "ElevatorC must span its shaft from y 2736 to the corridor at 1792.5.")
+
+	var shaft_c_open := true
+
+	for x in range(55, 63):
+		for y in range(37, 47):
+			if tiles.get_cell_source_id(Vector2i(x, y)) != -1:
+				shaft_c_open = false
+
+	_check(shaft_c_open, "The floor over shaft C must be open so the elevator reaches the corridor.")
+	_check(tiles.get_cell_source_id(Vector2i(54, 37)) != -1 and tiles.get_cell_source_id(Vector2i(63, 37)) != -1, "The corridor floor beside shaft C must remain.")
 	_check(tiles.get_cell_source_id(Vector2i(-28, 21)) != -1 and tiles.get_cell_source_id(Vector2i(-19, 21)) != -1, "The shaft B walls beside the opening must remain.")
 
 	level.free()

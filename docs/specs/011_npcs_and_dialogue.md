@@ -36,7 +36,7 @@ The first implementation supports linear conversations. Branching choices are a 
 - Each subsequent interaction press advances exactly one line. Advancing past the final line completes the conversation and hides the panel.
 - A dedicated cancel action ends the conversation immediately.
 - Returning to an NPC after completion or interruption starts its conversation from the first line. There is no remembered progress in this milestone.
-- The player may move, jump, aim, cast spells, and take damage while talking. Dialogue does not grant invulnerability, cancel movement modes, or change cooldowns.
+- The player may move, jump, aim, cast spells, and take damage while talking. A Jump press that is also OK (A / Space) advances the dialogue instead of jumping; see spec 019. Dialogue does not grant invulnerability, cancel movement modes, or change cooldowns.
 - The NPC remains horizontally stationary and uses a solid `CharacterBody2D` with the same Entities layer (4) and World / One-way Platforms / Entities mask (7) as the player and enemies. Its body blocks player and enemy movement; its separate interaction area only detects eligible players.
 - A composed `StationaryNpcBody` component applies the shared gravity behavior and calls `move_and_slide()` so the NPC settles onto terrain and one-way platforms. The NPC root needs no controller script.
 - Use the existing dummy's blue knight idle sprite sheet, copied to `entities/npcs/village_guide/assets/idle_32x32.png`, with an eleven-frame looping idle animation and the same 3x scale used by the player and enemies. NPC artwork is owned by the NPC feature. Decorative polygon and line placeholders are removed.
@@ -56,7 +56,7 @@ The first implementation supports linear conversations. Branching choices are a 
 
 ## Input and Presentation
 
-- Rebind `interaction` from keyboard S to E. S remains available for downward aiming and jump-down behavior.
+- Rebind `interaction` from keyboard S to E. S remains available for downward aiming and jump-down behavior. (Superseded by spec 019: interaction is Down again.)
 - Add a controller binding for interaction on the right shoulder button, which is separate from the existing movement, spell, pause, and selection controls.
 - Add `dialogue_cancel`, bound to Q and the right stick press. Escape continues to open the pause menu during dialogue.
 - Keep action names configurable on the feature's input component. Prompt labels reflect the action bindings rather than embedding an E label in conversation data.
