@@ -93,9 +93,11 @@ func _test_settings_round_trip() -> void:
 
 
 func _test_options_menu() -> void:
-	var menu = (load("res://ui/main_menu/Options.tscn") as PackedScene).instantiate()
-	root.add_child(menu)
+	var screen = (load("res://ui/main_menu/Options.tscn") as PackedScene).instantiate()
+	root.add_child(screen)
 	await process_frame
+
+	var menu = screen.options_panel
 
 	_check(menu.get_binding_button(&"jump") != null, "Options must list Jump.")
 	_check(menu.get_binding_button(&"pause") != null, "Options must list Pause.")
@@ -126,11 +128,15 @@ func _test_options_menu() -> void:
 	menu.fullscreen_check.button_pressed = true
 	_check(_settings.fullscreen, "The fullscreen toggle must change the setting.")
 
+	menu.vsync_check.button_pressed = false
+	_check(not _settings.vsync, "The V-Sync toggle must change the setting.")
+
 	menu.reset_button.pressed.emit()
 	_check(_settings.get_binding(&"jump") == KEY_SPACE, "Reset must restore keys from the menu.")
 	_check(menu.get_binding_button(&"jump").text == "Space", "Reset must refresh the buttons.")
+	_check(_settings.vsync, "Reset must restore V-Sync.")
 
-	menu.queue_free()
+	screen.queue_free()
 	await process_frame
 	_check(FileAccess.file_exists(TEST_SETTINGS_PATH), "Closing the options must save the settings.")
 

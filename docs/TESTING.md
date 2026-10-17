@@ -27,6 +27,7 @@ Set `GODOT_BIN` to select a Godot executable. Each suite uses `tests/run_suite.s
 | `dig` | Dig spell definition and sequence, one-hit block breaking, unsupported actions, player casting, and Level 01 block placement. |
 | `spell_shop` | Shop offers, locked multi-token spells, Stardust spending and rejection, checkpoint menu purchase flow. |
 | `save_system` | Resting at checkpoints (health, enemy recreation), save/load round trip, missing saves, and the checkpoint Save button. |
+| `pause_menu` | Pause menu tabs and navigation, inventory artifacts and status, sections, monster guide, spell details, settings tab, and quit actions. |
 | `options_and_death` | Startup scene, settings persistence, key rebinding and swaps, options menu, and the death loading screen. |
 | `standards` | Integration regressions for lifecycle signals, explicit dependencies, cooldown reconnection, inventory, and equipment. |
 

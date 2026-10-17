@@ -8,6 +8,7 @@
 script = ExtResource("1_qd0jt")
 id = &"push"
 display_name = "Push"
+description = "Empurra objetos e inimigos à sua frente na direção mirada. Útil para mover caixas e afastar ameaças."
 icon = ExtResource("2_icon")
 sequence = Array[StringName]([&"interaction"])
 command_scene = ExtResource("1_crwdp")

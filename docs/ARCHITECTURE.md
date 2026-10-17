@@ -22,6 +22,7 @@ entities/
     detection/                    Enemy target detection
     platform_crawler/             Enemy that loops around one platform and charges forward
     respawn/                      Enemy recreation after player death or checkpoint rest
+    bestiary/                     Monster guide entries shown in the pause menu
   interactive/
     checkpoint/                   Reusable checkpoint scene, logic, and menu
     door/                         Door scene and controller
@@ -52,7 +53,7 @@ dialogue/                         Shared dialogue resources, active session, and
 components/                       Components with consumers across features
   interaction/                    NPC/checkpoint interaction contract
 levels/level_01/                  Level composition, camera, and level artwork
-ui/                               General menus and the player HUD
+ui/                               General menus (tabbed pause menu, options panel, shared theme) and the player HUD
 assets/pickups/                   Placeholder artwork shared by items and currency
 prototypes/                       Background rendering experiment and debug artwork
   editor_recovery/                Historical editor snapshots, excluded from imports

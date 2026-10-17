@@ -15,22 +15,23 @@ const SECTION_INPUT := "input"
 const MASTER_BUS := &"Master"
 const DEFAULT_VOLUME := 1.0
 const DEFAULT_FULLSCREEN := false
+const DEFAULT_VSYNC := true
 
 ## Actions the player can rebind, in display order, with their labels.
 const REMAPPABLE_ACTIONS: Array[Dictionary] = [
-	{"action": &"left", "label": "Move left"},
-	{"action": &"right", "label": "Move right"},
-	{"action": &"aim_up", "label": "Aim up"},
-	{"action": &"aim_down", "label": "Aim down / Drop down"},
-	{"action": &"jump", "label": "Jump"},
-	{"action": &"cast_move_token", "label": "Spell: Move token"},
-	{"action": &"cast_interaction_token", "label": "Spell: Interaction token"},
-	{"action": &"cast_attack_token", "label": "Spell: Attack token"},
-	{"action": &"cast_confirm_token", "label": "Spell: Confirm"},
-	{"action": &"interaction", "label": "Interact"},
-	{"action": &"dialogue_cancel", "label": "Cancel / Back"},
-	{"action": &"Select", "label": "Select"},
-	{"action": &"pause", "label": "Pause"},
+	{"action": &"left", "label": "Mover para a esquerda"},
+	{"action": &"right", "label": "Mover para a direita"},
+	{"action": &"aim_up", "label": "Mirar para cima"},
+	{"action": &"aim_down", "label": "Mirar para baixo / Descer"},
+	{"action": &"jump", "label": "Pular"},
+	{"action": &"cast_move_token", "label": "Magia: Movimento"},
+	{"action": &"cast_interaction_token", "label": "Magia: Interação"},
+	{"action": &"cast_attack_token", "label": "Magia: Ataque"},
+	{"action": &"cast_confirm_token", "label": "Magia: Confirmar"},
+	{"action": &"interaction", "label": "Interagir"},
+	{"action": &"dialogue_cancel", "label": "Cancelar / Voltar"},
+	{"action": &"Select", "label": "Selecionar"},
+	{"action": &"pause", "label": "Pausar / Menu"},
 ]
 
 ## Overridable so tests can write to an isolated file.
@@ -38,6 +39,7 @@ var settings_path: String = SETTINGS_PATH
 
 var master_volume: float = DEFAULT_VOLUME
 var fullscreen: bool = DEFAULT_FULLSCREEN
+var vsync: bool = DEFAULT_VSYNC
 
 var _bindings: Dictionary[StringName, Key] = {}
 var _default_bindings: Dictionary[StringName, Key] = {}
@@ -76,6 +78,32 @@ func set_fullscreen(enabled: bool) -> void:
 	changed.emit()
 
 
+func set_vsync(enabled: bool) -> void:
+	vsync = enabled
+	_apply_vsync()
+	changed.emit()
+
+
+## Display label for a spell token, using its current keyboard binding.
+func get_token_key_label(token: StringName) -> String:
+	var action := StringName("cast_%s_token" % token)
+
+	if get_binding(action) == KEY_NONE:
+		return String(token)
+
+	return get_key_label(action)
+
+
+## Display label for a spell sequence, e.g. "L + K".
+func format_sequence(sequence: Array[StringName]) -> String:
+	var keys := PackedStringArray()
+
+	for token in sequence:
+		keys.append(get_token_key_label(token))
+
+	return " + ".join(keys)
+
+
 ## Binds a physical key to an action. If another remappable action already
 ## uses that key, the two actions swap keys so no input is left ambiguous.
 ## Returns false for unknown actions or KEY_NONE.
@@ -103,6 +131,7 @@ func set_binding(action: StringName, key: Key) -> bool:
 func reset_to_defaults() -> void:
 	master_volume = DEFAULT_VOLUME
 	fullscreen = DEFAULT_FULLSCREEN
+	vsync = DEFAULT_VSYNC
 
 	for action: StringName in _default_bindings:
 		_bindings[action] = _default_bindings[action]
@@ -110,6 +139,7 @@ func reset_to_defaults() -> void:
 
 	_apply_volume()
 	_apply_fullscreen()
+	_apply_vsync()
 	changed.emit()
 
 
@@ -118,6 +148,7 @@ func save_settings() -> bool:
 
 	file.set_value(SECTION_AUDIO, "master_volume", master_volume)
 	file.set_value(SECTION_VIDEO, "fullscreen", fullscreen)
+	file.set_value(SECTION_VIDEO, "vsync", vsync)
 
 	for action: StringName in _bindings:
 		file.set_value(SECTION_INPUT, String(action), int(_bindings[action]))
@@ -137,6 +168,7 @@ func load_settings() -> void:
 
 	master_volume = clampf(file.get_value(SECTION_AUDIO, "master_volume", DEFAULT_VOLUME), 0.0, 1.0)
 	fullscreen = file.get_value(SECTION_VIDEO, "fullscreen", DEFAULT_FULLSCREEN)
+	vsync = file.get_value(SECTION_VIDEO, "vsync", DEFAULT_VSYNC)
 
 	for action: StringName in _default_bindings:
 		var key: Key = _default_bindings[action]
@@ -149,6 +181,7 @@ func load_settings() -> void:
 
 	_apply_volume()
 	_apply_fullscreen()
+	_apply_vsync()
 	changed.emit()
 
 
@@ -169,6 +202,14 @@ func _apply_fullscreen() -> void:
 
 	var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen else DisplayServer.WINDOW_MODE_WINDOWED
 	DisplayServer.window_set_mode(mode)
+
+
+func _apply_vsync() -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+
+	var mode := DisplayServer.VSYNC_ENABLED if vsync else DisplayServer.VSYNC_DISABLED
+	DisplayServer.window_set_vsync_mode(mode)
 
 
 ## Returns the action's keyboard key, preferring the physical keycode.

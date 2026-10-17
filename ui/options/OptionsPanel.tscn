@@ -1,0 +1,94 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/options/options_panel.gd" id="1_options_panel"]
+
+[node name="OptionsPanel" type="VBoxContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+script = ExtResource("1_options_panel")
+
+[node name="AudioTitle" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.78, 0.3, 1)
+theme_override_font_sizes/font_size = 22
+text = "Áudio"
+
+[node name="VolumeRow" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="VolumeLabel" type="Label" parent="VolumeRow"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Volume geral"
+
+[node name="VolumeSlider" type="HSlider" parent="VolumeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 5.0
+value = 100.0
+
+[node name="VolumeValueLabel" type="Label" parent="VolumeRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 2
+
+[node name="VideoTitle" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.78, 0.3, 1)
+theme_override_font_sizes/font_size = 22
+text = "Vídeo"
+
+[node name="VideoRow" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="FullscreenCheck" type="CheckButton" parent="VideoRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tela cheia"
+
+[node name="VsyncCheck" type="CheckButton" parent="VideoRow"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "V-Sync"
+
+[node name="ControlsTitle" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.78, 0.3, 1)
+theme_override_font_sizes/font_size = 22
+text = "Controles (teclado)"
+
+[node name="HintLabel" type="Label" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.7)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Escolha uma ação para trocar a tecla."
+
+[node name="BindingsScroll" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="BindingsGrid" type="GridContainer" parent="BindingsScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 6
+columns = 2
+
+[node name="ResetButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Restaurar padrões"

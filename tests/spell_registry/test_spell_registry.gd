@@ -179,25 +179,20 @@ func _test_debug_ui_controls() -> void:
 
 	var registry: SpellRegistry = player.get_node("SpellRegistry")
 	var hud: PlayerHud = player.get_node("PlayerHudLayer/PlayerHud")
-	var pause_menu := pause_menu_scene.instantiate() as PauseMenu
+	# Untyped: PauseMenu uses autoloads, which are not registered when tests compile.
+	var pause_menu = pause_menu_scene.instantiate()
 	pause_menu.spell_registry = registry
 	root.add_child(pause_menu)
 	await process_frame
 
-	var debug_ui := pause_menu.spell_registry_debug_ui
-	var main_menu_panel := pause_menu.get_node("PanelContainer") as Control
-	var registry_window := pause_menu.spell_registry_window
+	var debug_ui: SpellRegistryDebugUI = pause_menu.spell_registry_debug_ui
+	var spells_page: Control = pause_menu.pages[1]
+	var registry_window: Control = pause_menu.spell_registry_window
 
 	_check(not pause_menu.visible, "The pause menu must be hidden during gameplay.")
 	_check(
 		hud.get_node_or_null("SpellRegistryDebugUI") == null,
 		"The player HUD must not contain the registry debug UI."
-	)
-	_check(
-		is_equal_approx(registry_window.anchor_left, 0.5)
-		and is_equal_approx(registry_window.anchor_right, 0.5)
-		and is_equal_approx(registry_window.offset_left, -registry_window.offset_right),
-		"The spell registry window must be centered horizontally."
 	)
 	_check(debug_ui.registry == registry, "The debug UI must receive the player's registry.")
 	_check(debug_ui.get_catalogued_spell_count() == 5, "The debug UI must list every database spell.")
@@ -206,22 +201,22 @@ func _test_debug_ui_controls() -> void:
 	pause_menu.pause_game()
 	_check(pause_menu.visible, "Opening the ESC menu must show the pause menu.")
 	_check(paused, "Opening the ESC menu must pause the game.")
-	_check(main_menu_panel.visible, "The compact menu must be shown when ESC is pressed.")
 	_check(
 		not registry_window.visible,
 		"The registry window must remain hidden until its menu button is pressed."
 	)
 
+	pause_menu.select_tab(1)
+	_check(spells_page.visible, "The Spells tab must show the spell list.")
 	pause_menu.spell_registry_button.pressed.emit()
-	_check(registry_window.visible, "The Spell Registry button must open the registry window.")
-	_check(not main_menu_panel.visible, "Opening the registry window must hide the compact menu.")
+	_check(registry_window.visible, "The debug registry button must open the registry window.")
 
 	var escape_event := InputEventAction.new()
 	escape_event.action = &"pause"
 	escape_event.pressed = true
 	pause_menu._unhandled_input(escape_event)
 	_check(not registry_window.visible, "ESC must close the registry window.")
-	_check(main_menu_panel.visible, "ESC must return to the compact pause menu.")
+	_check(spells_page.visible, "ESC must return to the Spells tab.")
 	_check(paused, "Closing the registry window with ESC must keep the game paused.")
 	pause_menu.spell_registry_button.pressed.emit()
 
@@ -244,7 +239,7 @@ func _test_debug_ui_controls() -> void:
 
 	pause_menu.close_spell_registry_button.pressed.emit()
 	_check(not registry_window.visible, "The Back button must close the registry window.")
-	_check(main_menu_panel.visible, "The Back button must restore the compact pause menu.")
+	_check(spells_page.visible, "The Back button must return to the Spells tab.")
 
 	paused = false
 	await _free_node(pause_menu)

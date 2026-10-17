@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://segjcmorj6ib"]
 
 [ext_resource type="Script" path="res://ui/main_menu/options_menu.gd" id="1_options_menu"]
+[ext_resource type="Theme" path="res://ui/theme/menu_theme.tres" id="2_theme"]
+[ext_resource type="PackedScene" path="res://ui/options/OptionsPanel.tscn" id="3_options_panel"]
 
 [node name="Options" type="Control"]
 layout_mode = 3
@@ -9,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_theme")
 script = ExtResource("1_options_menu")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -19,7 +22,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.08, 0.08, 0.1, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -30,92 +33,26 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="PanelContainer" parent="Center"]
-custom_minimum_size = Vector2(620, 0)
+custom_minimum_size = Vector2(680, 620)
 layout_mode = 2
 
-[node name="Margin" type="MarginContainer" parent="Center/Panel"]
-layout_mode = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 20
-
-[node name="Content" type="VBoxContainer" parent="Center/Panel/Margin"]
+[node name="Content" type="VBoxContainer" parent="Center/Panel"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="Center/Panel/Margin/Content"]
+[node name="Title" type="Label" parent="Center/Panel/Content"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "Options"
+theme_override_font_sizes/font_size = 30
+text = "Configurações"
 horizontal_alignment = 1
 
-[node name="VolumeRow" type="HBoxContainer" parent="Center/Panel/Margin/Content"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="VolumeLabel" type="Label" parent="Center/Panel/Margin/Content/VolumeRow"]
-custom_minimum_size = Vector2(160, 0)
-layout_mode = 2
-text = "Volume"
-
-[node name="VolumeSlider" type="HSlider" parent="Center/Panel/Margin/Content/VolumeRow"]
+[node name="OptionsPanel" parent="Center/Panel/Content" instance=ExtResource("3_options_panel")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-step = 5.0
-value = 100.0
 
-[node name="VolumeValueLabel" type="Label" parent="Center/Panel/Margin/Content/VolumeRow"]
+[node name="BackButton" type="Button" parent="Center/Panel/Content"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(56, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "100%"
-horizontal_alignment = 2
-
-[node name="FullscreenCheck" type="CheckButton" parent="Center/Panel/Margin/Content"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Fullscreen"
-
-[node name="ControlsTitle" type="Label" parent="Center/Panel/Margin/Content"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Controls (keyboard)"
-
-[node name="HintLabel" type="Label" parent="Center/Panel/Margin/Content"]
-unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0.7)
-layout_mode = 2
-text = "Select an action to change its key."
-
-[node name="BindingsScroll" type="ScrollContainer" parent="Center/Panel/Margin/Content"]
-custom_minimum_size = Vector2(0, 340)
-layout_mode = 2
-horizontal_scroll_mode = 0
-
-[node name="BindingsGrid" type="GridContainer" parent="Center/Panel/Margin/Content/BindingsScroll"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/h_separation = 16
-theme_override_constants/v_separation = 6
-columns = 2
-
-[node name="Buttons" type="HBoxContainer" parent="Center/Panel/Margin/Content"]
-layout_mode = 2
-theme_override_constants/separation = 16
-alignment = 1
-
-[node name="ResetButton" type="Button" parent="Center/Panel/Margin/Content/Buttons"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 0)
-layout_mode = 2
-text = "Reset to defaults"
-
-[node name="BackButton" type="Button" parent="Center/Panel/Margin/Content/Buttons"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 0)
-layout_mode = 2
-text = "Back"
+size_flags_horizontal = 4
+text = "Voltar"

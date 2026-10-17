@@ -207,10 +207,12 @@ func _test_main_dependencies() -> void:
 	main.process_mode = Node.PROCESS_MODE_DISABLED
 	root.add_child(main)
 	var registry: SpellRegistry = main.get_node("LevelRoot/Player/SpellRegistry")
-	var menu: PauseMenu = main.get_node("PauseMenuLayer/PauseMenu")
+	# Untyped: PauseMenu uses autoloads, which are not registered when tests compile.
+	var menu = main.get_node("PauseMenuLayer/PauseMenu")
 	_check(menu.spell_registry == registry, "Main must supply its player's spell registry.")
 	_check(menu.spell_registry_debug_ui.registry == registry, "The registry window must observe that registry.")
-	_check(menu.equipment_panel.equipment != null, "Main must supply equipment dependencies.")
+	_check(menu.equipment != null, "Main must supply equipment dependencies.")
+	_check(menu.inventory != null and menu.stats != null and menu.health != null, "Main must supply inventory, stats, and health.")
 	await _free_node(main)
 
 

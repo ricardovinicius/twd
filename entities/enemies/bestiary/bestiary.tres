@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="Bestiary" format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/bestiary/bestiary.gd" id="1_bestiary"]
+[ext_resource type="Script" path="res://entities/enemies/bestiary/monster_entry.gd" id="2_entry"]
+[ext_resource type="Texture2D" uid="uid://1vm731a8bylf" path="res://entities/enemies/basic_skeleton/sprites/idle.png" id="3_skeleton"]
+
+[sub_resource type="Resource" id="Resource_skeleton"]
+script = ExtResource("2_entry")
+id = &"basic_skeleton"
+display_name = "Esqueleto"
+description = "Patrulha o chão e persegue quem entra em seu campo de visão. Prepara um golpe corpo a corpo antes de atacar: afaste-se quando ele erguer a arma."
+portrait = ExtResource("3_skeleton")
+max_health = 50.0
+damage = 20.0
+stardust_drop = 20
+weakness = "Ataques à distância (Magic Arrow)"
+
+[sub_resource type="Resource" id="Resource_crawler"]
+script = ExtResource("2_entry")
+id = &"platform_crawler"
+display_name = "Rastejador de Plataforma"
+description = "Dá voltas ao redor de uma plataforma sem nunca sair dela. Só enxerga para a frente: quando vê você, acelera e investe repetidamente."
+placeholder_color = Color(0.55, 0.2, 0.75, 1)
+max_health = 30.0
+damage = 10.0
+stardust_drop = 20
+weakness = "Ataque pelas costas"
+
+[resource]
+script = ExtResource("1_bestiary")
+entries = Array[ExtResource("2_entry")]([SubResource("Resource_skeleton"), SubResource("Resource_crawler")])
