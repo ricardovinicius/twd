@@ -13,7 +13,7 @@ portrait = ExtResource("3_skeleton")
 max_health = 50.0
 damage = 20.0
 stardust_drop = 20
-weakness = "Ataques à distância (Magic Arrow)"
+weakness = "Magic Arrow, que atravessa as paredes"
 
 [sub_resource type="Resource" id="Resource_crawler"]
 script = ExtResource("2_entry")

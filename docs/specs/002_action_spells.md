@@ -26,7 +26,9 @@ sequenceDiagram
 
 # Implementation Plan
 
-For the initial implementation of the Action Spells, we will start with a basic implementation of push action spell, which will be the first Action Spell that the player will be able to cast. The push action spell will push the Reactive Entities away from the player in a specific direction.
+For the initial implementation of the Action Spells, we will start with a basic implementation of push action spell, which will be the first Action Spell that the player will be able to cast. The push action spell will push the Reactive Entities away from the player.
+
+**Update:** Push is a radial burst. Its effect area is a circle centred on the cast origin (`EffectQuery`, radius 32 in the caster's local scale), and each receiver is pushed along the direction from the origin to that receiver, so entities on every side are pushed outward. A receiver exactly at the origin is pushed in the caster's facing direction. `tests/spell_effects/` covers this behavior.
 
 1. Define ActionData, the data structure that will hold the information about the Action Spell that will be exchanged between action spells and the receivers.
 2. Create ActionReceiver as a reusable entity component that routes ActionData to composed reaction components.

@@ -38,7 +38,7 @@ func _run() -> void:
 	await _test_melee_timing_single_hit_miss_and_recovery()
 	await _test_magic_arrow_hits_mob_receiver()
 	await _test_mob_health_and_death()
-	await _test_projectile_world_collision()
+	await _test_projectile_passes_world_obstacles()
 	await _test_projectile_lifetime()
 
 	if _failures.is_empty():
@@ -260,7 +260,7 @@ func _test_mob_health_and_death() -> void:
 	await _free_fixture(world)
 
 
-func _test_projectile_world_collision() -> void:
+func _test_projectile_passes_world_obstacles() -> void:
 	var world := Node2D.new()
 	world.name = "ProjectileWorldCollisionFixture"
 	root.add_child(world)
@@ -287,8 +287,8 @@ func _test_projectile_world_collision() -> void:
 	var projectile_ref: WeakRef = weakref(projectile)
 
 	await _wait_until(func() -> bool: return projectile_ref.get_ref() == null, 90)
-	_check_true(projectile_ref.get_ref() == null, "Magic Arrow is consumed by world collision")
-	_check_equal(target.health.current, 25.0, "world collision prevents damage to a receiver behind it")
+	_check_true(projectile_ref.get_ref() == null, "Magic Arrow is consumed by the receiver behind the wall")
+	_check_equal(target.health.current, 15.0, "Magic Arrow passes through world obstacles and damages a receiver behind them")
 
 	await _free_fixture(world)
 

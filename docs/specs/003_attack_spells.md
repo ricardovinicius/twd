@@ -55,7 +55,7 @@ sequenceDiagram
 - Create and register the magic arrow SpellDefinition using the intended X-button sequence.
 - Add AttackReceiver and BasicMobDamage to an initial test entity (dummy)
 - Test no targets, one target, several targets, etc.
-- The projectile must be able to be destroyed when it collides with a target entity or other obstacle
+- The projectile is destroyed when it hits a target entity or its lifetime expires. It passes through world obstacles (walls, floors, platforms): its collision mask covers Attack Receivers only.
 - The projectile is added under `SpellContext.effect_parent` but uses a top-level world-space transform. It preserves its configured scene scale and does not inherit the caster's movement, rotation, or scale after launch.
 
 ## Recommended order
@@ -63,7 +63,7 @@ sequenceDiagram
 1. Define initial behavior rules
 
     Decide these before coding:
-    - Projectile stops at the first target or obstacle. 
+    - Projectile stops at the first target; world obstacles do not stop it.
         - Yes
     - It cannot damage its caster.
         - Yes
@@ -185,7 +185,7 @@ Only after manual projectile tests work:
 Test in this order:
 
 1. Projectile expires without hitting anything.
-2. Projectile hits a wall.
+2. Projectile passes through a wall and keeps flying.
 3. Projectile hits a receiver without compatible reactions.
 4. Projectile damages the dummy.
 5. Repeated arrows reduce health correctly.

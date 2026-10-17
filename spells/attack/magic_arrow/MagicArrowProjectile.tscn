@@ -9,7 +9,7 @@
 top_level = true
 scale = Vector2(3, 3)
 collision_layer = 0
-collision_mask = 17
+collision_mask = 16
 script = ExtResource("1_11i43")
 debug_collisions = true
 

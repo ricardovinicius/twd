@@ -95,6 +95,9 @@ func _on_area_entered(area: Area2D) -> void:
 	_consume("attack receiver handled collision")
 
 
+# The projectile only scans Attack Receivers, so world geometry (walls,
+# floors, platforms) never reaches here: the arrow passes through obstacles.
+# Bodies added to the mask in the future still stop it.
 func _on_body_entered(body: Node) -> void:
 	if _consumed:
 		return
