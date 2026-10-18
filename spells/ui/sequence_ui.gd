@@ -62,6 +62,7 @@ func _clear_icons() -> void:
 		child.queue_free()
 
 
-func _on_sequence_failed(sequence: Array[StringName], reason: StringName) -> void:
-	push_warning("SequenceUI: Sequence failed due to '%s'." % reason)
-	# You might want to add some visual feedback here, like flashing the sequence container or playing a sound.
+func _on_sequence_failed(_sequence: Array[StringName], _reason: StringName) -> void:
+	# A failed sequence is an expected outcome (docs/LOGGING.md): no log.
+	# Visual feedback (flash, sound) can be added here.
+	pass

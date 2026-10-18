@@ -50,3 +50,7 @@ Out of scope: separate music and effects volume (no audio exists yet), remapping
 5. Dying shows a black screen with a loading indicator in the bottom-right corner for 5 seconds, during which gameplay is paused and the pause menu cannot open; afterwards the screen fades out and play resumes at the respawn point.
 
 Run `bash tests/options_and_death/run_tests.sh` for the automated checks.
+
+# Update: Key Conflicts
+
+`menu_tab_prev` / `menu_tab_next` (Q / E) are fixed menu keys. `Pause` and the movement actions (`left`, `right`, `aim_up`, `aim_down`), which are also read inside menus, cannot take those keys, directly or through a swap. `Settings.get_binding_conflict()` explains the refusal and the options panel shows it.

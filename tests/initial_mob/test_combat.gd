@@ -26,7 +26,7 @@ var _failures: Array[String] = []
 var _checks := 0
 
 
-func _init() -> void:
+func _initialize() -> void:
 	call_deferred(&"_run")
 
 
@@ -162,12 +162,12 @@ func _test_melee_timing_single_hit_miss_and_recovery() -> void:
 
 	_check_true(melee.begin_attack(source, Vector2.RIGHT), "first melee attack can begin")
 	# Advance phases explicitly so assertions are independent of host frame rate.
-	melee.set_process(false)
-	melee._process(melee.windup_duration - 0.001)
+	melee.set_physics_process(false)
+	melee._physics_process(melee.windup_duration - 0.001)
 	await process_frame
 	_check_equal(target.health.current, 50.0, "melee cannot damage during windup")
 
-	melee._process(0.002)
+	melee._physics_process(0.002)
 	await process_frame
 	_check_equal(target.health.current, 40.0, "melee damages during its active moment")
 
@@ -177,17 +177,17 @@ func _test_melee_timing_single_hit_miss_and_recovery() -> void:
 	_check_equal(target.health.current, 40.0, "one swing damages a receiver at most once")
 	_check_false(melee.begin_attack(source, Vector2.RIGHT), "active attack blocks another attack")
 
-	melee._process(melee.active_duration + 0.001)
+	melee._physics_process(melee.active_duration + 0.001)
 	_check_false(melee.begin_attack(source, Vector2.RIGHT), "recovery blocks another attack")
-	melee._process(melee.recovery_duration + 0.001)
+	melee._physics_process(melee.recovery_duration + 0.001)
 	_check_false(melee.is_attacking(), "melee becomes ready after recovery")
 
 	# Begin another committed swing, then leave before its active moment.
 	_check_true(melee.begin_attack(source, Vector2.RIGHT), "attack can restart after recovery")
-	melee.set_process(false)
+	melee.set_physics_process(false)
 	target.root.global_position = Vector2(200.0, 0.0)
 	await _wait_physics_frames(2)
-	melee._process(melee.windup_duration + 0.001)
+	melee._physics_process(melee.windup_duration + 0.001)
 	await process_frame
 	_check_equal(target.health.current, 40.0, "leaving the hitbox before active timing misses")
 

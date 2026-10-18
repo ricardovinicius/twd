@@ -8,7 +8,7 @@
 script = ExtResource("1_definition")
 id = &"double_jump"
 display_name = "Double Jump"
-description = "Um salto mágico que funciona no chão ou no ar. Só pode ser usado uma vez no ar; recarrega ao tocar o chão."
+description = "A magic jump that works on the ground or in midair. It can be used once in the air and recharges when you land."
 icon = ExtResource("3_icon")
 cooldown = 0.25
 sequence = Array[StringName]([&"move", &"interaction"])

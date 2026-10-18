@@ -39,7 +39,7 @@ func _on_line_changed(line: DialogueLine) -> void:
 
 func _on_bindings_changed() -> void:
 	hints.text = "%s  Continue     %s  End conversation" % [
-		interactor.get_binding_label(interactor.interaction_action),
+		interactor.get_binding_label(interactor.accept_action),
 		interactor.get_binding_label(interactor.cancel_action)
 	]
 

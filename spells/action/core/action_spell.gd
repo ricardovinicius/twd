@@ -9,7 +9,6 @@ func _execute() -> void:
 		fail("ActionSpell: context is null.")
 		return
 	
-	push_warning("ActionSpell: Executing spell with context: caster=%s, origin=%s, direction=%s" % [context.caster, context.origin, context.direction])
 	
 	if context.caster == null:
 		fail("ActionSpell: context.caster is null.")
@@ -25,7 +24,6 @@ func _execute() -> void:
 	effect_query.force_shapecast_update()
 
 	for receiver in _find_receivers():
-		print("ActionSpell: Found receiver: %s" % receiver)
 
 		var action := _create_action_for(receiver)
 
@@ -44,7 +42,6 @@ func _find_receivers() -> Array[ActionReceiver]:
 		var area := effect_query.get_collider(i)
 		var receiver := area as ActionReceiver
 
-		print("ActionSpell: Checking overlapping area: %s" % area)
 
 		if receiver == null:
 			continue

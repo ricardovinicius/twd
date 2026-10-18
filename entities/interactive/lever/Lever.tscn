@@ -16,13 +16,15 @@ size = Vector2(10, 40)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_receiver"]
 size = Vector2(24, 52)
 
-[node name="Lever" type="Node2D" node_paths=PackedStringArray("switch", "handle", "pivot_joint", "physics_component", "grip")]
+[node name="Lever" type="Node2D" node_paths=PackedStringArray("switch", "handle", "pivot_joint", "physics_component", "grip", "impulse_reaction", "base")]
 script = ExtResource("1_lever")
 switch = NodePath("SwitchComponent")
 handle = NodePath("LeverHandle")
 pivot_joint = NodePath("PivotJoint")
 physics_component = NodePath("PhysicsLeverComponent")
 grip = NodePath("LeverHandle/Grip")
+impulse_reaction = NodePath("LeverHandle/ActionReceiver/LeverImpulseReaction")
+base = NodePath("Base")
 
 [node name="Base" type="StaticBody2D" parent="."]
 collision_layer = 1

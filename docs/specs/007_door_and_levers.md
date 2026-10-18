@@ -14,6 +14,7 @@ This feature must use composition and the existing action-reaction pipeline. Pus
 - The lever handle begins at the physical stop corresponding to the initial switch state.
 - An `ActionData` with `type = &"push"` applies an impulse to the lever handle; it does not change switch state directly.
 - The impulse uses the action's direction and strength, so a Push cast is not guaranteed to activate the lever.
+- Push is radial (see `002_action_spells.md`). Ordinary levers ignore pushes whose direction points behind the caster (`ActionData.facing`), so pushing an enemy away cannot flip a lever at your back.
 - The player may contact the handle physically, but the player's configured rigid-body push weight is too low to cross either lever threshold.
 - Other eligible physics bodies can move the handle through collision when they transfer enough momentum.
 - A body activates or deactivates the lever only if it moves the handle far enough to cross the corresponding angular threshold.

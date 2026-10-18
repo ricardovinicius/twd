@@ -42,7 +42,8 @@ func _physics_process(delta: float) -> void:
 	var was_on_floor := is_on_floor()
 	var is_being_knocked_back := knockback.is_active()
 
-	if Input.is_action_just_pressed("jump"):
+	# OK (A / Space) advances dialogue, so it does not jump while talking.
+	if Input.is_action_just_pressed("jump") and not interactor.blocks_jump():
 		_handle_jump_input()
 
 	if is_being_knocked_back:

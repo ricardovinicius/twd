@@ -77,7 +77,7 @@ func _test_inventory(menu: Node, player: Node) -> void:
 
 	_check(menu.get_stat_text("hp") == "100/100", "The status panel must show current and maximum HP.")
 	_check(menu.get_stat_text("res_arc") == "+0", "Resistances must be shown as signed values.")
-	_check(menu.artifact_slots[0].text == "Vazio", "Empty artifact slots must say so.")
+	_check(menu.artifact_slots[0].text == "Empty", "Empty artifact slots must say so.")
 
 	menu.artifact_slots[0].pressed.emit()
 	_check(menu.overlay.visible, "An artifact slot must open the item picker.")
@@ -90,14 +90,14 @@ func _test_inventory(menu: Node, player: Node) -> void:
 	_check(menu.get_stat_text("move_speed") == "+50", "Equipping must update the status panel.")
 
 	menu.artifact_slots[0].pressed.emit()
-	_find_overlay_button(menu, "Remover").pressed.emit()
+	_find_overlay_button(menu, "Remove").pressed.emit()
 	_check(player.get_equipment().get_item(0) == null, "Remove must unequip the artifact.")
 	_check(menu.get_stat_text("move_speed") == "+0", "Unequipping must update the status panel.")
 
 
 func _test_inventory_sections(menu: Node, player: Node) -> void:
 	menu.general_items_button.pressed.emit()
-	_check(menu.overlay_title.text == "Itens gerais", "General items must open its section.")
+	_check(menu.overlay_title.text == "General items", "General items must open its section.")
 	_check(_find_overlay_button(menu, "Ring  x2") != null, "General items must list quantities.")
 
 	_press(menu, &"pause")
@@ -108,15 +108,15 @@ func _test_inventory_sections(menu: Node, player: Node) -> void:
 	menu.select_tab(0)
 
 	menu.chains_button.pressed.emit()
-	_check(menu.overlay_title.text == "Correntes", "Chains must open its section.")
+	_check(menu.overlay_title.text == "Chains", "Chains must open its section.")
 	menu.overlay_back_button.pressed.emit()
 	_check(not menu.overlay.visible, "Back must close a section.")
 
 	menu.monster_guide_button.pressed.emit()
-	_check(_find_overlay_button(menu, "Esqueleto") != null, "The monster guide must list the skeleton.")
-	_check(_find_overlay_button(menu, "Rastejador") != null, "The monster guide must list the crawler.")
+	_check(_find_overlay_button(menu, "Skeleton") != null, "The monster guide must list the skeleton.")
+	_check(_find_overlay_button(menu, "Platform Crawler") != null, "The monster guide must list the crawler.")
 	_check(menu.overlay_detail.visible, "The monster guide must show the selected monster's details.")
-	_check(_overlay_detail_has_text(menu, "Vida: 50"), "The monster details must show its health.")
+	_check(_overlay_detail_has_text(menu, "Health: 50"), "The monster details must show its health.")
 	menu.close_overlay()
 
 
@@ -125,19 +125,19 @@ func _test_spells(menu: Node, player: Node) -> void:
 
 	var database = player.get_spell_registry().database
 	_check(menu.spell_list.get_child_count() == database.get_spells().size(), "The Spells tab must list every spell.")
-	_check(menu.get_spell_button(&"double_jump").text.contains("bloqueada"), "Unowned spells must be marked locked.")
-	_check(not menu.get_spell_button(&"magic_arrow").text.contains("bloqueada"), "Owned spells must not be marked locked.")
+	_check(menu.get_spell_button(&"double_jump").text.contains("locked"), "Unowned spells must be marked locked.")
+	_check(not menu.get_spell_button(&"magic_arrow").text.contains("locked"), "Owned spells must not be marked locked.")
 	_check(menu.spell_name_label.text == "Magic Arrow", "The first spell must be shown on open.")
 
 	menu.show_spell(database.get_spell(&"double_jump"))
 	_check(menu.spell_name_label.text == "Double Jump", "Selecting a spell must show its name.")
-	_check(menu.spell_keys_label.text == "Botões:  L + K", "The detail must show the spell's keys.")
+	_check(menu.spell_keys_label.text == "Keys:  L + K", "The detail must show the spell's keys.")
 	_check(menu.spell_cooldown_label.text == "Cooldown:  0.25 s", "The detail must show the cooldown.")
 	_check(not menu.spell_effect_label.text.is_empty(), "The detail must describe the effect.")
 	_check(menu.spell_icon.texture != null, "The detail must show the spell's symbol.")
 
 	menu.show_spell(database.get_spell(&"push"))
-	_check(menu.spell_cooldown_label.text == "Cooldown:  nenhum", "Spells without cooldown must say so.")
+	_check(menu.spell_cooldown_label.text == "Cooldown:  none", "Spells without cooldown must say so.")
 
 
 func _test_settings(menu: Node) -> void:

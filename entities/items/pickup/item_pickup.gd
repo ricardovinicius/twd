@@ -6,6 +6,10 @@ extends Area2D
 var _player_inside: CharacterBody2D = null
 
 
+func _ready() -> void:
+	PersistentPickup.register(self)
+
+
 func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
@@ -26,4 +30,5 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("interaction"):
 		if _player_inside.collect_item(item_definition, amount):
+			SaveGame.mark_collected(self)
 			queue_free()

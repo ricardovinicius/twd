@@ -12,9 +12,14 @@ const SAVE_VERSION := 1
 
 const SECTION_META := "meta"
 const SECTION_PLAYER := "player"
+const SECTION_WORLD := "world"
 
 ## Overridable so tests can write to an isolated file.
 var save_path: String = SAVE_PATH
+
+# Level pickups collected and saved, and those collected since the last save.
+var _saved_collected: Dictionary[String, bool] = {}
+var _pending_collected: Dictionary[String, bool] = {}
 
 
 func has_save() -> bool:
@@ -22,6 +27,9 @@ func has_save() -> bool:
 
 
 func delete_save() -> void:
+	_saved_collected.clear()
+	_pending_collected.clear()
+
 	if not has_save():
 		return
 
@@ -50,12 +58,18 @@ func save_player(player: Node) -> bool:
 	file.set_value(SECTION_PLAYER, "inventory", _capture_inventory(player.get_inventory()))
 	file.set_value(SECTION_PLAYER, "equipment", _capture_equipment(player.get_equipment()))
 
+	var collected := _saved_collected.duplicate()
+	collected.merge(_pending_collected)
+	file.set_value(SECTION_WORLD, "collected", collected.keys())
+
 	var error := file.save(save_path)
 
 	if error != OK:
 		push_error("SaveGame: Could not write '%s' (error %d)." % [save_path, error])
 		return false
 
+	_saved_collected = collected
+	_pending_collected.clear()
 	saved.emit()
 	return true
 
@@ -87,6 +101,12 @@ func load_into_player(player: Node) -> bool:
 		push_warning("SaveGame: Save has no checkpoint; ignoring it.")
 		return false
 
+	_saved_collected.clear()
+	_pending_collected.clear()
+
+	for id in file.get_value(SECTION_WORLD, "collected", []):
+		_saved_collected[String(id)] = true
+
 	CoinManager.set_coins(file.get_value(SECTION_PLAYER, "stardust", 0))
 	_restore_spells(player.get_spell_registry(), file.get_value(SECTION_PLAYER, "spells", []))
 	_restore_inventory(player.get_inventory(), file.get_value(SECTION_PLAYER, "inventory", {}))
@@ -97,6 +117,27 @@ func load_into_player(player: Node) -> bool:
 
 	loaded.emit()
 	return true
+
+
+## Records a level pickup collected this session; it stays gone once saved.
+func mark_collected(pickup: Node) -> void:
+	if PersistentPickup.is_persistent(pickup):
+		_pending_collected[PersistentPickup.get_id(pickup)] = true
+
+
+## Starts a play session: forgets unsaved pickups and removes the saved ones
+## from the running scene. Call after loading (or when there is no save).
+func apply_world_state(tree: SceneTree) -> void:
+	_pending_collected.clear()
+
+	for pickup in tree.get_nodes_in_group(PersistentPickup.GROUP):
+		if _saved_collected.has(PersistentPickup.get_id(pickup)):
+			pickup.queue_free()
+
+
+func is_collected(pickup: Node) -> bool:
+	var id := PersistentPickup.get_id(pickup)
+	return _saved_collected.has(id) or _pending_collected.has(id)
 
 
 func _is_saveable_player(player: Node) -> bool:

@@ -253,7 +253,7 @@ func _test_selection_and_input() -> void:
 
 	_check(interactor.get_selected_target() == target, "A nearby target must be selected.")
 	_check(
-		interactor.get_prompt().contains("E") and interactor.get_prompt().contains("Talk"),
+		interactor.get_prompt().contains("S") and interactor.get_prompt().contains("Talk"),
 		"Prompt must reflect target and configured binding."
 	)
 
@@ -810,19 +810,25 @@ func _action(action: StringName) -> InputEventAction:
 func _test_bindings() -> void:
 	var interaction := InputMap.action_get_events(&"interaction")
 
+	# Settings rewrites keyboard events at startup, so match by type, not order.
 	_check(
-		interaction[0].physical_keycode == KEY_E and interaction[1].button_index == JOY_BUTTON_RIGHT_SHOULDER,
-		"Interaction must use E and right shoulder."
+		_has_key(interaction, KEY_S) and _has_joy_button(interaction, JOY_BUTTON_DPAD_DOWN),
+		"Interaction must use down: S and D-pad down."
 	)
 
 	var cancel := InputMap.action_get_events(&"dialogue_cancel")
 
 	_check(
-		cancel[0].physical_keycode == KEY_Q and cancel[1].button_index == JOY_BUTTON_RIGHT_STICK,
+		_has_key(cancel, KEY_Q) and _has_joy_button(cancel, JOY_BUTTON_RIGHT_STICK),
 		"Cancel must use Q and right stick press."
 	)
 
-	for action in [&"left", &"right", &"aim_up", &"aim_down", &"jump", &"cast_move_token", &"cast_interaction_token", &"cast_attack_token", &"cast_confirm_token", &"pause", &"Select"]:
+	# Interacting is pressing down by design, so it shares aim_down's inputs.
+	for event in InputMap.action_get_events(&"aim_down"):
+		for reserved in cancel:
+			_check(not event.is_match(reserved), "Cancel must not collide with aim_down.")
+
+	for action in [&"left", &"right", &"aim_up", &"jump", &"cast_move_token", &"cast_interaction_token", &"cast_attack_token", &"cast_confirm_token", &"pause", &"Select"]:
 		for event in InputMap.action_get_events(action):
 			for reserved in interaction + cancel:
 				_check(not event.is_match(reserved), "Dialogue bindings must not collide with %s." % action)
@@ -832,3 +838,19 @@ func _check(condition: bool, message: String) -> void:
 	_checks += 1
 	if not condition:
 		_failures.append(message)
+
+
+func _has_key(events: Array[InputEvent], key: Key) -> bool:
+	for event in events:
+		if event is InputEventKey and (event.physical_keycode == key or event.keycode == key):
+			return true
+
+	return false
+
+
+func _has_joy_button(events: Array[InputEvent], button: JoyButton) -> bool:
+	for event in events:
+		if event is InputEventJoypadButton and event.button_index == button:
+			return true
+
+	return false

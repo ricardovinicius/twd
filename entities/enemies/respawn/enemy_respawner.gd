@@ -15,8 +15,8 @@ func _ready() -> void:
 func _register_enemy(enemy: Node2D) -> void:
 	if enemy.scene_file_path.is_empty():
 		push_error(
-			"EnemyRespawner: '%s' não tem scene_file_path. Ele precisa ser " % enemy.name
-			+ "instanciado a partir de uma cena própria (.tscn) para poder ser recriado."
+			"EnemyRespawner: '%s' has no scene_file_path. It must be instanced " % enemy.name
+			+ "from its own scene (.tscn) so it can be recreated."
 		)
 		return
 

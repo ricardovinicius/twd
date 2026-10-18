@@ -8,7 +8,7 @@
 script = ExtResource("1_s73ym")
 id = &"dash"
 display_name = "Dash"
-description = "Avança rapidamente na horizontal por um instante, ignorando a gravidade durante o movimento."
+description = "A quick horizontal burst that ignores gravity while it lasts."
 icon = ExtResource("2_icon")
 cooldown = 1.0
 sequence = Array[StringName]([&"move"])

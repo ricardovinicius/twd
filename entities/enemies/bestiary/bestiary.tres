@@ -7,24 +7,24 @@
 [sub_resource type="Resource" id="Resource_skeleton"]
 script = ExtResource("2_entry")
 id = &"basic_skeleton"
-display_name = "Esqueleto"
-description = "Patrulha o chão e persegue quem entra em seu campo de visão. Prepara um golpe corpo a corpo antes de atacar: afaste-se quando ele erguer a arma."
+display_name = "Skeleton"
+description = "Patrols the ground and chases anyone who enters its sight. It winds up a melee strike before attacking: step away when it raises its weapon."
 portrait = ExtResource("3_skeleton")
 max_health = 50.0
 damage = 20.0
 stardust_drop = 20
-weakness = "Magic Arrow, que atravessa as paredes"
+weakness = "Magic Arrow, which passes through walls"
 
 [sub_resource type="Resource" id="Resource_crawler"]
 script = ExtResource("2_entry")
 id = &"platform_crawler"
-display_name = "Rastejador de Plataforma"
-description = "Dá voltas ao redor de uma plataforma sem nunca sair dela. Só enxerga para a frente: quando vê você, acelera e investe repetidamente."
+display_name = "Platform Crawler"
+description = "Circles a single platform and never leaves it. It only sees ahead: once it spots you, it speeds up and charges again and again."
 placeholder_color = Color(0.55, 0.2, 0.75, 1)
 max_health = 30.0
 damage = 10.0
 stardust_drop = 20
-weakness = "Ataque pelas costas"
+weakness = "Attacks from behind"
 
 [resource]
 script = ExtResource("1_bestiary")

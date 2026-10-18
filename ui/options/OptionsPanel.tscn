@@ -12,7 +12,7 @@ script = ExtResource("1_options_panel")
 layout_mode = 2
 theme_override_colors/font_color = Color(0.96, 0.78, 0.3, 1)
 theme_override_font_sizes/font_size = 22
-text = "Áudio"
+text = "Audio"
 
 [node name="VolumeRow" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -21,7 +21,7 @@ theme_override_constants/separation = 16
 [node name="VolumeLabel" type="Label" parent="VolumeRow"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "Volume geral"
+text = "Master volume"
 
 [node name="VolumeSlider" type="HSlider" parent="VolumeRow"]
 unique_name_in_owner = true
@@ -42,7 +42,7 @@ horizontal_alignment = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0.96, 0.78, 0.3, 1)
 theme_override_font_sizes/font_size = 22
-text = "Vídeo"
+text = "Video"
 
 [node name="VideoRow" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -51,7 +51,7 @@ theme_override_constants/separation = 32
 [node name="FullscreenCheck" type="CheckButton" parent="VideoRow"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Tela cheia"
+text = "Fullscreen"
 
 [node name="VsyncCheck" type="CheckButton" parent="VideoRow"]
 unique_name_in_owner = true
@@ -63,14 +63,14 @@ text = "V-Sync"
 layout_mode = 2
 theme_override_colors/font_color = Color(0.96, 0.78, 0.3, 1)
 theme_override_font_sizes/font_size = 22
-text = "Controles (teclado)"
+text = "Controls (keyboard)"
 
 [node name="HintLabel" type="Label" parent="."]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.7)
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
-text = "Escolha uma ação para trocar a tecla."
+text = "Select an action to change its key."
 
 [node name="BindingsScroll" type="ScrollContainer" parent="."]
 custom_minimum_size = Vector2(0, 220)
@@ -91,4 +91,4 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Restaurar padrões"
+text = "Reset to defaults"

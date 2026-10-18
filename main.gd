@@ -42,3 +42,6 @@ func _load_saved_game() -> void:
 	# not kept: the level's pickups reappear, so the total starts over too.
 	if not SaveGame.has_save() or not SaveGame.load_into_player(player):
 		CoinManager.set_coins(0)
+
+	# Pickups already collected in the saved game stay collected.
+	SaveGame.apply_world_state(get_tree())

@@ -13,7 +13,6 @@ func receive_attack(attack: AttackData) -> void:
 
     var handled := false
 
-    print("AttackReceiver: Received attack of type '%s' from source '%s'" % [attack.attack_type, attack.source])
 
     for child in get_children():
         var reaction := child as AttackReaction

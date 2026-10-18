@@ -197,7 +197,7 @@ custom_minimum_size = Vector2(200, 44)
 toggle_mode = true
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
-text = "Inventário"
+text = "Inventory"
 
 [node name="SpellsTab" type="Button" parent="Window/Layout/TabBar"]
 unique_name_in_owner = true
@@ -206,7 +206,7 @@ custom_minimum_size = Vector2(200, 44)
 toggle_mode = true
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
-text = "Magias"
+text = "Spells"
 
 [node name="SettingsTab" type="Button" parent="Window/Layout/TabBar"]
 unique_name_in_owner = true
@@ -215,7 +215,7 @@ custom_minimum_size = Vector2(200, 44)
 toggle_mode = true
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
-text = "Configurações"
+text = "Settings"
 
 [node name="QuitTab" type="Button" parent="Window/Layout/TabBar"]
 unique_name_in_owner = true
@@ -224,7 +224,7 @@ custom_minimum_size = Vector2(200, 44)
 toggle_mode = true
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
-text = "Sair"
+text = "Quit"
 
 [node name="NextHint" type="Label" parent="Window/Layout/TabBar"]
 layout_mode = 2
@@ -257,7 +257,7 @@ theme_override_constants/separation = 6
 [node name="ArtifactLabel0" type="Label" parent="Window/Layout/Pages/InventoryPage/ArtifactColumn"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "Artefato"
+text = "Artifact"
 horizontal_alignment = 1
 
 [node name="ArtifactSlot0" type="Button" parent="Window/Layout/Pages/InventoryPage/ArtifactColumn"]
@@ -268,12 +268,12 @@ expand_icon = true
 icon_alignment = 1
 vertical_icon_alignment = 0
 autowrap_mode = 3
-text = "Vazio"
+text = "Empty"
 
 [node name="ArtifactLabel1" type="Label" parent="Window/Layout/Pages/InventoryPage/ArtifactColumn"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "Artefato"
+text = "Artifact"
 horizontal_alignment = 1
 
 [node name="ArtifactSlot1" type="Button" parent="Window/Layout/Pages/InventoryPage/ArtifactColumn"]
@@ -284,12 +284,12 @@ expand_icon = true
 icon_alignment = 1
 vertical_icon_alignment = 0
 autowrap_mode = 3
-text = "Vazio"
+text = "Empty"
 
 [node name="ArtifactLabel2" type="Label" parent="Window/Layout/Pages/InventoryPage/ArtifactColumn"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "Artefato"
+text = "Artifact"
 horizontal_alignment = 1
 
 [node name="ArtifactSlot2" type="Button" parent="Window/Layout/Pages/InventoryPage/ArtifactColumn"]
@@ -300,7 +300,7 @@ expand_icon = true
 icon_alignment = 1
 vertical_icon_alignment = 0
 autowrap_mode = 3
-text = "Vazio"
+text = "Empty"
 
 [node name="CharacterColumn" type="VBoxContainer" parent="Window/Layout/Pages/InventoryPage"]
 layout_mode = 2
@@ -350,7 +350,7 @@ theme_override_constants/separation = 6
 [node name="ChannelerLabel" type="Label" parent="Window/Layout/Pages/InventoryPage/InfoColumn/LowerRow/ChannelerColumn"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "Canalizador"
+text = "Channeler"
 horizontal_alignment = 1
 
 [node name="ChannelerSlot" type="Button" parent="Window/Layout/Pages/InventoryPage/InfoColumn/LowerRow/ChannelerColumn"]
@@ -358,8 +358,8 @@ unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(150, 120)
 disabled = true
-tooltip_text = "Canalizadores ainda não existem no jogo."
-text = "Vazio"
+tooltip_text = "Channelers do not exist in the game yet."
+text = "Empty"
 
 [node name="SectionColumn" type="VBoxContainer" parent="Window/Layout/Pages/InventoryPage/InfoColumn/LowerRow"]
 layout_mode = 2
@@ -369,22 +369,22 @@ theme_override_constants/separation = 8
 [node name="SectionLabel" type="Label" parent="Window/Layout/Pages/InventoryPage/InfoColumn/LowerRow/SectionColumn"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "Seções"
+text = "Sections"
 
 [node name="ChainsButton" type="Button" parent="Window/Layout/Pages/InventoryPage/InfoColumn/LowerRow/SectionColumn"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Correntes"
+text = "Chains"
 
 [node name="GeneralItemsButton" type="Button" parent="Window/Layout/Pages/InventoryPage/InfoColumn/LowerRow/SectionColumn"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Itens gerais"
+text = "General items"
 
 [node name="MonsterGuideButton" type="Button" parent="Window/Layout/Pages/InventoryPage/InfoColumn/LowerRow/SectionColumn"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Guia dos monstros"
+text = "Monster guide"
 
 [node name="InventoryOverlay" type="PanelContainer" parent="Window/Layout/Pages"]
 unique_name_in_owner = true
@@ -434,7 +434,7 @@ unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(180, 0)
 size_flags_horizontal = 0
-text = "Voltar"
+text = "Back"
 
 [node name="SpellsPage" type="HBoxContainer" parent="Window/Layout/Pages"]
 unique_name_in_owner = true
@@ -455,7 +455,7 @@ theme_override_constants/separation = 8
 layout_mode = 2
 theme_override_colors/font_color = Color(0.96, 0.78, 0.3, 1)
 theme_override_font_sizes/font_size = 22
-text = "Todas as magias"
+text = "All spells"
 
 [node name="SpellScroll" type="ScrollContainer" parent="Window/Layout/Pages/SpellsPage/SpellListColumn"]
 layout_mode = 2
@@ -472,7 +472,7 @@ theme_override_constants/separation = 6
 [node name="SpellRegistryButton" type="Button" parent="Window/Layout/Pages/SpellsPage/SpellListColumn"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Registro (debug)"
+text = "Registry (debug)"
 
 [node name="SpellDetail" type="PanelContainer" parent="Window/Layout/Pages/SpellsPage"]
 layout_mode = 2
@@ -532,7 +532,7 @@ text = ""
 layout_mode = 2
 theme_override_colors/font_color = Color(0.96, 0.78, 0.3, 1)
 theme_override_font_sizes/font_size = 20
-text = "Efeito"
+text = "Effect"
 
 [node name="SpellEffectLabel" type="Label" parent="Window/Layout/Pages/SpellsPage/SpellDetail/DetailContent"]
 unique_name_in_owner = true
@@ -564,7 +564,7 @@ unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(180, 0)
 size_flags_horizontal = 4
-text = "Voltar"
+text = "Back"
 
 [node name="SettingsPage" type="ScrollContainer" parent="Window/Layout/Pages"]
 unique_name_in_owner = true
@@ -599,28 +599,28 @@ unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(420, 56)
 theme_override_font_sizes/font_size = 22
-text = "Continuar jogando"
+text = "Resume"
 
 [node name="RestartButton" type="Button" parent="Window/Layout/Pages/QuitPage/QuitButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(420, 56)
 theme_override_font_sizes/font_size = 22
-text = "Recomeçar do último checkpoint"
+text = "Restart from last checkpoint"
 
 [node name="MainMenuButton" type="Button" parent="Window/Layout/Pages/QuitPage/QuitButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(420, 56)
 theme_override_font_sizes/font_size = 22
-text = "Sair para o menu inicial"
+text = "Quit to main menu"
 
 [node name="QuitGameButton" type="Button" parent="Window/Layout/Pages/QuitPage/QuitButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(420, 56)
 theme_override_font_sizes/font_size = 22
-text = "Sair do jogo"
+text = "Quit game"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries/ = SubResource("AnimationLibrary_d3xb4")

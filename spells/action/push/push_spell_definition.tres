@@ -8,7 +8,7 @@
 script = ExtResource("1_qd0jt")
 id = &"push"
 display_name = "Push"
-description = "Libera uma onda ao seu redor que empurra objetos e inimigos em todas as direções, para longe de você. Útil para mover caixas e afastar ameaças."
+description = "Releases a wave that pushes objects and enemies around you away in every direction. Useful for moving crates and keeping threats at bay."
 icon = ExtResource("2_icon")
 sequence = Array[StringName]([&"interaction"])
 command_scene = ExtResource("1_crwdp")

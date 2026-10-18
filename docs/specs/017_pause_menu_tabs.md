@@ -52,3 +52,12 @@ The in-game menu (Pause: Esc / Start) is a full-screen, tabbed menu following th
 7. Sair resumes, restarts, returns to the main menu, or quits.
 
 Run `bash tests/pause_menu/run_tests.sh` for the automated checks.
+
+# Update
+
+- The artifact picker only lists items the player still has spare copies of (`Equipment.get_available_quantity`). `Equipment` refuses to fill more slots than the owned quantity when it has an `Inventory`.
+- The restart button reads *Recomeçar do início* when there is no save.
+
+# Update: Language
+
+All player-facing text is in English (tabs: Inventory, Spells, Settings, Quit; sections: Artifacts, Channeler, Chains, General items, Monster guide). The Portuguese names above describe the original request.

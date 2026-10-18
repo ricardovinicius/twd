@@ -25,6 +25,8 @@ extends Camera2D
 @export var look_offset: float = 120.0
 @export var look_speed: float = 6.0
 @export var hold_threshold: float = 0.15
+## Velocidade abaixo da qual o jogador conta como parado para olhar.
+@export var still_speed: float = 1.0
 
 var _hold_time: float = 0.0
 var _holding_direction: int = 0
@@ -80,7 +82,7 @@ func _update_fall_look(delta: float) -> void:
 func _update_look_up_down(delta: float) -> void:
 	var input_direction := 0
 
-	if player.is_on_floor():
+	if _is_standing_still():
 		if Input.is_action_pressed("aim_up"):
 			input_direction = -1
 		elif Input.is_action_pressed("aim_down"):
@@ -101,6 +103,25 @@ func _update_look_up_down(delta: float) -> void:
 		target_look_y = look_offset * _holding_direction
 
 	_look_y = _smooth(_look_y, target_look_y, look_speed, delta)
+
+
+# Olhar para cima/baixo só vale com o jogador totalmente parado: no chão, sem
+# velocidade, sem segurar esquerda/direita e sem nada para interagir (para
+# baixo também é o botão de interação).
+func _is_standing_still() -> bool:
+	if not player.is_on_floor() or player.velocity.length() > still_speed:
+		return false
+
+	if Input.is_action_pressed("left") or Input.is_action_pressed("right"):
+		return false
+
+	if player.has_method("get_interactor"):
+		var interactor = player.get_interactor()
+
+		if is_instance_valid(interactor) and interactor.get_selected_target() != null:
+			return false
+
+	return true
 
 
 # Interpolação independente do framerate.

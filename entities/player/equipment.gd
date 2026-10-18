@@ -10,6 +10,8 @@ var _slots: Array[ItemDefinition] = [null, null, null]
 @export var stats: PlayerStats
 @export var health: Health
 @export var horizontal_movement: HorizontalMovementComponent
+## When assigned, an item can only fill as many slots as the player owns.
+@export var inventory: Inventory
 
 
 func _ready() -> void:
@@ -29,10 +31,32 @@ func equip(slot_index: int, item: ItemDefinition) -> bool:
 	if _slots[slot_index] == item:
 		return false
 
+	if item != null and get_available_quantity(item, slot_index) <= 0:
+		return false
+
 	_slots[slot_index] = item
 	_apply_totals()
 	equipment_changed.emit(slot_index, item)
 	return true
+
+
+## Copies of `item` the player can still equip into `slot_index`: owned
+## quantity minus copies already equipped in other slots. Unlimited without
+## an inventory.
+func get_available_quantity(item: ItemDefinition, slot_index: int = -1) -> int:
+	if item == null:
+		return 0
+
+	if inventory == null:
+		return 1
+
+	var used := 0
+
+	for index in SLOT_COUNT:
+		if index != slot_index and _slots[index] == item:
+			used += 1
+
+	return inventory.get_quantity(item) - used
 
 
 func unequip(slot_index: int) -> void:

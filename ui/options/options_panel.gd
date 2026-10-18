@@ -5,9 +5,9 @@ extends VBoxContainer
 ## Used by the main menu's Options screen and the pause menu's Settings tab.
 ## Changes apply immediately; call Settings.save_settings() to persist them.
 
-const WAITING_TEXT := "Aperte uma tecla..."
-const IDLE_HINT := "Escolha uma ação para trocar a tecla."
-const CAPTURE_HINT := "Aperte a nova tecla. Esc cancela."
+const WAITING_TEXT := "Press a key..."
+const IDLE_HINT := "Select an action to change its key."
+const CAPTURE_HINT := "Press the new key. Esc cancels."
 
 @onready var volume_slider: HSlider = %VolumeSlider
 @onready var volume_value_label: Label = %VolumeValueLabel
@@ -55,8 +55,15 @@ func _input(event: InputEvent) -> void:
 		cancel_capture()
 		return
 
-	Settings.set_binding(_capturing_action, key)
+	var conflict: String = Settings.get_binding_conflict(_capturing_action, key)
+
+	if conflict.is_empty():
+		Settings.set_binding(_capturing_action, key)
+
 	cancel_capture()
+
+	if not conflict.is_empty():
+		hint_label.text = conflict
 
 
 func focus_first() -> void:

@@ -15,7 +15,7 @@ if XDG_DATA_HOME="$runtime_root/data" \
 	XDG_CACHE_HOME="$runtime_root/cache" \
 	"$godot_bin" --headless --path "$project_dir" \
 	--log-file "$runtime_root/godot.log" --quit-after 3600 \
-	--script "res://$suite_path" 2>&1 | tee "$runtime_root/output.log"; then
+	--script "res://tests/bootstrap.gd" -- "res://$suite_path" 2>&1 | tee "$runtime_root/output.log"; then
 	:
 else
 	exit 1

@@ -9,7 +9,6 @@ extends Node
 
 func _ready() -> void:
 	# Guard clauses to ensure that the required nodes are assigned.
-	print(health)
 	assert(health != null, "DamageAnimation: Health node is not assigned.")
 	assert(sprite != null, "DamageAnimation: AnimatedSprite2D node is not assigned.")
 

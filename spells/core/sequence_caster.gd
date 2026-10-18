@@ -76,7 +76,6 @@ func confirm_sequence() -> void:
 		return
 
 	if current_sequence.is_empty():
-		push_warning("SequenceCaster::confirm_sequence() - No sequence to confirm.")
 		return
 
 	# Duplicate the current sequence to avoid mutation during processing.
@@ -87,7 +86,7 @@ func confirm_sequence() -> void:
 	var spell := sequence_to_spell.get(sequence_key, null) as SpellDefinition
 
 	if spell == null or registry == null or not registry.has_spell(spell.id):
-		push_warning("SequenceCaster::confirm_sequence() - No spell found for the entered sequence: %s" % entered_sequence)
+		# An unknown sequence is an expected outcome (docs/LOGGING.md): no log.
 		sequence_failed.emit(entered_sequence, "no_matching_spell")
 		clear_sequence()
 		return
@@ -152,7 +151,6 @@ func _convert_sequence_to_key(sequence: Array[StringName]) -> StringName:
 
 func _add_token_to_sequence(token: StringName) -> void:
 	if current_sequence.size() >= max_sequence_length:
-		push_warning("SequenceCaster::_add_token_to_sequence() - Maximum sequence length exceeded.")
 		sequence_failed.emit(current_sequence, "max_length_exceeded")
 		clear_sequence()
 		return
@@ -181,7 +179,6 @@ func _create_spell_context() -> SpellContext:
 
 
 func _on_timeout() -> void:
-	push_warning("SequenceCaster::_on_timeout() - Input sequence timed out.")
 	clear_sequence()
 
 
