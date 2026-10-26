@@ -23,6 +23,16 @@ signal arrived(at_top: bool)
 @export var platform: AnimatableBody2D
 @export var crush_guard: Area2D
 @export var cables: Array[Line2D] = []
+## Floor art drawn on the platform. Its vertical offset blends between the
+## two values below so it lines up with the drawn floor at each stop.
+@export var floor_visual: Node2D
+
+@export_category("Floor Alignment")
+## Landing floors collide 16.5 px below the drawn tile top, so the art sits
+## that much above the platform at the top stop.
+@export var top_floor_offset: float = -16.5
+## Shaft floors collide at the drawn tile top.
+@export var bottom_floor_offset: float = 0.0
 
 var _at_top: bool = false
 var _moving: bool = false
@@ -54,6 +64,7 @@ func _ready() -> void:
 	platform.position = _stop_position(_at_top)
 	platform.reset_physics_interpolation()
 	_update_cables()
+	_update_floor_visual()
 	_set_cables_visible(false)
 
 
@@ -72,6 +83,7 @@ func _physics_process(delta: float) -> void:
 	var eased := (1.0 - cos(PI * _progress)) * 0.5
 	platform.position = _from.lerp(_to, eased)
 	_update_cables()
+	_update_floor_visual()
 
 	if _progress >= 1.0:
 		_finish_trip()
@@ -107,6 +119,7 @@ func _finish_trip() -> void:
 	_at_top = not _at_top
 	platform.position = _stop_position(_at_top)
 	_update_cables()
+	_update_floor_visual()
 	_set_cables_visible(false)
 	arrived.emit(_at_top)
 
@@ -124,6 +137,14 @@ func _update_cables() -> void:
 			continue
 
 		cable.set_point_position(1, Vector2(cable.get_point_position(0).x, anchor_y))
+
+
+func _update_floor_visual() -> void:
+	if floor_visual == null:
+		return
+
+	var t := clampf(platform.position.dot(travel) / travel.length_squared(), 0.0, 1.0)
+	floor_visual.position.y = lerpf(bottom_floor_offset, top_floor_offset, t)
 
 
 ## The platform is drawn with the floor tiles, so at rest it blends into the

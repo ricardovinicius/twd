@@ -25,7 +25,7 @@ Three vertical shafts in Level 01 are elevators. Each has a platform that travel
 | --- | --- | --- | --- | --- |
 | `ElevatorA` | 1872–2256 | 5376 (shaft floor, left exit) | 3328.5 (left exit) | `ElevatorALeverBottom` (1830, 5392.5), `ElevatorALeverTop` (1830, 3328.5) |
 | `ElevatorB` | −1296 to −912 | 3216 (shaft floor, right exit) | 1024.5 (upper corridor) | `ElevatorBLeverBottom` (−870, 3232.5), `ElevatorBLeverTop` (−1340, 1024.5), `ElevatorBLeverTopRight` (−868, 1024.5) |
-| `ElevatorC` | 2640–3024 | 2736 (shaft floor, left exit) | 1792.5 (long corridor) | `ElevatorCLeverBottom` (2598, 2752.5), `ElevatorCLeverTopLeft` (2598, 1792.5), `ElevatorCLeverTopRight` (3066, 1792.5) |
+| `ElevatorC` | 2640–3024 | 2736 (shaft floor, left exit) | 1792.5 (long corridor) | `ElevatorCLeverBottom` (2598, 2752.5) only — no lever at the top stop |
 
 Landing floors collide 16.5 px below the drawn tile top, while the shaft floors collide at the tile top. Top stops are flush with the landing collision. At the bottom, `ElevatorABottomStep` / `ElevatorBBottomStep` are small invisible ramps over the 16.5 px step so the player walks into and out of the shaft.
 
@@ -38,6 +38,14 @@ Shaft B was capped by the upper corridor's floor. The 16 floor tiles over the sh
 ## Menu navigation
 
 - `Settings` mirrors the movement bindings onto `ui_up` / `ui_down` / `ui_left` / `ui_right` (aim_up, aim_down, left, right → W, S, A, D by default). Arrow keys and controller inputs keep working. Remapping a movement key moves its menu binding too.
+
+## Presentation
+
+- The platform is drawn with the same stone floor tiles as the landings (`Platform/FloorTiles`, `tile_set_1.png`), continuing each landing's stone pattern, so a resting elevator blends into the floor. `ElevatorB` overrides the tile phase in Level 01.
+- `top_floor_offset` (−16.5) and `bottom_floor_offset` (0) align the art with the drawn floor at each stop; the offset blends between them during a trip.
+- Cables are visible only while the elevator travels.
+- Elevator nodes come before `Player` in Level 01, so the player and enemies are drawn in front of the platform.
+- Shaft C's cap (`TileMapPrincipal1` cells x 55…62, y 37…44) is removed again so the platform reaches the long corridor.
 
 # Implementation Details
 

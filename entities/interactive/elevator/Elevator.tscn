@@ -23,11 +23,12 @@ texture = ExtResource("2_floor")
 [sub_resource type="TileSet" id="TileSet_floor"]
 sources/0 = SubResource("TileSetAtlasSource_floor")
 
-[node name="Elevator" type="Node2D" node_paths=PackedStringArray("platform", "crush_guard", "cables")]
+[node name="Elevator" type="Node2D" node_paths=PackedStringArray("platform", "crush_guard", "cables", "floor_visual")]
 script = ExtResource("1_elevator")
 platform = NodePath("Platform")
 crush_guard = NodePath("Platform/CrushGuard")
 cables = [NodePath("Platform/CableLeft"), NodePath("Platform/CableRight")]
+floor_visual = NodePath("Platform/FloorTiles")
 
 [node name="Platform" type="AnimatableBody2D" parent="."]
 collision_layer = 1
