@@ -1,12 +1,27 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://entities/interactive/elevator/elevator.gd" id="1_elevator"]
+[ext_resource type="Texture2D" uid="uid://b6i6d5545lwsf" path="res://levels/level_01/assets/tilemap/tile_set_1.png" id="2_floor"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
 size = Vector2(380, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_guard"]
 size = Vector2(360, 30)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_floor"]
+texture = ExtResource("2_floor")
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_floor"]
+sources/0 = SubResource("TileSetAtlasSource_floor")
 
 [node name="Elevator" type="Node2D" node_paths=PackedStringArray("platform", "crush_guard", "cables")]
 script = ExtResource("1_elevator")
@@ -22,29 +37,22 @@ collision_mask = 0
 position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_platform")
 
-[node name="Deck" type="Polygon2D" parent="Platform"]
-color = Color(0.2, 0.19, 0.24, 1)
-polygon = PackedVector2Array(-190, 0, 190, 0, 190, 24, -190, 24)
-
-[node name="Trim" type="Polygon2D" parent="Platform"]
-color = Color(0.96, 0.78, 0.3, 1)
-polygon = PackedVector2Array(-190, 0, 190, 0, 190, 5, -190, 5)
-
-[node name="Underside" type="Polygon2D" parent="Platform"]
-color = Color(0.12, 0.11, 0.15, 1)
-polygon = PackedVector2Array(-170, 24, 170, 24, 150, 40, -150, 40)
-
-[node name="Rune" type="Polygon2D" parent="Platform"]
-color = Color(0.45, 0.65, 1, 0.9)
-polygon = PackedVector2Array(0, 8, 9, 13, 0, 18, -9, 13)
+[node name="FloorTiles" type="TileMapLayer" parent="Platform"]
+texture_filter = 1
+position = Vector2(-192, -16.5)
+scale = Vector2(3, 3)
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 4, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 5, 0, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 3, 0, 1, 0, 0, 0, 3, 0, 1, 0, 0, 0, 4, 0, 1, 0, 0, 0, 4, 0, 1, 0, 0, 0, 5, 0, 1, 0, 0, 0, 5, 0, 1, 0, 0, 0, 6, 0, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 7, 0, 1, 0, 0, 0, 3, 0, 1, 0, 0, 0)
+tile_set = SubResource("TileSet_floor")
 
 [node name="CableLeft" type="Line2D" parent="Platform"]
+visible = false
 z_index = -1
 points = PackedVector2Array(-170, 0, -170, -480)
 width = 3.0
 default_color = Color(0.55, 0.5, 0.42, 0.85)
 
 [node name="CableRight" type="Line2D" parent="Platform"]
+visible = false
 z_index = -1
 points = PackedVector2Array(170, 0, 170, -480)
 width = 3.0

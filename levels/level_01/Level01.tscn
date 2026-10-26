@@ -819,6 +819,9 @@ travel = Vector2(0, -2191.5)
 start_at_top = true
 switches = [NodePath("../ElevatorBLeverTop/SwitchComponent"), NodePath("../ElevatorBLeverTopRight/SwitchComponent"), NodePath("../ElevatorBLeverBottom/SwitchComponent")]
 
+[node name="FloorTiles" parent="ElevatorB/Platform" index="1"]
+tile_map_data = PackedByteArray("AAAAAAAAAAACAAAAAAABAAAAAAADAAAAAAACAAAAAAAEAAAAAAADAAAAAAAFAAAAAAAEAAAAAAACAAAAAAAFAAAAAAADAAAAAAAGAAAAAAAEAAAAAAAHAAAAAAAFAAAAAAAAAAEAAAACAAEAAAABAAEAAAADAAEAAAACAAEAAAAEAAEAAAADAAEAAAAFAAEAAAAEAAEAAAACAAEAAAAFAAEAAAADAAEAAAAGAAEAAAAEAAEAAAAHAAEAAAAFAAEAAAA=")
+
 [node name="ElevatorBLeverTop" parent="." unique_id=1034392054 instance=ExtResource("11_lever")]
 position = Vector2(-1340, 1024.5)
 toggle_on_any_push = true

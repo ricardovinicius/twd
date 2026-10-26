@@ -310,3 +310,8 @@ func get_inventory() -> Inventory:
 
 func get_equipment() -> Equipment:
 	return equipment
+
+
+## Current horizontal top speed, including equipment and stat bonuses.
+func get_move_speed() -> float:
+	return horizontal_movement.max_speed

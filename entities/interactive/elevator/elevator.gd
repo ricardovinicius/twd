@@ -54,6 +54,7 @@ func _ready() -> void:
 	platform.position = _stop_position(_at_top)
 	platform.reset_physics_interpolation()
 	_update_cables()
+	_set_cables_visible(false)
 
 
 func _physics_process(delta: float) -> void:
@@ -94,6 +95,7 @@ func call_elevator() -> bool:
 	_progress = 0.0
 	_moving = true
 	_set_switches_locked(true)
+	_set_cables_visible(true)
 	departed.emit(not _at_top)
 
 	return true
@@ -105,6 +107,7 @@ func _finish_trip() -> void:
 	_at_top = not _at_top
 	platform.position = _stop_position(_at_top)
 	_update_cables()
+	_set_cables_visible(false)
 	arrived.emit(_at_top)
 
 
@@ -121,6 +124,14 @@ func _update_cables() -> void:
 			continue
 
 		cable.set_point_position(1, Vector2(cable.get_point_position(0).x, anchor_y))
+
+
+## The platform is drawn with the floor tiles, so at rest it blends into the
+## landing. Cables only show while it travels.
+func _set_cables_visible(value: bool) -> void:
+	for cable in cables:
+		if cable != null:
+			cable.visible = value
 
 
 func _is_blocked_below() -> bool:
