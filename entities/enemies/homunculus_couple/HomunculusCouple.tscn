@@ -1,0 +1,56 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/homunculus_couple/homunculus_couple.gd" id="1_couple"]
+[ext_resource type="PackedScene" path="res://entities/enemies/homunculus_couple/Homunculus.tscn" id="2_homunculus"]
+[ext_resource type="Texture2D" path="res://entities/enemies/homunculus_couple/sprites/heart_7x6.png" id="3_heart"]
+[ext_resource type="Script" uid="uid://d14jwxuq06jvb" path="res://entities/enemies/detection/target_detector.gd" id="4_detector"]
+
+[sub_resource type="AtlasTexture" id="Heart0"]
+atlas = ExtResource("3_heart")
+region = Rect2(0, 0, 7, 6)
+
+[sub_resource type="AtlasTexture" id="Heart1"]
+atlas = ExtResource("3_heart")
+region = Rect2(7, 0, 7, 6)
+
+[sub_resource type="SpriteFrames" id="HeartFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Heart0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Heart1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="CircleShape2D" id="VisionShape"]
+radius = 260.0
+
+[node name="HomunculusCouple" type="Node2D"]
+script = ExtResource("1_couple")
+
+[node name="Left" parent="." instance=ExtResource("2_homunculus")]
+position = Vector2(-21, 0)
+
+[node name="Right" parent="." instance=ExtResource("2_homunculus")]
+position = Vector2(21, 0)
+
+[node name="Heart" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -33)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("HeartFrames")
+autoplay = "default"
+
+[node name="Vision" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("4_detector")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+shape = SubResource("VisionShape")

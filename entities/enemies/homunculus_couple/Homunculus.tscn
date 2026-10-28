@@ -1,0 +1,199 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/homunculus_couple/homunculus.gd" id="1_homunculus"]
+[ext_resource type="Texture2D" path="res://entities/enemies/homunculus_couple/sprites/kiss_16x16.png" id="2_kiss"]
+[ext_resource type="Texture2D" path="res://entities/enemies/homunculus_couple/sprites/alert_16x16.png" id="3_alert"]
+[ext_resource type="Texture2D" path="res://entities/enemies/homunculus_couple/sprites/run_16x16.png" id="4_run"]
+[ext_resource type="Texture2D" path="res://entities/enemies/homunculus_couple/sprites/hit_16x16.png" id="5_hit"]
+[ext_resource type="Texture2D" path="res://entities/enemies/homunculus_couple/sprites/stare_16x16.png" id="15_stare"]
+[ext_resource type="Script" uid="uid://bmouqvprw5wyj" path="res://components/movement/horizontal_movement_component.gd" id="6_move"]
+[ext_resource type="Script" uid="uid://2htj0e4va8nl" path="res://components/movement/gravity_component.gd" id="7_gravity"]
+[ext_resource type="Script" uid="uid://dx4kugto8jvw2" path="res://entities/enemies/combat/contact_impact_component.gd" id="8_contact"]
+[ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="9_health"]
+[ext_resource type="Script" uid="uid://crs540wacfv0j" path="res://health/destroy_on_death.gd" id="10_death"]
+[ext_resource type="Script" path="res://currency/drop/stardust_drop_on_death.gd" id="11_stardust_drop"]
+[ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://currency/pickup/CoinPickup.tscn" id="12_coin_pickup"]
+[ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="13_receiver"]
+[ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="14_damage"]
+
+[sub_resource type="AtlasTexture" id="Kiss0"]
+atlas = ExtResource("2_kiss")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Kiss1"]
+atlas = ExtResource("2_kiss")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Alert0"]
+atlas = ExtResource("3_alert")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Run0"]
+atlas = ExtResource("4_run")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Run1"]
+atlas = ExtResource("4_run")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Run2"]
+atlas = ExtResource("4_run")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Run3"]
+atlas = ExtResource("4_run")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Hit0"]
+atlas = ExtResource("5_hit")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="StareFront0"]
+atlas = ExtResource("15_stare")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="StareBack0"]
+atlas = ExtResource("15_stare")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="HomunculusFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Kiss0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Kiss1")
+}],
+"loop": true,
+"name": &"kiss",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Alert0")
+}],
+"loop": true,
+"name": &"alert",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Run0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Run1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Run2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Run3")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Hit0")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("StareFront0")
+}],
+"loop": true,
+"name": &"stare_front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("StareBack0")
+}],
+"loop": true,
+"name": &"stare_back",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="BodyShape"]
+size = Vector2(12, 13)
+
+[sub_resource type="RectangleShape2D" id="ContactShape"]
+size = Vector2(14, 13)
+
+[sub_resource type="RectangleShape2D" id="AttackReceiverShape"]
+size = Vector2(13, 14)
+
+[node name="Homunculus" type="CharacterBody2D"]
+scale = Vector2(3, 3)
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_homunculus")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("HomunculusFrames")
+animation = &"kiss"
+autoplay = "kiss"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("BodyShape")
+
+[node name="HorizontalMovement" type="Node" parent="."]
+script = ExtResource("6_move")
+max_speed = 360.0
+acceleration = 1400.0
+deceleration = 2000.0
+
+[node name="Gravity" type="Node" parent="."]
+script = ExtResource("7_gravity")
+
+[node name="ContactImpact" type="Node2D" parent="." node_paths=PackedStringArray("source", "contact_area")]
+script = ExtResource("8_contact")
+source = NodePath("..")
+contact_area = NodePath("ContactArea")
+contact_damage = 15.0
+
+[node name="ContactArea" type="Area2D" parent="ContactImpact"]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactImpact/ContactArea"]
+position = Vector2(0, 1.5)
+shape = SubResource("ContactShape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("9_health")
+maximum = 30.0
+
+[node name="DestroyOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "target")]
+script = ExtResource("10_death")
+health = NodePath("../Health")
+target = NodePath("..")
+
+[node name="StardustDropOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "source")]
+script = ExtResource("11_stardust_drop")
+health = NodePath("../Health")
+source = NodePath("..")
+pickup_scene = ExtResource("12_coin_pickup")
+pickup_count = 1
+amount_per_pickup = 10
+
+[node name="AttackReceiver" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("13_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackReceiver"]
+position = Vector2(0, 1.5)
+shape = SubResource("AttackReceiverShape")
+
+[node name="HealthDamageReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health")]
+script = ExtResource("14_damage")
+health = NodePath("../../Health")

@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" path="res://dialogue/ui/DialoguePanel.tscn" id="7_dialogue_panel"]
 [ext_resource type="PackedScene" path="res://entities/player/respawn/ui/DeathScreen.tscn" id="8_death_screen"]
 [ext_resource type="PackedScene" path="res://entities/enemies/flying_eye/FlyingEye.tscn" id="10_wkp8b"]
+[ext_resource type="PackedScene" path="res://entities/enemies/homunculus_couple/HomunculusCouple.tscn" id="11_20pc6"]
 
 [node name="Main" type="Node2D" unique_id=1783851588 node_paths=PackedStringArray("pause_menu", "spell_registry", "equipment", "stats", "health", "inventory", "interactor", "dialogue_session", "dialogue_interaction", "player")]
 process_mode = 1
@@ -84,3 +85,6 @@ position = Vector2(-3335, 1775.0001)
 
 [node name="FlyingEye2" parent="." unique_id=396838380 instance=ExtResource("10_wkp8b")]
 position = Vector2(-4112, 2447)
+
+[node name="HomunculusCouple" parent="." unique_id=1756340629 instance=ExtResource("11_20pc6")]
+position = Vector2(-557, 4940)

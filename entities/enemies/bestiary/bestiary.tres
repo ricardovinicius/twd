@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cff8ufofddmve" path="res://entities/enemies/bestiary/monster_entry.gd" id="2_entry"]
 [ext_resource type="Texture2D" uid="uid://1vm731a8bylf" path="res://entities/enemies/basic_skeleton/sprites/idle.png" id="3_skeleton"]
 [ext_resource type="Texture2D" uid="uid://b072xa1oudi05" path="res://entities/enemies/flying_eye/sprites/portrait.png" id="4_flying_eye"]
+[ext_resource type="Texture2D" uid="uid://b5fr1mv1d7jbs" path="res://entities/enemies/homunculus_couple/sprites/portrait.png" id="5_homunculus_couple"]
 
 [sub_resource type="Resource" id="Resource_skeleton"]
 script = ExtResource("2_entry")
@@ -38,6 +39,17 @@ damage = 10.0
 stardust_drop = 20
 weakness = "Walls block its sight and its bolts"
 
+[sub_resource type="Resource" id="Resource_homunculus_couple"]
+script = ExtResource("2_entry")
+id = &"homunculus_couple"
+display_name = "Homunculus Lovers"
+description = "Two homunculi lost in a kiss. Step into their sight and they stare at you without letting go, then break apart and race after you, faster than they look. They will not stop until you leave their screen."
+portrait = ExtResource("5_homunculus_couple")
+max_health = 30.0
+damage = 15.0
+stardust_drop = 20
+weakness = "Outrunning them off the screen"
+
 [resource]
 script = ExtResource("1_bestiary")
-entries = Array[ExtResource("2_entry")]([SubResource("Resource_skeleton"), SubResource("Resource_crawler"), SubResource("Resource_flying_eye")])
+entries = Array[ExtResource("2_entry")]([SubResource("Resource_skeleton"), SubResource("Resource_crawler"), SubResource("Resource_flying_eye"), SubResource("Resource_homunculus_couple")])

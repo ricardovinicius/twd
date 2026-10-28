@@ -24,6 +24,7 @@ Set `GODOT_BIN` to select a Godot executable. Suites start through `tests/bootst
 | `checkpoint` | Reusable checkpoint placement, menu focus, Save/Back, duplicate protection, and player spawn integration. |
 | `platform_crawler` | Perimeter loop geometry, front-only detection, charge speed, death drop, and respawn configuration. |
 | `flying_eye` | Flying Eye composition, patrol bounds, sight through walls, wind-up and bolt firing, cooldown and rejection, bolt filtering, obstacles and lifetime, death drop, respawn, and monster guide entry. |
+| `homunculus_couple` | Kissing couple composition, mid-kiss stare toward the player, damage skipping the stare, walls blocking sight, fast chase that ignores vision while on screen, giving up off screen and kissing again, deaths and drops, respawn, and monster guide entry. |
 | `stardust_drop` | Enemy Stardust drops, pickup amounts, player-only collection, and `CoinManager.add_coins`. |
 | `stardust_gravity` | Stardust pickups falling onto world collision, ignoring other layers, attraction suspending and resuming the fall, collection while falling, and enemy drops landing. |
 | `dash` | Dash speed profile (ease-in from the current speed, ease-out to walking speed), tick-counted duration, rejection and cancellation, and smooth player speed through and after a dash. |

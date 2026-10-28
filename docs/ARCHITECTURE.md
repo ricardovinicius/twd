@@ -22,6 +22,7 @@ entities/
     detection/                    Enemy target detection
     platform_crawler/             Enemy that loops around one platform and charges forward
     flying_eye/                   Flying enemy that hovers and spits bolts; its flight, ranged attack, and EyeBolt
+    homunculus_couple/            Kissing pair that splits apart and chases the player; placeholder art
     respawn/                      Enemy recreation after player death or checkpoint rest
     bestiary/                     Monster guide entries shown in the pause menu
   interactive/
