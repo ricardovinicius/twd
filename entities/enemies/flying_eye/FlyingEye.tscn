@@ -1,0 +1,190 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/flying_eye/flying_eye.gd" id="1_eye"]
+[ext_resource type="Texture2D" path="res://entities/enemies/flying_eye/sprites/fly_16x16.png" id="2_fly"]
+[ext_resource type="Texture2D" path="res://entities/enemies/flying_eye/sprites/shoot_16x16.png" id="3_shoot"]
+[ext_resource type="Texture2D" path="res://entities/enemies/flying_eye/sprites/hit_16x16.png" id="4_hit"]
+[ext_resource type="Script" path="res://entities/enemies/flying_eye/hover_flight_component.gd" id="5_flight"]
+[ext_resource type="Script" uid="uid://d14jwxuq06jvb" path="res://entities/enemies/detection/target_detector.gd" id="6_detector"]
+[ext_resource type="Script" path="res://entities/enemies/flying_eye/projectile_attack_component.gd" id="7_ranged"]
+[ext_resource type="PackedScene" path="res://entities/enemies/flying_eye/eye_bolt/EyeBolt.tscn" id="8_bolt"]
+[ext_resource type="Script" uid="uid://dx4kugto8jvw2" path="res://entities/enemies/combat/contact_impact_component.gd" id="9_contact"]
+[ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="10_health"]
+[ext_resource type="Script" uid="uid://crs540wacfv0j" path="res://health/destroy_on_death.gd" id="11_death"]
+[ext_resource type="Script" path="res://currency/drop/stardust_drop_on_death.gd" id="12_stardust_drop"]
+[ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://currency/pickup/CoinPickup.tscn" id="13_coin_pickup"]
+[ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="14_receiver"]
+[ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="15_damage"]
+
+[sub_resource type="AtlasTexture" id="Fly0"]
+atlas = ExtResource("2_fly")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Fly1"]
+atlas = ExtResource("2_fly")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Fly2"]
+atlas = ExtResource("2_fly")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Fly3"]
+atlas = ExtResource("2_fly")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Shoot0"]
+atlas = ExtResource("3_shoot")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Shoot1"]
+atlas = ExtResource("3_shoot")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Shoot2"]
+atlas = ExtResource("3_shoot")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Hit0"]
+atlas = ExtResource("4_hit")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Hit1"]
+atlas = ExtResource("4_hit")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="EyeFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Fly0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Fly1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Fly2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Fly3")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Shoot0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Shoot1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Shoot2")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Hit0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Hit1")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="BodyShape"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="AggroShape"]
+radius = 110.0
+
+[sub_resource type="CircleShape2D" id="ContactShape"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="AttackReceiverShape"]
+radius = 6.0
+
+[node name="FlyingEye" type="CharacterBody2D"]
+scale = Vector2(3, 3)
+collision_layer = 0
+collision_mask = 1
+motion_mode = 1
+script = ExtResource("1_eye")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("EyeFrames")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("BodyShape")
+
+[node name="Flight" type="Node" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("5_flight")
+body = NodePath("..")
+
+[node name="AggroDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("6_detector")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AggroDetector"]
+shape = SubResource("AggroShape")
+
+[node name="RangedAttack" type="Node2D" parent="." node_paths=PackedStringArray("source")]
+position = Vector2(0, 1)
+script = ExtResource("7_ranged")
+source = NodePath("..")
+projectile_scene = ExtResource("8_bolt")
+
+[node name="ContactImpact" type="Node2D" parent="." node_paths=PackedStringArray("source", "contact_area")]
+script = ExtResource("9_contact")
+source = NodePath("..")
+contact_area = NodePath("ContactArea")
+
+[node name="ContactArea" type="Area2D" parent="ContactImpact"]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactImpact/ContactArea"]
+position = Vector2(0, 1)
+shape = SubResource("ContactShape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("10_health")
+maximum = 20.0
+
+[node name="DestroyOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "target")]
+script = ExtResource("11_death")
+health = NodePath("../Health")
+target = NodePath("..")
+
+[node name="StardustDropOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "source")]
+script = ExtResource("12_stardust_drop")
+health = NodePath("../Health")
+source = NodePath("..")
+pickup_scene = ExtResource("13_coin_pickup")
+pickup_count = 2
+amount_per_pickup = 10
+
+[node name="AttackReceiver" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("14_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackReceiver"]
+position = Vector2(0, 1)
+shape = SubResource("AttackReceiverShape")
+
+[node name="HealthDamageReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health")]
+script = ExtResource("15_damage")
+health = NodePath("../../Health")

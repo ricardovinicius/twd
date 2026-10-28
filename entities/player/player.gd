@@ -9,6 +9,7 @@ extends CharacterBody2D
 @onready var spell_jump: SpellJumpComponent = $SpellJump
 @onready var gravity: GravityComponent = $Gravity
 @onready var knockback: KnockbackComponent = $Knockback
+@onready var dash: DashMovementComponent = $Dash
 @onready var rigid_body_push: CharacterRigidBodyPushComponent = $RigidBodyPush
 @onready var prop_push: CharacterPropPushComponent = $PropPush
 @onready var health: Health = $Health
@@ -22,11 +23,10 @@ extends CharacterBody2D
 @export var facing_direction: Vector2 = Vector2.RIGHT
 @export var camera: Camera2D
 
-var is_dashing: bool = false
-var dash_direction: Vector2 = Vector2.ZERO
-var dash_speed: float = 0.0
+var is_dashing: bool:
+	get:
+		return dash != null and dash.is_active()
 var _is_playing_hit_animation: bool = false
-var _dash_generation: int = 0
 
 # Pulo duplo: só um pulo mágico no ar por vez; recarrega ao tocar o chão
 var _has_air_spell_jump: bool = true
@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 	elif not is_dashing:
 		_apply_normal_movement(delta)
 	else:
-		_apply_dash_movement()
+		_apply_dash_movement(delta)
 
 	coyote_time.update_floor_state(was_on_floor, is_on_floor())
 
@@ -125,9 +125,9 @@ func _handle_jump_input() -> void:
 	jump_buffer.buffer_jump()
 
 
-func _apply_dash_movement() -> void:
-	velocity = dash_direction * dash_speed
-	velocity.y = 0
+func _apply_dash_movement(delta: float) -> void:
+	velocity = dash.calculate_velocity(delta)
+	velocity.y = 0.0
 
 	_play_animation(&"jump")
 	_move_and_slide_with_rigid_body_push()
@@ -215,40 +215,34 @@ func try_spell_jump() -> bool:
 	return true
 
 
+## Dashes and returns once the dash ends or is interrupted. The dash hands
+## its speed back to normal movement at the walking top speed, so leaving it
+## blends into walking or a short slide instead of a dead stop.
 func begin_dash(direction: Vector2, speed: float, duration: float) -> void:
-	if is_dashing:
-		push_error("Player is already dashing.")
+	if dash.is_active():
+		push_error("Player: Already dashing.")
 		return
 
-	_dash_generation += 1
-	var generation := _dash_generation
-	is_dashing = true
-
-	dash_direction = direction.normalized()
+	var dash_direction := direction
 
 	if dash_direction.is_zero_approx():
-		push_error("Dash direction is zero. Defaulting to facing direction.")
-		dash_direction = facing_direction.normalized()
+		push_error("Player: Dash direction is zero. Defaulting to facing direction.")
+		dash_direction = facing_direction
 
-	dash_speed = speed
-
-	await get_tree().create_timer(duration).timeout
-
-	if generation != _dash_generation:
+	if not dash.begin(
+		dash_direction,
+		speed,
+		duration,
+		velocity,
+		horizontal_movement.max_speed
+	):
 		return
 
-	is_dashing = false
-	velocity.x = 0
+	await dash.dash_finished
 
 
 func _cancel_dash() -> void:
-	if not is_dashing:
-		return
-
-	_dash_generation += 1
-	is_dashing = false
-	dash_direction = Vector2.ZERO
-	dash_speed = 0.0
+	dash.cancel()
 
 
 func collect_item(item: ItemDefinition, amount: int = 1) -> bool:

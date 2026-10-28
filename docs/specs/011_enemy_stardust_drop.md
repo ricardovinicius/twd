@@ -12,7 +12,7 @@ When a Basic Skeleton dies, it drops **20 Stardust** split across **two pickups*
 ## Non-Goals
 
 - Random drop amounts, drop tables, or item drops.
-- Physics arcs, bouncing, or despawn timers for dropped pickups.
+- Physics arcs, bouncing, or despawn timers for dropped pickups. Dropped pickups fall straight down onto the floor; see [020](020_stardust_gravity.md).
 - New Stardust artwork, sounds, or a different pickup visual per value.
 - Saving or persisting uncollected drops.
 - Drops from the training Dummy or the player.
@@ -33,6 +33,7 @@ When a Basic Skeleton dies, it drops **20 Stardust** split across **two pickups*
 - `CoinPickup.amount` (default `1`) is the Stardust value added on collection. Pickups already placed in levels keep a value of `1`.
 - Only bodies in the `player` group attract or collect a pickup. World geometry and enemies are ignored, so a pickup that spawns on the floor or near another enemy is not consumed.
 - Collection happens once: the pickup adds its amount, plays `collected`, and frees itself.
+- Pickups fall to the floor while not attracted ([020](020_stardust_gravity.md)).
 
 ## Currency
 
@@ -50,7 +51,8 @@ BasicMob (CharacterBody2D)
 CoinPickup (Area2D, spawned by the drop)
 ├── AnimatedSprite2D
 ├── CollisionShape2D
-└── AttractionArea
+├── AttractionArea
+└── Fall                  (PickupFallComponent, spec 020)
 ```
 
 | Component | Responsibility |
@@ -87,7 +89,7 @@ signal dropped(pickups: Array[Node2D])
 
 - An unconfigured component never crashes the enemy's death; `DestroyOnDeath` still frees it.
 - A freed drop parent at drop time falls back to the default parent.
-- If the attracting player is freed, the pickup stops moving and remains collectable.
+- If the attracting player is freed, the pickup stops being attracted, falls back to the floor, and remains collectable.
 
 # Implementation Plan
 

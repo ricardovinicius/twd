@@ -39,6 +39,7 @@
 
 [ext_resource type="Script" path="res://entities/player/interaction/player_interactor.gd" id="36_interactor"]
 [ext_resource type="Script" path="res://entities/player/interaction/ui/interaction_prompt.gd" id="37_prompt"]
+[ext_resource type="Script" path="res://entities/player/movement/dash_movement_component.gd" id="38_dash"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("1_dqkch")
@@ -771,6 +772,9 @@ fall_gravity_multiplier = 1.2
 [node name="Knockback" type="Node" parent="." unique_id=1701475534 node_paths=PackedStringArray("body")]
 script = ExtResource("17_knockback")
 body = NodePath("..")
+
+[node name="Dash" type="Node" parent="."]
+script = ExtResource("38_dash")
 
 [node name="SequenceUI" parent="." unique_id=444228689 node_paths=PackedStringArray("sequence_caster") groups=["player"] instance=ExtResource("2_7thud")]
 position = Vector2(0, -29.666668)

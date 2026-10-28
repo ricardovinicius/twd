@@ -1,0 +1,42 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/companions/grimoire/companion_follow_component.gd" id="1_follow"]
+[ext_resource type="Script" path="res://entities/companions/grimoire/hover_bob_component.gd" id="2_hover"]
+
+[node name="Grimoire" type="Node2D"]
+
+[node name="Sprite" type="Node2D" parent="."]
+texture_filter = 1
+scale = Vector2(3, 3)
+
+[node name="Spine" type="Polygon2D" parent="Sprite"]
+color = Color(0.231, 0.102, 0.353, 1)
+polygon = PackedVector2Array(-14, -13, -11, -14, -11, 14, -14, 13)
+
+[node name="Cover" type="Polygon2D" parent="Sprite"]
+color = Color(0.357, 0.165, 0.525, 1)
+polygon = PackedVector2Array(-11, -14, 12, -14, 12, 14, -11, 14)
+
+[node name="Pages" type="Polygon2D" parent="Sprite"]
+color = Color(0.937, 0.902, 0.784, 1)
+polygon = PackedVector2Array(12, -13, 14, -12, 14, 12, 12, 13)
+
+[node name="Strap" type="Polygon2D" parent="Sprite"]
+color = Color(0.475, 0.31, 0.18, 1)
+polygon = PackedVector2Array(-11, -2, 14, -2, 14, 2, -11, 2)
+
+[node name="Emblem" type="Polygon2D" parent="Sprite"]
+color = Color(0.949, 0.784, 0.294, 1)
+polygon = PackedVector2Array(0, -7, 6, 0, 0, 7, -6, 0)
+
+[node name="EmblemEye" type="Polygon2D" parent="Sprite"]
+color = Color(0.231, 0.102, 0.353, 1)
+polygon = PackedVector2Array(0, -2, 2, 0, 0, 2, -2, 0)
+
+[node name="CompanionFollow" type="Node" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("1_follow")
+body = NodePath("..")
+
+[node name="HoverBob" type="Node" parent="." node_paths=PackedStringArray("visual")]
+script = ExtResource("2_hover")
+visual = NodePath("../Sprite")

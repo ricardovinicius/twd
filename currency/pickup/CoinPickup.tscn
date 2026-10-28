@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ctvgcsbihpujx" path="res://currency/pickup/coin_pickup.gd" id="1_lf8ff"]
 [ext_resource type="Texture2D" uid="uid://82airhvyl0ix" path="res://assets/pickups/stardust_placeholder.webp" id="2_ytmkh"]
+[ext_resource type="Script" path="res://currency/pickup/pickup_fall_component.gd" id="3_fall"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7mq0e"]
 atlas = ExtResource("2_ytmkh")
@@ -64,10 +65,11 @@ radius = 17.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_qg34q"]
 radius = 163.01227
 
-[node name="CoinPickup" type="Area2D" unique_id=2125175977]
+[node name="CoinPickup" type="Area2D" unique_id=2125175977 node_paths=PackedStringArray("fall")]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_lf8ff")
+fall = NodePath("Fall")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1215811723]
 scale = Vector2(0.078947365, 0.078947365)
@@ -83,6 +85,10 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttractionArea" unique_id=151131000]
 shape = SubResource("CircleShape2D_qg34q")
+
+[node name="Fall" type="Node" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("3_fall")
+body = NodePath("..")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="AttractionArea" to="." method="_on_attraction_area_body_entered"]

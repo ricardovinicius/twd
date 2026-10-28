@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://ntfdi7u7s4ha" path="res://dialogue/dialogue_session.gd" id="6_dialogue"]
 [ext_resource type="PackedScene" path="res://dialogue/ui/DialoguePanel.tscn" id="7_dialogue_panel"]
 [ext_resource type="PackedScene" path="res://entities/player/respawn/ui/DeathScreen.tscn" id="8_death_screen"]
+[ext_resource type="PackedScene" path="res://entities/enemies/flying_eye/FlyingEye.tscn" id="10_wkp8b"]
 
 [node name="Main" type="Node2D" unique_id=1783851588 node_paths=PackedStringArray("pause_menu", "spell_registry", "equipment", "stats", "health", "inventory", "interactor", "dialogue_session", "dialogue_interaction", "player")]
 process_mode = 1
@@ -76,4 +77,10 @@ respawn = NodePath("../LevelRoot/Player/RespawnOnDeath")
 session = NodePath("../DialogueSession")
 interactor = NodePath("../LevelRoot/Player/PlayerInteractor")
 
-[node name="DeathScreen" parent="." instance=ExtResource("8_death_screen")]
+[node name="DeathScreen" parent="." unique_id=1846908779 instance=ExtResource("8_death_screen")]
+
+[node name="FlyingEye" parent="." unique_id=111065260 instance=ExtResource("10_wkp8b")]
+position = Vector2(-3335, 1775.0001)
+
+[node name="FlyingEye2" parent="." unique_id=396838380 instance=ExtResource("10_wkp8b")]
+position = Vector2(-4112, 2447)

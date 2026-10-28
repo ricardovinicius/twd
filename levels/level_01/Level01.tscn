@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" path="res://entities/npcs/village_guide/VillageGuide.tscn" id="20_guide"]
 [ext_resource type="PackedScene" path="res://entities/interactive/diggable_block/DiggableBlock.tscn" id="21_diggable_block"]
 [ext_resource type="PackedScene" path="res://entities/interactive/elevator/Elevator.tscn" id="22_elevator"]
+[ext_resource type="PackedScene" path="res://entities/companions/grimoire/Grimoire.tscn" id="23_grimoire"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b3jm5"]
 texture = ExtResource("1_thp0t")
@@ -733,6 +734,12 @@ travel = Vector2(0, -943.5)
 start_at_top = true
 cable_anchor_height = 150.0
 switches = [NodePath("../ElevatorCLeverBottom/SwitchComponent")]
+
+[node name="Grimoire" parent="." instance=ExtResource("23_grimoire")]
+position = Vector2(126, 493)
+
+[node name="CompanionFollow" parent="Grimoire" node_paths=PackedStringArray("target")]
+target = NodePath("../../Player")
 
 [node name="Player" parent="." unique_id=599257793 node_paths=PackedStringArray("camera") instance=ExtResource("3_dm0pi")]
 position = Vector2(198, 583)

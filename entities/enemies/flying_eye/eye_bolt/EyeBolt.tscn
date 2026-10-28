@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/flying_eye/eye_bolt/eye_bolt.gd" id="1_bolt"]
+[ext_resource type="Texture2D" path="res://entities/enemies/flying_eye/eye_bolt/sprites/eye_bolt_8x8.png" id="2_sprite"]
+
+[sub_resource type="AtlasTexture" id="Bolt0"]
+atlas = ExtResource("2_sprite")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="Bolt1"]
+atlas = ExtResource("2_sprite")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="BoltFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Bolt0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Bolt1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="BoltShape"]
+radius = 3.0
+
+[node name="EyeBolt" type="Area2D"]
+top_level = true
+scale = Vector2(3, 3)
+collision_layer = 0
+collision_mask = 17
+script = ExtResource("1_bolt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("BoltFrames")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("BoltShape")

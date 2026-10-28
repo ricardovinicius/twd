@@ -11,7 +11,7 @@ entities/
   player/                         Player controller, inventory, equipment, stats, sprites
     input/                        Player aim input
     interaction/                  Nearby selection, input routing, and interaction prompt
-    movement/                     Player jump and knockback components
+    movement/                     Player jump, dash, and knockback components
     reactions/                    Player action reactions
     respawn/                      Player spawn/checkpoint state and death response
   npcs/village_guide/             Stationary guide, copied sprite assets, and introduction dialogue
@@ -21,6 +21,7 @@ entities/
     combat/                       Enemy melee, hitbox, and contact behavior
     detection/                    Enemy target detection
     platform_crawler/             Enemy that loops around one platform and charges forward
+    flying_eye/                   Flying enemy that hovers and spits bolts; its flight, ranged attack, and EyeBolt
     respawn/                      Enemy recreation after player death or checkpoint rest
     bestiary/                     Monster guide entries shown in the pause menu
   interactive/
@@ -35,10 +36,12 @@ entities/
     reactions/                    Physics-item action reactions
     sprites/                      Item-specific artwork and source files
   dummy/                          Combat test entity and its damage animation
+  companions/
+    grimoire/                     Floating spellbook companion: follow and hover components, placeholder art
 currency/
   coin_manager.gd                 Autoload owning the currency total
   drop/                           Death-triggered Stardust drops composed into enemies
-  pickup/                         Currency pickup scene and behavior
+  pickup/                         Currency pickup scene, behavior, and fall-to-floor component
   ui/                             Currency display
 health/                           Shared health and generic death policies
 save/                             SaveGame autoload: persists progress when resting at checkpoints
