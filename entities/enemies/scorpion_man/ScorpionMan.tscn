@@ -1,0 +1,233 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/scorpion_man/scorpion_man.gd" id="1_scorpion"]
+[ext_resource type="Texture2D" path="res://entities/enemies/scorpion_man/sprites/walk_32x32.png" id="2_walk"]
+[ext_resource type="Texture2D" path="res://entities/enemies/scorpion_man/sprites/slam_32x32.png" id="3_slam"]
+[ext_resource type="Texture2D" path="res://entities/enemies/scorpion_man/sprites/leap_32x32.png" id="4_leap"]
+[ext_resource type="Script" path="res://entities/enemies/scorpion_man/leap_attack_component.gd" id="10_leap"]
+[ext_resource type="Script" uid="uid://bmouqvprw5wyj" path="res://components/movement/horizontal_movement_component.gd" id="6_move"]
+[ext_resource type="Script" uid="uid://bwbhww5r7mqe3" path="res://entities/enemies/combat/melee_attack_component.gd" id="7_melee"]
+[ext_resource type="Script" uid="uid://d2y585wyaknw3" path="res://entities/enemies/combat/attack_hitbox.gd" id="8_hitbox"]
+[ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="9_damage"]
+[ext_resource type="Script" uid="uid://2htj0e4va8nl" path="res://components/movement/gravity_component.gd" id="20_gravity"]
+[ext_resource type="Script" uid="uid://d14jwxuq06jvb" path="res://entities/enemies/detection/target_detector.gd" id="21_detector"]
+[ext_resource type="Script" uid="uid://dx4kugto8jvw2" path="res://entities/enemies/combat/contact_impact_component.gd" id="22_contact"]
+[ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="23_health"]
+[ext_resource type="Script" uid="uid://crs540wacfv0j" path="res://health/destroy_on_death.gd" id="24_death"]
+[ext_resource type="Script" path="res://currency/drop/stardust_drop_on_death.gd" id="25_stardust_drop"]
+[ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://currency/pickup/CoinPickup.tscn" id="26_coin_pickup"]
+[ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="27_receiver"]
+
+[sub_resource type="AtlasTexture" id="Walk0"]
+atlas = ExtResource("2_walk")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk1"]
+atlas = ExtResource("2_walk")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk2"]
+atlas = ExtResource("2_walk")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Walk3"]
+atlas = ExtResource("2_walk")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Slam0"]
+atlas = ExtResource("3_slam")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Slam1"]
+atlas = ExtResource("3_slam")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Slam2"]
+atlas = ExtResource("3_slam")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Leap0"]
+atlas = ExtResource("4_leap")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Leap1"]
+atlas = ExtResource("4_leap")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="ScorpionFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Walk0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Slam0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Slam1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Slam2")
+}],
+"loop": false,
+"name": &"slam",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Leap0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Leap1")
+}],
+"loop": false,
+"name": &"leap",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="BodyShape"]
+size = Vector2(18, 16)
+
+[sub_resource type="CircleShape2D" id="DetectorShape"]
+radius = 220.0
+
+[sub_resource type="RectangleShape2D" id="ContactShape"]
+size = Vector2(20, 16)
+
+[sub_resource type="RectangleShape2D" id="AttackReceiverShape"]
+size = Vector2(24, 26)
+
+[sub_resource type="RectangleShape2D" id="SlamHitboxShape"]
+size = Vector2(24, 14)
+
+[sub_resource type="RectangleShape2D" id="LeapHitboxShape"]
+size = Vector2(18, 22)
+
+[node name="ScorpionMan" type="CharacterBody2D"]
+scale = Vector2(3, 3)
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_scorpion")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("ScorpionFrames")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("BodyShape")
+
+[node name="HorizontalMovement" type="Node" parent="."]
+script = ExtResource("6_move")
+max_speed = 170.0
+acceleration = 900.0
+deceleration = 1600.0
+
+[node name="Slam" type="Node2D" parent="." node_paths=PackedStringArray("attack_hitbox", "visual")]
+script = ExtResource("7_melee")
+attack_hitbox = NodePath("Hitbox")
+visual = NodePath("../AnimatedSprite2D")
+damage = 25.0
+windup_duration = 0.7
+active_duration = 0.15
+recovery_duration = 0.6
+windup_distance = 1.0
+lunge_distance = 2.0
+
+[node name="Hitbox" type="Area2D" parent="Slam"]
+position = Vector2(22, 9)
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+script = ExtResource("8_hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slam/Hitbox"]
+shape = SubResource("SlamHitboxShape")
+
+[node name="Leap" type="Node" parent="." node_paths=PackedStringArray("body", "attack_hitbox")]
+script = ExtResource("10_leap")
+body = NodePath("..")
+attack_hitbox = NodePath("../LeapHitbox")
+
+[node name="LeapHitbox" type="Area2D" parent="."]
+position = Vector2(12, 6)
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+script = ExtResource("8_hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeapHitbox"]
+shape = SubResource("LeapHitboxShape")
+
+[node name="Gravity" type="Node" parent="."]
+script = ExtResource("20_gravity")
+
+[node name="AggroDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("21_detector")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AggroDetector"]
+shape = SubResource("DetectorShape")
+
+[node name="ContactImpact" type="Node2D" parent="." node_paths=PackedStringArray("source", "contact_area")]
+script = ExtResource("22_contact")
+source = NodePath("..")
+contact_area = NodePath("ContactArea")
+contact_damage = 10.0
+
+[node name="ContactArea" type="Area2D" parent="ContactImpact"]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactImpact/ContactArea"]
+position = Vector2(0, 1.5)
+shape = SubResource("ContactShape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("23_health")
+maximum = 300.0
+
+[node name="DestroyOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "target")]
+script = ExtResource("24_death")
+health = NodePath("../Health")
+target = NodePath("..")
+
+[node name="StardustDropOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "source")]
+script = ExtResource("25_stardust_drop")
+health = NodePath("../Health")
+source = NodePath("..")
+pickup_scene = ExtResource("26_coin_pickup")
+pickup_count = 5
+amount_per_pickup = 20
+
+[node name="AttackReceiver" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("27_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackReceiver"]
+position = Vector2(0, 1.5)
+shape = SubResource("AttackReceiverShape")
+
+[node name="HealthDamageReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health")]
+script = ExtResource("9_damage")
+health = NodePath("../../Health")

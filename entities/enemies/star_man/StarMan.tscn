@@ -1,0 +1,193 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/star_man/star_man.gd" id="1_star"]
+[ext_resource type="Texture2D" path="res://entities/enemies/star_man/sprites/idle_32x32.png" id="2_idle"]
+[ext_resource type="Texture2D" path="res://entities/enemies/star_man/sprites/scream_32x32.png" id="3_scream"]
+[ext_resource type="Texture2D" path="res://entities/enemies/star_man/sprites/roll_32x32.png" id="4_roll"]
+[ext_resource type="Texture2D" path="res://entities/enemies/star_man/sprites/dizzy_32x32.png" id="5_dizzy"]
+[ext_resource type="Texture2D" path="res://entities/enemies/star_man/sprites/hit_32x32.png" id="6_hit"]
+[ext_resource type="Script" path="res://entities/enemies/star_man/star_guard_reaction.gd" id="7_guard"]
+[ext_resource type="Script" uid="uid://2htj0e4va8nl" path="res://components/movement/gravity_component.gd" id="20_gravity"]
+[ext_resource type="Script" uid="uid://d14jwxuq06jvb" path="res://entities/enemies/detection/target_detector.gd" id="21_detector"]
+[ext_resource type="Script" uid="uid://dx4kugto8jvw2" path="res://entities/enemies/combat/contact_impact_component.gd" id="22_contact"]
+[ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="23_health"]
+[ext_resource type="Script" uid="uid://crs540wacfv0j" path="res://health/destroy_on_death.gd" id="24_death"]
+[ext_resource type="Script" path="res://currency/drop/stardust_drop_on_death.gd" id="25_stardust_drop"]
+[ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://currency/pickup/CoinPickup.tscn" id="26_coin_pickup"]
+[ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="27_receiver"]
+
+[sub_resource type="AtlasTexture" id="Idle0"]
+atlas = ExtResource("2_idle")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Idle1"]
+atlas = ExtResource("2_idle")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Scream0"]
+atlas = ExtResource("3_scream")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Scream1"]
+atlas = ExtResource("3_scream")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Roll0"]
+atlas = ExtResource("4_roll")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Dizzy0"]
+atlas = ExtResource("5_dizzy")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Dizzy1"]
+atlas = ExtResource("5_dizzy")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Dizzy2"]
+atlas = ExtResource("5_dizzy")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Hit0"]
+atlas = ExtResource("6_hit")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="StarManFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Idle0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Scream0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Scream1")
+}],
+"loop": true,
+"name": &"scream",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Roll0")
+}],
+"loop": true,
+"name": &"roll",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Dizzy0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Dizzy1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Dizzy2")
+}],
+"loop": true,
+"name": &"dizzy",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Hit0")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="BodyShape"]
+size = Vector2(16, 28)
+
+[sub_resource type="CircleShape2D" id="DetectorShape"]
+radius = 140.0
+
+[sub_resource type="RectangleShape2D" id="ContactShape"]
+size = Vector2(22, 26)
+
+[sub_resource type="RectangleShape2D" id="AttackReceiverShape"]
+size = Vector2(24, 28)
+
+[node name="StarMan" type="CharacterBody2D"]
+scale = Vector2(3, 3)
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_star")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("StarManFrames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("BodyShape")
+
+[node name="Gravity" type="Node" parent="."]
+script = ExtResource("20_gravity")
+
+[node name="Vision" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("21_detector")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+shape = SubResource("DetectorShape")
+
+[node name="ContactImpact" type="Node2D" parent="." node_paths=PackedStringArray("source", "contact_area")]
+script = ExtResource("22_contact")
+source = NodePath("..")
+contact_area = NodePath("ContactArea")
+contact_damage = 5.0
+
+[node name="ContactArea" type="Area2D" parent="ContactImpact"]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactImpact/ContactArea"]
+position = Vector2(0, 1.5)
+shape = SubResource("ContactShape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("23_health")
+maximum = 120.0
+
+[node name="DestroyOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "target")]
+script = ExtResource("24_death")
+health = NodePath("../Health")
+target = NodePath("..")
+
+[node name="StardustDropOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "source")]
+script = ExtResource("25_stardust_drop")
+health = NodePath("../Health")
+source = NodePath("..")
+pickup_scene = ExtResource("26_coin_pickup")
+pickup_count = 4
+amount_per_pickup = 20
+
+[node name="AttackReceiver" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("27_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackReceiver"]
+position = Vector2(0, 1.5)
+shape = SubResource("AttackReceiverShape")
+
+[node name="StarGuardReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health")]
+script = ExtResource("7_guard")
+health = NodePath("../../Health")

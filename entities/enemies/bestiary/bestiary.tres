@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://b5fr1mv1d7jbs" path="res://entities/enemies/homunculus_couple/sprites/portrait.png" id="5_homunculus_couple"]
 [ext_resource type="Texture2D" uid="uid://cp6xw8gs536aw" path="res://entities/enemies/life_moth/sprites/portrait.png" id="6_life_moth"]
 [ext_resource type="Texture2D" uid="uid://thkqp1lfpfk0" path="res://entities/enemies/dung_beetle/sprites/portrait.png" id="7_dung_beetle"]
+[ext_resource type="Texture2D" uid="uid://b8lanrqp7alu3" path="res://entities/enemies/star_man/sprites/portrait.png" id="8_star_man"]
+[ext_resource type="Texture2D" uid="uid://4jcpa6yn1kt4" path="res://entities/enemies/scorpion_man/sprites/portrait.png" id="9_scorpion_man"]
 
 [sub_resource type="Resource" id="Resource_skeleton"]
 script = ExtResource("2_entry")
@@ -70,6 +72,28 @@ portrait = ExtResource("7_dung_beetle")
 max_health = 20.0
 weakness = "Walls stop its escape"
 
+[sub_resource type="Resource" id="Resource_star_man"]
+script = ExtResource("2_entry")
+id = &"star_man"
+display_name = "Star Man"
+description = "A man with a star stuck around his neck. When he spots you he screams, curls up and rolls at you like a madman, hopping and bouncing off walls. Nothing hurts him while he rolls: wait for him to stop, dizzy, and strike then."
+portrait = ExtResource("8_star_man")
+max_health = 120.0
+damage = 20.0
+stardust_drop = 80
+weakness = "Hitting him while he stands dizzy"
+
+[sub_resource type="Resource" id="Resource_scorpion_man"]
+script = ExtResource("2_entry")
+id = &"scorpion_man"
+display_name = "Scorpion Man"
+description = "A crouching man with a huge stinger tail where his head should be. Up close he slams the stinger into the ground. Keep your distance and he turns around and leaps across the room, the pincers on his rear wide open. He takes a beating before he falls."
+portrait = ExtResource("9_scorpion_man")
+max_health = 300.0
+damage = 25.0
+stardust_drop = 100
+weakness = "Jumping over the leap, striking while he recovers"
+
 [resource]
 script = ExtResource("1_bestiary")
-entries = Array[ExtResource("2_entry")]([SubResource("Resource_skeleton"), SubResource("Resource_crawler"), SubResource("Resource_flying_eye"), SubResource("Resource_homunculus_couple"), SubResource("Resource_life_moth"), SubResource("Resource_dung_beetle")])
+entries = Array[ExtResource("2_entry")]([SubResource("Resource_skeleton"), SubResource("Resource_crawler"), SubResource("Resource_flying_eye"), SubResource("Resource_homunculus_couple"), SubResource("Resource_life_moth"), SubResource("Resource_dung_beetle"), SubResource("Resource_star_man"), SubResource("Resource_scorpion_man")])

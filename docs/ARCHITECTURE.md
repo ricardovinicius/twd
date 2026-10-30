@@ -25,6 +25,8 @@ entities/
     homunculus_couple/            Kissing pair that splits apart and chases the player; placeholder art
     life_moth/                    Harmless moth that flees the player and drops a health orb
     dung_beetle/                  Harmless beetle that rolls a health orb away and drops it
+    star_man/                     Boss that screams, rolls invulnerable at the player, then stands dizzy
+    scorpion_man/                 Boss that slams its tail stinger up close and leaps butt-first from afar
     respawn/                      Enemy recreation after player death or checkpoint rest
     bestiary/                     Monster guide entries shown in the pause menu
   interactive/

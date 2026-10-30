@@ -28,6 +28,8 @@ Set `GODOT_BIN` to select a Godot executable. Suites start through `tests/bootst
 | `health_orb` | `Health.heal`, the player heal capability, orbs falling then releasing, collection, full-health rejection, collecting on landing, and dropping from a carrier's hand. |
 | `life_moth` | Moth composition, patrol, fleeing within its speed and height band, being catchable with effort, calming down, orb drop, respawn, and monster guide entry. |
 | `dung_beetle` | Beetle play and orb toss, fleeing while rolling the orb, being catchable with effort, walls cornering it, calming after a delay, orb drop, respawn, and monster guide entry. |
+| `star_man` | Star Man sight through walls, scream, invulnerable roll at speed with spin, bounded turn-backs, wall bounces, dizzy vulnerability and re-rolling, forgetting a far player, drops, respawn, and monster guide entry. |
+| `scorpion_man` | Scorpion Man toughness, attack choice by distance, walking closer then slamming, tail slam, butt-pincer leap across the room with its cooldown, uninterrupted attacks, drops, respawn, and monster guide entry. |
 | `stardust_drop` | Enemy Stardust drops, pickup amounts, player-only collection, and `CoinManager.add_coins`. |
 | `stardust_gravity` | Stardust pickups falling onto world collision, ignoring other layers, attraction suspending and resuming the fall, collection while falling, and enemy drops landing. |
 | `dash` | Dash speed profile (ease-in from the current speed, ease-out to walking speed), tick-counted duration, rejection and cancellation, and smooth player speed through and after a dash. |
