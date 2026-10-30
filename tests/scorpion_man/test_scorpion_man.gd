@@ -140,11 +140,18 @@ func _test_leap_crosses_the_room() -> void:
 	_check(scorpion.facing_direction < 0.0, "He must turn his back so the butt pincers lead.")
 	_check(scorpion.leap.get_direction() > 0.0, "He must leap toward the player.")
 
-	await _await_until(func() -> bool: return scorpion.leap.is_airborne(), 60)
+	await _await_physics_frames(int(scorpion.leap.windup_duration * 60.0) - 5)
+	_check(not scorpion.leap.is_airborne(), "The crouch must give the player time to react.")
+
+	await _await_until(func() -> bool: return scorpion.leap.is_airborne(), 30)
 	_check(scorpion.leap.is_airborne(), "After the crouch he must take off.")
+	_check(
+		is_equal_approx(absf(scorpion.velocity.x), scorpion.leap.leap_speed),
+		"He must fly across at his leap speed, slow enough to dodge."
+	)
 	_check(scorpion.sprite.animation == &"leap" and scorpion.sprite.frame == 1, "In the air he must show the leap pose.")
 
-	for _index in 120:
+	for _index in 180:
 		await physics_frame
 		peak_height = maxf(peak_height, -scorpion.global_position.y)
 		if not scorpion.leap.is_airborne():
@@ -155,7 +162,10 @@ func _test_leap_crosses_the_room() -> void:
 	_check(scorpion.is_on_floor(), "He must land on the floor.")
 	_check(hits.count(scorpion.leap.damage) == 1, "The pincers must hit the player once.")
 
-	await _await_until(func() -> bool: return scorpion.get_state() != ScorpionMan.State.ATTACK, 120)
+	await _await_physics_frames(int(scorpion.leap.recovery_duration * 60.0) - 10)
+	_check(scorpion.get_state() == ScorpionMan.State.ATTACK, "After landing he must stay stuck for a while.")
+
+	await _await_until(func() -> bool: return scorpion.get_state() != ScorpionMan.State.ATTACK, 60)
 	_check(
 		scorpion.choose_attack(Vector2(-450.0, 0.0)) == ScorpionMan.Attack.NONE,
 		"Right after landing, the leap must be cooling down."

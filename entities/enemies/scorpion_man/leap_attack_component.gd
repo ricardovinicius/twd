@@ -24,15 +24,18 @@ enum Phase {
 
 @export_category("Leap")
 @export_range(0.0, 1000.0, 1.0, "or_greater") var damage: float = 20.0
-@export_range(0.0, 5.0, 0.01, "or_greater") var windup_duration: float = 0.5
-@export_range(0.0, 5.0, 0.01, "or_greater") var recovery_duration: float = 0.6
-## Upward take-off speed; with gravity it sets how long the leap lasts.
-@export_range(1.0, 5000.0, 1.0, "or_greater") var jump_speed: float = 450.0
+## Crouch before take-off: the warning the player gets.
+@export_range(0.0, 5.0, 0.01, "or_greater") var windup_duration: float = 0.9
+## Time spent stuck after landing: the window to hit him.
+@export_range(0.0, 5.0, 0.01, "or_greater") var recovery_duration: float = 1.2
+## Horizontal speed of the leap. The flight lasts distance / leap_speed.
+@export_range(1.0, 5000.0, 1.0, "or_greater") var leap_speed: float = 600.0
+## Peak height of the leap arc, kept low so the pincers sweep the floor.
+@export_range(0.0, 1000.0, 1.0, "or_greater") var leap_height: float = 40.0
 ## How far past the target he lands.
 @export_range(0.0, 2000.0, 1.0, "or_greater") var overshoot: float = 160.0
 @export_range(0.0, 5000.0, 1.0, "or_greater") var min_distance: float = 200.0
 @export_range(0.0, 5000.0, 1.0, "or_greater") var max_distance: float = 900.0
-@export_range(0.0, 5.0, 0.05) var gravity_scale: float = 1.0
 
 var _phase: Phase = Phase.IDLE
 var _phase_time: float = 0.0
@@ -40,6 +43,7 @@ var _direction: float = 1.0
 var _distance: float = 0.0
 var _source: Node2D
 var _left_floor: bool = false
+var _flight_gravity: float = 0.0
 
 
 func _ready() -> void:
@@ -104,8 +108,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _take_off() -> void:
-	var gravity := _gravity()
-	var flight_time := 2.0 * jump_speed / maxf(gravity, 1.0)
+	# A parabola of leap_height that covers the distance at leap_speed.
+	var flight_time := maxf(_distance / leap_speed, 0.05)
+	var jump_speed := 4.0 * leap_height / flight_time
 	var attack := AttackData.new()
 
 	attack.attack_type = &"leap"
@@ -115,14 +120,15 @@ func _take_off() -> void:
 	attack.damage = damage
 	attack_hitbox.activate(attack)
 
-	body.velocity = Vector2(_direction * _distance / flight_time, -jump_speed)
+	_flight_gravity = 8.0 * leap_height / (flight_time * flight_time)
+	body.velocity = Vector2(_direction * leap_speed, -jump_speed)
 	_left_floor = false
 	_start_phase(Phase.AIRBORNE)
 	took_off.emit()
 
 
 func _fly(delta: float) -> void:
-	body.velocity.y += _gravity() * delta
+	body.velocity.y += _flight_gravity * delta
 	body.move_and_slide()
 
 	if not body.is_on_floor():
@@ -163,4 +169,4 @@ func _start_phase(phase: Phase) -> void:
 
 
 func _gravity() -> float:
-	return body.get_gravity().y * gravity_scale
+	return body.get_gravity().y

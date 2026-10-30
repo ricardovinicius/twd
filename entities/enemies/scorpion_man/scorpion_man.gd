@@ -35,7 +35,7 @@ signal attack_chosen(attack: Attack)
 ## He leaps when the player is at least this far away (and the leap is ready).
 @export_range(0.0, 5000.0, 1.0, "or_greater") var leap_trigger_distance: float = 240.0
 ## Time between leaps; while it runs he walks closer instead.
-@export_range(0.0, 30.0, 0.05, "or_greater") var leap_cooldown: float = 2.5
+@export_range(0.0, 30.0, 0.05, "or_greater") var leap_cooldown: float = 3.5
 ## Pause after any attack.
 @export_range(0.0, 10.0, 0.05, "or_greater") var attack_cooldown: float = 0.35
 
