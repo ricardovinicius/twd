@@ -1,0 +1,134 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/life_moth/life_moth.gd" id="1_moth"]
+[ext_resource type="Texture2D" path="res://entities/enemies/life_moth/sprites/fly_16x16.png" id="2_fly"]
+[ext_resource type="Texture2D" path="res://entities/enemies/life_moth/sprites/hit_16x16.png" id="3_hit"]
+[ext_resource type="Script" uid="uid://d14jwxuq06jvb" path="res://entities/enemies/detection/target_detector.gd" id="10_detector"]
+[ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="11_health"]
+[ext_resource type="Script" uid="uid://crs540wacfv0j" path="res://health/destroy_on_death.gd" id="12_death"]
+[ext_resource type="Script" path="res://health/orb/health_orb_drop_on_death.gd" id="13_orb_drop"]
+[ext_resource type="PackedScene" path="res://health/orb/HealthOrb.tscn" id="14_orb_scene"]
+[ext_resource type="Texture2D" path="res://health/orb/sprites/health_orb_8x8.png" id="15_orb_texture"]
+[ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="16_receiver"]
+[ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="17_damage"]
+
+[sub_resource type="AtlasTexture" id="Fly0"]
+atlas = ExtResource("2_fly")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Fly1"]
+atlas = ExtResource("2_fly")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Fly2"]
+atlas = ExtResource("2_fly")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Fly3"]
+atlas = ExtResource("2_fly")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Hit0"]
+atlas = ExtResource("3_hit")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="MothFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Fly0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Fly1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Fly2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Fly3")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Hit0")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 6.0
+}]
+
+[sub_resource type="AtlasTexture" id="HeldOrbTexture"]
+atlas = ExtResource("15_orb_texture")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="CircleShape2D" id="BodyShape"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="ThreatShape"]
+radius = 100.0
+
+[sub_resource type="CircleShape2D" id="AttackReceiverShape"]
+radius = 7.0
+
+[node name="LifeMoth" type="CharacterBody2D"]
+scale = Vector2(3, 3)
+collision_layer = 0
+collision_mask = 1
+motion_mode = 1
+script = ExtResource("1_moth")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("MothFrames")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="HeldOrb" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 7)
+texture = SubResource("HeldOrbTexture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("BodyShape")
+
+[node name="ThreatDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("10_detector")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ThreatDetector"]
+shape = SubResource("ThreatShape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("11_health")
+maximum = 10.0
+
+[node name="DestroyOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "target")]
+script = ExtResource("12_death")
+health = NodePath("../Health")
+target = NodePath("..")
+
+[node name="HealthOrbDropOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "hand", "held_orb")]
+script = ExtResource("13_orb_drop")
+health = NodePath("../Health")
+hand = NodePath("../HeldOrb")
+orb_scene = ExtResource("14_orb_scene")
+held_orb = NodePath("../HeldOrb")
+
+[node name="AttackReceiver" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("16_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackReceiver"]
+position = Vector2(0, 3)
+shape = SubResource("AttackReceiverShape")
+
+[node name="HealthDamageReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health")]
+script = ExtResource("17_damage")
+health = NodePath("../../Health")

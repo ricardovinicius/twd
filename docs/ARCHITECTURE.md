@@ -23,6 +23,8 @@ entities/
     platform_crawler/             Enemy that loops around one platform and charges forward
     flying_eye/                   Flying enemy that hovers and spits bolts; its flight, ranged attack, and EyeBolt
     homunculus_couple/            Kissing pair that splits apart and chases the player; placeholder art
+    life_moth/                    Harmless moth that flees the player and drops a health orb
+    dung_beetle/                  Harmless beetle that rolls a health orb away and drops it
     respawn/                      Enemy recreation after player death or checkpoint rest
     bestiary/                     Monster guide entries shown in the pause menu
   interactive/
@@ -44,7 +46,8 @@ currency/
   drop/                           Death-triggered Stardust drops composed into enemies
   pickup/                         Currency pickup scene, behavior, and fall-to-floor component
   ui/                             Currency display
-health/                           Shared health and generic death policies
+health/                           Shared health (damage and heal) and generic death policies
+  orb/                            Health orb pickup and the drop-on-death component of orb carriers
 save/                             SaveGame autoload: persists progress when resting at checkpoints
 settings/                         Settings autoload: volume, fullscreen, and key bindings
 spells/

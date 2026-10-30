@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://1vm731a8bylf" path="res://entities/enemies/basic_skeleton/sprites/idle.png" id="3_skeleton"]
 [ext_resource type="Texture2D" uid="uid://b072xa1oudi05" path="res://entities/enemies/flying_eye/sprites/portrait.png" id="4_flying_eye"]
 [ext_resource type="Texture2D" uid="uid://b5fr1mv1d7jbs" path="res://entities/enemies/homunculus_couple/sprites/portrait.png" id="5_homunculus_couple"]
+[ext_resource type="Texture2D" uid="uid://cp6xw8gs536aw" path="res://entities/enemies/life_moth/sprites/portrait.png" id="6_life_moth"]
+[ext_resource type="Texture2D" uid="uid://thkqp1lfpfk0" path="res://entities/enemies/dung_beetle/sprites/portrait.png" id="7_dung_beetle"]
 
 [sub_resource type="Resource" id="Resource_skeleton"]
 script = ExtResource("2_entry")
@@ -50,6 +52,24 @@ damage = 15.0
 stardust_drop = 20
 weakness = "Outrunning them off the screen"
 
+[sub_resource type="Resource" id="Resource_life_moth"]
+script = ExtResource("2_entry")
+id = &"life_moth"
+display_name = "Life Moth"
+description = "A shy moth that flutters back and forth clutching a health orb. Get too close and it flies away, a little slower than you can run. Bring it down and the orb falls to the ground, ready to heal you."
+portrait = ExtResource("6_life_moth")
+max_health = 10.0
+weakness = "Chasing it until it tires out"
+
+[sub_resource type="Resource" id="Resource_dung_beetle"]
+script = ExtResource("2_entry")
+id = &"dung_beetle"
+display_name = "Orb Roller"
+description = "A beetle that plays with a health orb as if it were a ball of dung. When you come near it rolls the orb away and flees. Corner it against a wall and the orb is yours."
+portrait = ExtResource("7_dung_beetle")
+max_health = 20.0
+weakness = "Walls stop its escape"
+
 [resource]
 script = ExtResource("1_bestiary")
-entries = Array[ExtResource("2_entry")]([SubResource("Resource_skeleton"), SubResource("Resource_crawler"), SubResource("Resource_flying_eye"), SubResource("Resource_homunculus_couple")])
+entries = Array[ExtResource("2_entry")]([SubResource("Resource_skeleton"), SubResource("Resource_crawler"), SubResource("Resource_flying_eye"), SubResource("Resource_homunculus_couple"), SubResource("Resource_life_moth"), SubResource("Resource_dung_beetle")])

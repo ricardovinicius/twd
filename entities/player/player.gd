@@ -252,6 +252,16 @@ func collect_item(item: ItemDefinition, amount: int = 1) -> bool:
 	return true
 
 
+## Restores player health, such as from a health orb. Returns the amount
+## restored (0 when health is full or depleted).
+func heal(amount: float) -> float:
+	return health.heal(amount)
+
+
+func can_heal() -> bool:
+	return not health.is_full() and not health.is_depleted()
+
+
 func set_checkpoint(pos: Vector2) -> void:
 	respawn.set_checkpoint(pos)
 

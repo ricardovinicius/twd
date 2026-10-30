@@ -3,6 +3,7 @@ extends Node
 
 signal changed(current: float, maximum: float)
 signal damaged(amount: float)
+signal healed(amount: float)
 signal depleted
 signal shield_changed(current: float, maximum: float)
 signal shield_broken
@@ -52,6 +53,26 @@ func take_damage(amount: float) -> float:
 		depleted.emit()
 
 	return applied_damage
+
+
+## Restores up to amount, never above maximum. Returns the health actually
+## restored. Depleted health (death) cannot be healed; use reset() instead.
+func heal(amount: float) -> float:
+	if amount <= 0.0 or is_depleted() or is_full():
+		return 0.0
+
+	var previous := current
+	current = minf(current + amount, maximum)
+	var restored := current - previous
+
+	healed.emit(restored)
+	changed.emit(current, maximum)
+
+	return restored
+
+
+func is_full() -> bool:
+	return current >= maximum
 
 
 func is_depleted() -> bool:

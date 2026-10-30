@@ -1,0 +1,59 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://health/orb/health_orb.gd" id="1_orb"]
+[ext_resource type="Texture2D" path="res://health/orb/sprites/health_orb_8x8.png" id="2_sprite"]
+[ext_resource type="Script" uid="uid://cismp3gae8mh7" path="res://currency/pickup/pickup_fall_component.gd" id="3_fall"]
+
+[sub_resource type="AtlasTexture" id="Orb0"]
+atlas = ExtResource("2_sprite")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="Orb1"]
+atlas = ExtResource("2_sprite")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="OrbFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Orb0")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Orb0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Orb1")
+}],
+"loop": true,
+"name": &"released",
+"speed": 4.0
+}]
+
+[sub_resource type="CircleShape2D" id="OrbShape"]
+radius = 14.0
+
+[node name="HealthOrb" type="Area2D" node_paths=PackedStringArray("fall")]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("1_orb")
+fall = NodePath("Fall")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(3, 3)
+sprite_frames = SubResource("OrbFrames")
+animation = &"falling"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("OrbShape")
+
+[node name="Fall" type="Node" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("3_fall")
+body = NodePath("..")
+rest_height = 12.0

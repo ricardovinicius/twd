@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" path="res://entities/player/respawn/ui/DeathScreen.tscn" id="8_death_screen"]
 [ext_resource type="PackedScene" path="res://entities/enemies/flying_eye/FlyingEye.tscn" id="10_wkp8b"]
 [ext_resource type="PackedScene" path="res://entities/enemies/homunculus_couple/HomunculusCouple.tscn" id="11_20pc6"]
+[ext_resource type="PackedScene" path="res://entities/enemies/life_moth/LifeMoth.tscn" id="12_5vvyt"]
+[ext_resource type="PackedScene" path="res://entities/enemies/dung_beetle/DungBeetle.tscn" id="13_c6i3y"]
 
 [node name="Main" type="Node2D" unique_id=1783851588 node_paths=PackedStringArray("pause_menu", "spell_registry", "equipment", "stats", "health", "inventory", "interactor", "dialogue_session", "dialogue_interaction", "player")]
 process_mode = 1
@@ -88,3 +90,9 @@ position = Vector2(-4112, 2447)
 
 [node name="HomunculusCouple" parent="." unique_id=1756340629 instance=ExtResource("11_20pc6")]
 position = Vector2(-557, 4940)
+
+[node name="LifeMoth" parent="." unique_id=1531069571 instance=ExtResource("12_5vvyt")]
+position = Vector2(2622, 566)
+
+[node name="DungBeetle" parent="." unique_id=1861190909 instance=ExtResource("13_c6i3y")]
+position = Vector2(1507, 2723)

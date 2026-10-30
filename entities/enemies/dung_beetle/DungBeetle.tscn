@@ -1,0 +1,178 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/dung_beetle/dung_beetle.gd" id="1_beetle"]
+[ext_resource type="Texture2D" path="res://entities/enemies/dung_beetle/sprites/play_16x16.png" id="2_play"]
+[ext_resource type="Texture2D" path="res://entities/enemies/dung_beetle/sprites/roll_16x16.png" id="3_roll"]
+[ext_resource type="Texture2D" path="res://entities/enemies/dung_beetle/sprites/hit_16x16.png" id="4_hit"]
+[ext_resource type="Script" uid="uid://bmouqvprw5wyj" path="res://components/movement/horizontal_movement_component.gd" id="5_move"]
+[ext_resource type="Script" uid="uid://2htj0e4va8nl" path="res://components/movement/gravity_component.gd" id="6_gravity"]
+[ext_resource type="Script" uid="uid://d14jwxuq06jvb" path="res://entities/enemies/detection/target_detector.gd" id="10_detector"]
+[ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="11_health"]
+[ext_resource type="Script" uid="uid://crs540wacfv0j" path="res://health/destroy_on_death.gd" id="12_death"]
+[ext_resource type="Script" path="res://health/orb/health_orb_drop_on_death.gd" id="13_orb_drop"]
+[ext_resource type="PackedScene" path="res://health/orb/HealthOrb.tscn" id="14_orb_scene"]
+[ext_resource type="Texture2D" path="res://health/orb/sprites/health_orb_8x8.png" id="15_orb_texture"]
+[ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="16_receiver"]
+[ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="17_damage"]
+
+[sub_resource type="AtlasTexture" id="Play0"]
+atlas = ExtResource("2_play")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Play1"]
+atlas = ExtResource("2_play")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Play2"]
+atlas = ExtResource("2_play")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Play3"]
+atlas = ExtResource("2_play")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Roll0"]
+atlas = ExtResource("3_roll")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Roll1"]
+atlas = ExtResource("3_roll")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Roll2"]
+atlas = ExtResource("3_roll")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Roll3"]
+atlas = ExtResource("3_roll")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Hit0"]
+atlas = ExtResource("4_hit")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="BeetleFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Play0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Play1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Play2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Play3")
+}],
+"loop": true,
+"name": &"play",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Roll0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Roll1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Roll2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Roll3")
+}],
+"loop": true,
+"name": &"roll",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Hit0")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 6.0
+}]
+
+[sub_resource type="AtlasTexture" id="HeldOrbTexture"]
+atlas = ExtResource("15_orb_texture")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="RectangleShape2D" id="BodyShape"]
+size = Vector2(10, 9)
+
+[sub_resource type="CircleShape2D" id="ThreatShape"]
+radius = 120.0
+
+[sub_resource type="RectangleShape2D" id="AttackReceiverShape"]
+size = Vector2(14, 12)
+
+[node name="DungBeetle" type="CharacterBody2D"]
+scale = Vector2(3, 3)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_beetle")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("BeetleFrames")
+animation = &"play"
+autoplay = "play"
+
+[node name="Orb" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(5, -6)
+texture = SubResource("HeldOrbTexture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3.5)
+shape = SubResource("BodyShape")
+
+[node name="HorizontalMovement" type="Node" parent="."]
+script = ExtResource("5_move")
+max_speed = 330.0
+acceleration = 1100.0
+deceleration = 1800.0
+
+[node name="Gravity" type="Node" parent="."]
+script = ExtResource("6_gravity")
+
+[node name="ThreatDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("10_detector")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ThreatDetector"]
+shape = SubResource("ThreatShape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("11_health")
+maximum = 20.0
+
+[node name="DestroyOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "target")]
+script = ExtResource("12_death")
+health = NodePath("../Health")
+target = NodePath("..")
+
+[node name="HealthOrbDropOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "hand", "held_orb")]
+script = ExtResource("13_orb_drop")
+health = NodePath("../Health")
+hand = NodePath("../Orb")
+orb_scene = ExtResource("14_orb_scene")
+held_orb = NodePath("../Orb")
+
+[node name="AttackReceiver" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("16_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackReceiver"]
+position = Vector2(0, 2)
+shape = SubResource("AttackReceiverShape")
+
+[node name="HealthDamageReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health")]
+script = ExtResource("17_damage")
+health = NodePath("../../Health")
