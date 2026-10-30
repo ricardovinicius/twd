@@ -45,11 +45,11 @@ func _test_composition() -> void:
 
 	for animation in [&"idle", &"scream", &"roll", &"dizzy", &"hit"]:
 		_check(frames.has_animation(animation), "The Star Man must have a '%s' animation." % animation)
-	_check(frames.get_frame_texture(&"idle", 0).get_size() == Vector2(32.0, 32.0), "Boss frames must be 32x32.")
+	_check(frames.get_frame_texture(&"idle", 0).get_size() == Vector2(32.0, 32.0), "Star Man frames must be 32x32.")
 	_check(star.collision_layer == 4 and star.collision_mask == 3, "He must be solid to the player but roll through them.")
 	_check(star.is_on_floor(), "He must stand on the floor.")
 	_check(star.get_state() == StarMan.State.IDLE, "He must start idle.")
-	_check(star.health.maximum >= 100.0, "A boss must have plenty of health.")
+	_check(star.health.maximum >= 100.0, "The Star Man must have plenty of health.")
 
 	await _free_node(world)
 

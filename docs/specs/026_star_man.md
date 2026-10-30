@@ -1,4 +1,4 @@
-# 026 — Star Man (boss)
+# 026 — Star Man
 
 ## Overview
 
@@ -58,8 +58,7 @@ Sprites in `entities/enemies/star_man/sprites/`, 32×32 frames facing right:
 
 ## Scope limits
 
-- No boss health bar, intro, or arena lock yet.
-- Like other enemies he respawns through `EnemyRespawner` when the player dies or rests; defeating him is not saved.
+- He is a regular (tough) enemy, not a boss: `EnemyRespawner` recreates him when the player dies or rests, like the other enemies. There is no boss fight structure (arena, boss health bar) yet.
 
 ## Acceptance criteria
 

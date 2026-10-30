@@ -833,6 +833,7 @@ script = ExtResource("2_coyote")
 
 [node name="Health" type="Node" parent="." unique_id=1003559884]
 script = ExtResource("13_health")
+invulnerability_duration = 0.6
 
 [node name="RespawnOnDeath" type="Node" parent="." unique_id=2061136104 node_paths=PackedStringArray("body", "health")]
 script = ExtResource("35_respawn")

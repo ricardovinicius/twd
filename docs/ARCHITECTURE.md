@@ -25,8 +25,8 @@ entities/
     homunculus_couple/            Kissing pair that splits apart and chases the player; placeholder art
     life_moth/                    Harmless moth that flees the player and drops a health orb
     dung_beetle/                  Harmless beetle that rolls a health orb away and drops it
-    star_man/                     Boss that screams, rolls invulnerable at the player, then stands dizzy
-    scorpion_man/                 Boss that slams its tail stinger up close and leaps butt-first from afar
+    star_man/                     Tough enemy that screams, rolls invulnerable at the player, then stands dizzy
+    scorpion_man/                 Tough enemy that slams its tail stinger up close and leaps butt-first from afar
     respawn/                      Enemy recreation after player death or checkpoint rest
     bestiary/                     Monster guide entries shown in the pause menu
   interactive/
@@ -80,10 +80,10 @@ docs/specs/                       Feature behavior and acceptance criteria
 | `SpellCooldowns` | Active cooldown end times, accepted durations, and start order. |
 | `DialogueSession` | Active conversation, current line, interruption subscriptions, and completion. |
 | `PlayerInteractor` | Nearby interaction candidates, selected target, and interaction/cancel input. |
-| `Health` | Health, shield, and depletion events. |
+| `Health` | Health, shield, healing, an optional post-damage invulnerability window (the player's), and depletion events. |
 | `Inventory` / `Equipment` | Item quantities and equipped slots, changed through public APIs. |
 | `RespawnOnDeath` | Player spawn position, checkpoint, and respawn lifecycle. |
-| `EnemyRespawner` | Placed enemy definitions and transforms used for recreation. |
+| `EnemyRespawner` | Placed enemy definitions and transforms used for recreation. Level 01's respawner holds the level's enemies and `Main/Enemies` holds the enemies placed in `Main`. |
 | `SwitchComponent` | Discrete switch state consumed by doors. |
 | `CoinManager` | Currency total and its change signal. |
 | `Settings` | Player options and keyboard bindings, applied to the engine and saved to disk. |

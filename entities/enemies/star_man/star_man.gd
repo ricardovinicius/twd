@@ -1,7 +1,7 @@
 class_name StarMan
 extends CharacterBody2D
 
-## Boss: a man with a star stuck around his neck. He waits until he sees the
+## Tough enemy: a man with a star stuck around his neck. He waits until he sees the
 ## player, screams, then curls into the star and rolls at them like a madman:
 ## very fast, hopping at random, turning back when he overshoots, bouncing off
 ## walls. While rolling he cannot be hurt and hits hard. When the roll ends he

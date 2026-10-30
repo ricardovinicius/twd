@@ -136,7 +136,7 @@ func _test_level_wiring() -> void:
 		if child.scene_file_path == block_scene.resource_path:
 			block_count += 1
 
-	_check(block_count == 5, "Level 01 must place the five diggable blocks.")
+	_check(block_count == 6, "Level 01 must place the six diggable blocks.")
 
 	var tile_layer := level.get_node("TileMapPrincipal1") as TileMapLayer
 	_check(

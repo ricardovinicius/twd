@@ -20,8 +20,13 @@ signal state_changed(state: State)
 @export_category("Engage")
 ## Horizontal distance kept from the target while shooting.
 @export_range(0.0, 2000.0, 1.0, "or_greater") var keep_distance: float = 200.0
-## Height kept above the target while shooting.
-@export_range(-1000.0, 1000.0, 1.0) var hover_height: float = 120.0
+## Height kept above the target while shooting. Kept low so a jumping
+## player can line up a horizontal shot.
+@export_range(-1000.0, 1000.0, 1.0) var hover_height: float = 70.0
+## The eye bobs up and down this much around its hover height while shooting,
+## crossing the player's line of fire now and then.
+@export_range(0.0, 500.0, 1.0, "or_greater") var engage_sway: float = 60.0
+@export_range(0.1, 30.0, 0.1, "or_greater") var engage_sway_period: float = 2.4
 ## Layers that block sight (walls, floors).
 @export_flags_2d_physics var line_of_sight_mask: int = 1
 
@@ -41,6 +46,7 @@ var _target: Node2D
 var _home: Vector2
 var _home_set: bool = false
 var _patrol_time: float = 0.0
+var _engage_time: float = 0.0
 
 
 func _ready() -> void:
@@ -60,6 +66,7 @@ func _physics_process(delta: float) -> void:
 	_set_state(State.ENGAGE if _target != null else State.PATROL)
 
 	if _state == State.ENGAGE:
+		_engage_time = fmod(_engage_time + delta, engage_sway_period)
 		flight.fly_toward(_engage_point(_target), delta)
 		ranged_attack.begin_attack(_target)
 	else:
@@ -134,7 +141,9 @@ func _engage_point(target: Node2D) -> Vector2:
 	if is_zero_approx(side):
 		side = 1.0
 
-	return target.global_position + Vector2(side * keep_distance, -hover_height)
+	var sway := sin(TAU * _engage_time / engage_sway_period) * engage_sway
+
+	return target.global_position + Vector2(side * keep_distance, -hover_height + sway)
 
 
 func _set_state(new_state: State) -> void:

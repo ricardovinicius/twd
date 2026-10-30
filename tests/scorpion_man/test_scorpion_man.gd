@@ -51,7 +51,7 @@ func _test_composition() -> void:
 		_check(frames.has_animation(animation), "The Scorpion Man must have a '%s' animation." % animation)
 	_check(frames.get_frame_count(&"slam") == 3, "The slam must have raise, strike and recover frames.")
 	_check(frames.get_frame_count(&"leap") == 2, "The leap must have crouch and air frames.")
-	_check(frames.get_frame_texture(&"walk", 0).get_size() == Vector2(32.0, 32.0), "Boss frames must be 32x32.")
+	_check(frames.get_frame_texture(&"walk", 0).get_size() == Vector2(32.0, 32.0), "Scorpion Man frames must be 32x32.")
 	_check(scorpion.is_on_floor(), "He must stand on the floor.")
 	_check(
 		scorpion.health.maximum >= (skeleton.get_node("Health") as Health).maximum * 4.0,

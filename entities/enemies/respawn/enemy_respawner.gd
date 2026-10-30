@@ -1,6 +1,8 @@
 class_name EnemyRespawner
 extends Node2D
 
+## Recreates its child enemies when the player dies or rests at a checkpoint.
+
 var _enemy_data: Array[Dictionary] = []
 
 

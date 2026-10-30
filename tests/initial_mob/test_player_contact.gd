@@ -96,6 +96,9 @@ func _test_contact_payloads_deduplication_and_cooldown() -> void:
 	mob.set_physics_process(false)
 
 	var health: Health = player.get_node("Health")
+	# This test checks the contact cooldown on its own, not the player's
+	# post-damage invulnerability window.
+	health.invulnerability_duration = 0.0
 	var attack_receiver: AttackReceiver = player.get_node("AttackReceiver")
 	var action_receiver: ActionReceiver = player.get_node("ActionReceiver")
 	var knockback: KnockbackComponent = player.get_node("Knockback")

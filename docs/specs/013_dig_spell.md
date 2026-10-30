@@ -44,7 +44,7 @@ DiggableBlock (StaticBody2D, layer World, scale 3)
 
 ## Scope Limits
 
-- Blocks are scene instances, not painted tiles. Level 01's yellow tiles (`TileMapPrincipal1` source 4 and the whole `TileMapPrincipal2`) were replaced by five `DiggableBlock` instances; `DiggableBlock5` overrides its sprite region to show the lower block art. New diggable blocks are placed by instancing `DiggableBlock.tscn`.
+- Blocks are scene instances, not painted tiles. Level 01's yellow tiles (`TileMapPrincipal1` source 4 and the whole `TileMapPrincipal2`) were replaced by six `DiggableBlock` instances; `DiggableBlock5` overrides its sprite region to show the lower block art. `DiggableBlock6` (−479, 5472) replaced four yellow tiles painted back into `TileMapPrincipal1` later, which looked diggable but were not. New diggable blocks are placed by instancing `DiggableBlock.tscn`.
 - No break animation, sound or particles yet.
 
 ## Acceptance Criteria

@@ -1,4 +1,4 @@
-# 027 — Scorpion Man (boss)
+# 027 — Scorpion Man
 
 ## Overview
 
@@ -54,8 +54,7 @@ Sprites in `entities/enemies/scorpion_man/sprites/`, 32×32 frames facing right 
 
 ## Scope limits
 
-- No boss health bar or arena yet.
-- Like other enemies he respawns through `EnemyRespawner`; defeating him is not saved.
+- He is a regular (tough) enemy, not a boss: `EnemyRespawner` recreates him when the player dies or rests, like the other enemies. There is no boss fight structure (arena, boss health bar) yet.
 
 ## Acceptance criteria
 

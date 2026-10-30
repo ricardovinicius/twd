@@ -40,9 +40,10 @@ Set `GODOT_BIN` to select a Godot executable. Suites start through `tests/bootst
 | `qa_fixes` | QA regressions: saved pickups stay collected, equipment limited to owned copies, levers behind the caster, New Game confirmation, menu key conflicts, restart label, shaft B corridor, and walkable elevator landings. |
 | `elevator_landings` | Level traversal around the elevators: crossing corridors on the platforms, walking onto and off every landing, riding, and calling with levers. |
 | `controller_input` | Controller layout for every action on any controller slot, OK (A) and Back (B) in menus and dialogue without jumping, interacting with Down (S, D-pad down, stick down), Interact following a remapped Down key, and the camera only looking up or down while the player stands still. |
-| `elevator` | Elevator trips, crush guard, riding, toggle and pass-through levers, Level 01 placement and opened shaft, WASD menu navigation. |
+| `elevator` | Elevator trips, crush guard, riding, toggle and pass-through levers, Level 01 placement (levers per the spec: A 2, B 3, C 1) and opened shaft, WASD menu navigation. |
 | `spell_effects` | Push reaching receivers in every direction and pushing them away, push radius, Magic Arrow passing through walls and stopping on the first enemy. |
 | `burn` | Burn definition (J + J) and shop rule, burn reactions on every enemy, fireball hit and ignition, ticking and going out, refresh without stacking, plain attacks not igniting, the rolling Star Man, and casting from the player. |
+| `playtest_fixes` | Regressions from the full-game playtest: the player's damage invulnerability window, every placed enemy under an `EnemyRespawner` (and coming back after death), and the flying eye dipping into the line of fire. |
 | `pause_menu` | Pause menu tabs and navigation, inventory artifacts and status, sections, monster guide, spell details, settings tab, and quit actions. |
 | `options_and_death` | Startup scene, settings persistence, key rebinding and swaps, options menu, and the death loading screen. |
 | `standards` | Integration regressions for lifecycle signals, explicit dependencies, cooldown reconnection, inventory, and equipment. |

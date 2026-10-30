@@ -193,7 +193,10 @@ func _test_level_placement() -> void:
 		if elevator == null:
 			continue
 
-		_check(elevator.switches.size() == (2 if key == "A" else 3), "Elevator%s must have a lever at every landing side." % key)
+		# See 018_elevators.md: ElevatorC only has its bottom lever.
+		var expected_levers: int = {"A": 2, "B": 3, "C": 1}[key]
+
+		_check(elevator.switches.size() == expected_levers, "Elevator%s must have the levers listed in the spec." % key)
 		_check(key == "A" or elevator.start_at_top, "Elevator%s must start at its corridor so the corridor is not open by default." % key)
 
 		for switch in elevator.switches:

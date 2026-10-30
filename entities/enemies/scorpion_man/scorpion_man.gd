@@ -1,7 +1,7 @@
 class_name ScorpionMan
 extends CharacterBody2D
 
-## Boss: a crouching man with a big stinger tail where his head should be and
+## Tough enemy: a crouching man with a big stinger tail where his head should be and
 ## two pincers on his butt. His attack depends on distance:
 ## - close: he raises the big tail and slams the stinger into the ground in
 ##   front of him;

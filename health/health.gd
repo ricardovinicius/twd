@@ -10,10 +10,17 @@ signal shield_broken
 
 @export_range(1.0, 1000.0, 1.0, "or_greater")
 var maximum: float = 100.0
+## After taking damage, further damage is ignored for this long (seconds).
+## 0 = no invulnerability window (enemies); the player uses a short one so
+## overlapping hits in the same moment do not all land.
+@export_range(0.0, 5.0, 0.05, "or_greater")
+var invulnerability_duration: float = 0.0
 
 var current: float
 var shield_maximum: float = 0.0
 var shield_current: float = 0.0
+
+var _invulnerable_until_frame: int = -1
 
 
 func _ready() -> void:
@@ -22,8 +29,10 @@ func _ready() -> void:
 
 
 func take_damage(amount: float) -> float:
-	if amount <= 0.0 or is_depleted():
+	if amount <= 0.0 or is_depleted() or is_invulnerable():
 		return 0.0
+
+	_start_invulnerability()
 
 	var remaining_damage := amount
 
@@ -75,6 +84,19 @@ func is_full() -> bool:
 	return current >= maximum
 
 
+func is_invulnerable() -> bool:
+	return Engine.get_physics_frames() < _invulnerable_until_frame
+
+
+func _start_invulnerability() -> void:
+	if invulnerability_duration <= 0.0:
+		return
+
+	var frames := ceili(invulnerability_duration * Engine.physics_ticks_per_second)
+
+	_invulnerable_until_frame = Engine.get_physics_frames() + frames
+
+
 func is_depleted() -> bool:
 	return current <= 0.0
 
@@ -86,6 +108,7 @@ func set_shield_maximum(new_max: float) -> void:
 
 
 func reset() -> void:
+	_invulnerable_until_frame = -1
 	current = maximum
 	shield_current = shield_maximum
 	changed.emit(current, maximum)

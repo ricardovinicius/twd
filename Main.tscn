@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" path="res://entities/enemies/dung_beetle/DungBeetle.tscn" id="13_c6i3y"]
 [ext_resource type="PackedScene" path="res://entities/enemies/star_man/StarMan.tscn" id="14_j4qnp"]
 [ext_resource type="PackedScene" path="res://entities/enemies/scorpion_man/ScorpionMan.tscn" id="15_fpfj3"]
+[ext_resource type="Script" path="res://entities/enemies/respawn/enemy_respawner.gd" id="16_respawner"]
 
 [node name="Main" type="Node2D" unique_id=1783851588 node_paths=PackedStringArray("pause_menu", "spell_registry", "equipment", "stats", "health", "inventory", "interactor", "dialogue_session", "dialogue_interaction", "player")]
 process_mode = 1
@@ -84,23 +85,26 @@ interactor = NodePath("../LevelRoot/Player/PlayerInteractor")
 
 [node name="DeathScreen" parent="." unique_id=1846908779 instance=ExtResource("8_death_screen")]
 
-[node name="FlyingEye" parent="." unique_id=111065260 instance=ExtResource("10_wkp8b")]
+[node name="Enemies" type="Node2D" parent="."]
+script = ExtResource("16_respawner")
+
+[node name="FlyingEye" parent="Enemies" unique_id=111065260 instance=ExtResource("10_wkp8b")]
 position = Vector2(-3335, 1775.0001)
 
-[node name="FlyingEye2" parent="." unique_id=396838380 instance=ExtResource("10_wkp8b")]
+[node name="FlyingEye2" parent="Enemies" unique_id=396838380 instance=ExtResource("10_wkp8b")]
 position = Vector2(-4112, 2447)
 
-[node name="HomunculusCouple" parent="." unique_id=1756340629 instance=ExtResource("11_20pc6")]
+[node name="HomunculusCouple" parent="Enemies" unique_id=1756340629 instance=ExtResource("11_20pc6")]
 position = Vector2(1055, 4926)
 
-[node name="LifeMoth" parent="." unique_id=1531069571 instance=ExtResource("12_5vvyt")]
+[node name="LifeMoth" parent="Enemies" unique_id=1531069571 instance=ExtResource("12_5vvyt")]
 position = Vector2(2622, 566)
 
-[node name="DungBeetle" parent="." unique_id=1861190909 instance=ExtResource("13_c6i3y")]
+[node name="DungBeetle" parent="Enemies" unique_id=1861190909 instance=ExtResource("13_c6i3y")]
 position = Vector2(1507, 2723)
 
-[node name="StarMan" parent="." unique_id=1498422096 instance=ExtResource("14_j4qnp")]
+[node name="StarMan" parent="Enemies" unique_id=1498422096 instance=ExtResource("14_j4qnp")]
 position = Vector2(542, 3180.0002)
 
-[node name="ScorpionMan" parent="." unique_id=126257218 instance=ExtResource("15_fpfj3")]
+[node name="ScorpionMan" parent="Enemies" unique_id=126257218 instance=ExtResource("15_fpfj3")]
 position = Vector2(-173.00002, 4912)
