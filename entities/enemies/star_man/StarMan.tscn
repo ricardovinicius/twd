@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://currency/pickup/CoinPickup.tscn" id="26_coin_pickup"]
 [ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="27_receiver"]
 
+[ext_resource type="Script" path="res://components/attack_reactions/burn/burn_status_reaction.gd" id="90_burn"]
 [sub_resource type="AtlasTexture" id="Idle0"]
 atlas = ExtResource("2_idle")
 region = Rect2(0, 0, 32, 32)
@@ -191,3 +192,8 @@ shape = SubResource("AttackReceiverShape")
 [node name="StarGuardReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health")]
 script = ExtResource("7_guard")
 health = NodePath("../../Health")
+
+[node name="BurnStatusReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health", "visual")]
+script = ExtResource("90_burn")
+health = NodePath("../../Health")
+visual = NodePath("../../AnimatedSprite2D")

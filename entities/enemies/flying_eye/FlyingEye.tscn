@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="14_receiver"]
 [ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="15_damage"]
 
+[ext_resource type="Script" path="res://components/attack_reactions/burn/burn_status_reaction.gd" id="90_burn"]
 [sub_resource type="AtlasTexture" id="Fly0"]
 atlas = ExtResource("2_fly")
 region = Rect2(0, 0, 16, 16)
@@ -144,6 +145,7 @@ position = Vector2(0, 1)
 script = ExtResource("7_ranged")
 source = NodePath("..")
 projectile_scene = ExtResource("8_bolt")
+projectile_speed = 340.0
 
 [node name="ContactImpact" type="Node2D" parent="." node_paths=PackedStringArray("source", "contact_area")]
 script = ExtResource("9_contact")
@@ -161,7 +163,7 @@ shape = SubResource("ContactShape")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("10_health")
-maximum = 20.0
+maximum = 40.0
 
 [node name="DestroyOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "target")]
 script = ExtResource("11_death")
@@ -188,3 +190,8 @@ shape = SubResource("AttackReceiverShape")
 [node name="HealthDamageReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health")]
 script = ExtResource("15_damage")
 health = NodePath("../../Health")
+
+[node name="BurnStatusReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health", "visual")]
+script = ExtResource("90_burn")
+health = NodePath("../../Health")
+visual = NodePath("../../AnimatedSprite2D")

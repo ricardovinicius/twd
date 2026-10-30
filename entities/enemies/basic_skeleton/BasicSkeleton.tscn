@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://currency/drop/stardust_drop_on_death.gd" id="16_stardust_drop"]
 [ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://currency/pickup/CoinPickup.tscn" id="17_coin_pickup"]
 
+[ext_resource type="Script" path="res://components/attack_reactions/burn/burn_status_reaction.gd" id="90_burn"]
 [sub_resource type="AtlasTexture" id="Attack00"]
 atlas = ExtResource("13_attack")
 region = Rect2(0, 0, 32, 32)
@@ -446,3 +447,8 @@ shape = SubResource("AttackReceiverShape")
 [node name="HealthDamageReaction" type="Node" parent="AttackReceiver" unique_id=735799197 node_paths=PackedStringArray("health")]
 script = ExtResource("12_damage")
 health = NodePath("../../Health")
+
+[node name="BurnStatusReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health", "visual")]
+script = ExtResource("90_burn")
+health = NodePath("../../Health")
+visual = NodePath("../../AnimatedSprite2D")

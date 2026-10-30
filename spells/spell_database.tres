@@ -7,7 +7,8 @@
 [ext_resource type="Resource" uid="uid://2i1pgqkwgu6r" path="res://spells/dash/dash_spell_definition.tres" id="4_dash"]
 [ext_resource type="Resource" uid="uid://bplpfdcfka0xh" path="res://spells/double_jump/double_jump_spell_definition.tres" id="5_double_jump"]
 [ext_resource type="Resource" path="res://spells/action/dig/dig_spell_definition.tres" id="6_dig"]
+[ext_resource type="Resource" path="res://spells/attack/burn/burn_definition.tres" id="7_burn"]
 
 [resource]
 script = ExtResource("1_database")
-spells = Array[ExtResource("2_ial8j")]([ExtResource("2_magic_arrow"), ExtResource("3_push"), ExtResource("4_dash"), ExtResource("5_double_jump"), ExtResource("6_dig")])
+spells = Array[ExtResource("2_ial8j")]([ExtResource("2_magic_arrow"), ExtResource("3_push"), ExtResource("4_dash"), ExtResource("5_double_jump"), ExtResource("6_dig"), ExtResource("7_burn")])

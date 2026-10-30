@@ -55,7 +55,7 @@ settings/                         Settings autoload: volume, fullscreen, and key
 spells/
   core/                           Casting, definitions, registry, database, cooldowns
   action/                         Action contracts and concrete action spells
-  attack/                         Attack contracts, spell commands, and projectiles
+  attack/                         Attack contracts, spell commands, and projectiles (Magic Arrow, Burn)
   dash/ / double_jump/            Concrete movement spells
   ui/                             Spell sequence, cooldown, and registry presentation
 dialogue/                         Shared dialogue resources, active session, and panel
@@ -95,7 +95,7 @@ The player owns its movement coordination and exposes narrow capabilities such a
 
 The `Events` autoload publishes `player_died` and `item_collected`. The enemy respawner and item-notification display subscribe to those public events. It owns no gameplay state. The `CoinManager` autoload is the currency feature's application-lifetime state owner.
 
-Shared `components/` contains the action/attack receiver contracts, health damage reaction, switch state, gravity, horizontal movement, and character-to-rigid-body pushing. Player-only movement and input components remain inside the player feature. Generic behavior may move to shared components when a second feature demonstrates reuse.
+Shared `components/` contains the action/attack receiver contracts, health damage reaction, the burning status reaction used by every enemy, switch state, gravity, horizontal movement, and character-to-rigid-body pushing. Player-only movement and input components remain inside the player feature. Generic behavior may move to shared components when a second feature demonstrates reuse.
 
 ## Runtime flow
 

@@ -40,7 +40,7 @@ func _test_database_queries_and_copying() -> void:
 	var database := SPELL_DATABASE as SpellDatabase
 	var database_spells := database.get_spells()
 
-	_check(database_spells.size() == 5, "The spell database must contain all five spells.")
+	_check(database_spells.size() == 6, "The spell database must contain all six spells.")
 	_check(
 		database.get_spell(&"magic_arrow") == database_spells[0],
 		"Database lookup must return the canonical spell definition."
@@ -50,7 +50,7 @@ func _test_database_queries_and_copying() -> void:
 
 	database_spells.clear()
 	_check(
-		database.get_spells().size() == 5,
+		database.get_spells().size() == 6,
 		"Mutating a returned spell list must not mutate the database."
 	)
 
@@ -195,7 +195,7 @@ func _test_debug_ui_controls() -> void:
 		"The player HUD must not contain the registry debug UI."
 	)
 	_check(debug_ui.registry == registry, "The debug UI must receive the player's registry.")
-	_check(debug_ui.get_catalogued_spell_count() == 5, "The debug UI must list every database spell.")
+	_check(debug_ui.get_catalogued_spell_count() == 6, "The debug UI must list every database spell.")
 	_check(debug_ui.get_registered_spell_count() == 3, "The debug UI must list registered spells.")
 
 	pause_menu.pause_game()

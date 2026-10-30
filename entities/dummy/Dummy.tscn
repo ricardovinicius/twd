@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="4_cshfw"]
 [ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="6_wfdha"]
 
+[ext_resource type="Script" path="res://components/attack_reactions/burn/burn_status_reaction.gd" id="90_burn"]
 [sub_resource type="AtlasTexture" id="AtlasTexture_uo211"]
 atlas = ExtResource("1_vlfdi")
 region = Rect2(0, 0, 32, 32)
@@ -197,3 +198,8 @@ shape = SubResource("RectangleShape2D_cshfw")
 script = ExtResource("6_wfdha")
 health = NodePath("../../Health")
 metadata/_custom_type_script = "uid://de8r3y0cvpu5u"
+
+[node name="BurnStatusReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health", "visual")]
+script = ExtResource("90_burn")
+health = NodePath("../../Health")
+visual = NodePath("../../AnimatedSprite2D")

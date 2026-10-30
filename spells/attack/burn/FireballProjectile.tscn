@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://b7q3xogovuhhg" path="res://spells/attack/magic_arrow/magic_arrow_projectile.gd" id="1_projectile"]
+[ext_resource type="Texture2D" path="res://spells/attack/burn/sprites/fireball_12x12.png" id="2_sprite"]
+
+[sub_resource type="AtlasTexture" id="Fireball0"]
+atlas = ExtResource("2_sprite")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="Fireball1"]
+atlas = ExtResource("2_sprite")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="FireballFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Fireball0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Fireball1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="FireballShape"]
+radius = 6.0
+
+[node name="FireballProjectile" type="Area2D"]
+top_level = true
+scale = Vector2(3, 3)
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("1_projectile")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("FireballFrames")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("FireballShape")

@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://spells/attack/burn/burn_spell.gd" id="1_burn"]
+[ext_resource type="PackedScene" path="res://spells/attack/burn/FireballProjectile.tscn" id="2_fireball"]
+
+[node name="BurnSpell" type="Node2D"]
+script = ExtResource("1_burn")
+projectile_scene = ExtResource("2_fireball")
+speed = 800.0
+lifetime = 0.6
+damage = 15.0

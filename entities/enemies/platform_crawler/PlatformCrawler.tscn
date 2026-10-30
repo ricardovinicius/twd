@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://currency/drop/stardust_drop_on_death.gd" id="9_stardust_drop"]
 [ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://currency/pickup/CoinPickup.tscn" id="10_coin_pickup"]
 
+[ext_resource type="Script" path="res://components/attack_reactions/burn/burn_status_reaction.gd" id="90_burn"]
 [sub_resource type="CircleShape2D" id="VisionShape"]
 radius = 240.0
 
@@ -89,3 +90,8 @@ source = NodePath("../Body")
 pickup_scene = ExtResource("10_coin_pickup")
 pickup_count = 2
 amount_per_pickup = 10
+
+[node name="BurnStatusReaction" type="Node" parent="Body/AttackReceiver" node_paths=PackedStringArray("health", "visual")]
+script = ExtResource("90_burn")
+health = NodePath("../../../Health")
+visual = NodePath("../../Visual/Shell")

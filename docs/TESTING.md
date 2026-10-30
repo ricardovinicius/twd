@@ -17,7 +17,7 @@ Set `GODOT_BIN` to select a Godot executable. Suites start through `tests/bootst
 | `initial_mob` | Enemy behavior, attack pipeline, projectiles, contact, player health, and respawn cleanup. |
 | `cooldown_ui` | Cooldown entry presentation, ordering, lifecycle, and rejection. |
 | `doors_and_levers` | Switch state, lever physics, push interactions, door transitions, obstruction safety, and level wiring. |
-| `spell_registry` | Catalogue queries, per-player availability, dynamic casting, and registry UI. |
+| `spell_registry` | Catalogue queries (six spells), per-player availability, dynamic casting, and registry UI. |
 | `double_jump` | Grounded and airborne casting, the single air charge and its recharge on landing, cooldowns, and movement-mode coordination. |
 | `jump_down` | One-way platform traversal and collision restoration. |
 | `npcs_and_dialogue` | Shared target selection, dialogue lifecycle, live movement/casting, input, interruptions, and pause integration. |
@@ -42,6 +42,7 @@ Set `GODOT_BIN` to select a Godot executable. Suites start through `tests/bootst
 | `controller_input` | Controller layout for every action on any controller slot, OK (A) and Back (B) in menus and dialogue without jumping, interacting with Down (S, D-pad down, stick down), Interact following a remapped Down key, and the camera only looking up or down while the player stands still. |
 | `elevator` | Elevator trips, crush guard, riding, toggle and pass-through levers, Level 01 placement and opened shaft, WASD menu navigation. |
 | `spell_effects` | Push reaching receivers in every direction and pushing them away, push radius, Magic Arrow passing through walls and stopping on the first enemy. |
+| `burn` | Burn definition (J + J) and shop rule, burn reactions on every enemy, fireball hit and ignition, ticking and going out, refresh without stacking, plain attacks not igniting, the rolling Star Man, and casting from the player. |
 | `pause_menu` | Pause menu tabs and navigation, inventory artifacts and status, sections, monster guide, spell details, settings tab, and quit actions. |
 | `options_and_death` | Startup scene, settings persistence, key rebinding and swaps, options menu, and the death loading screen. |
 | `standards` | Integration regressions for lifecycle signals, explicit dependencies, cooldown reconnection, inventory, and equipment. |

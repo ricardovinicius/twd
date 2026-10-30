@@ -60,6 +60,7 @@ signal screamed(target: Node2D)
 @onready var vision: TargetDetector = $Vision
 @onready var vision_shape: CollisionShape2D = $Vision/CollisionShape2D
 @onready var guard: StarGuardReaction = $AttackReceiver/StarGuardReaction
+@onready var burn: BurnStatusReaction = $AttackReceiver/BurnStatusReaction
 @onready var contact_impact: ContactImpactComponent = $ContactImpact
 @onready var health: Health = $Health
 
@@ -269,6 +270,8 @@ func _enter_state(new_state: State) -> void:
 	_state = new_state
 	_state_time = 0.0
 	guard.guarded = _state == State.ROLL
+	# Rolling smothers any fire and he cannot catch fire while rolling.
+	burn.blocked = guard.guarded
 
 	if _state == State.ROLL:
 		contact_impact.contact_damage = roll_contact_damage
