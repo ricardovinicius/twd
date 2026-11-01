@@ -74,6 +74,16 @@ func is_attacking() -> bool:
 	return _phase != Phase.IDLE
 
 
+## Stops the attack at any phase without landing it (e.g. the owner was
+## defeated mid-swing). Emits attack_finished so the owner can clean up.
+func cancel_attack() -> void:
+	if not is_attacking():
+		return
+
+	attack_hitbox.deactivate()
+	_complete_attack()
+
+
 func _physics_process(delta: float) -> void:
 	_phase_elapsed += delta
 

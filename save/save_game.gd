@@ -20,6 +20,9 @@ var save_path: String = SAVE_PATH
 # Level pickups collected and saved, and those collected since the last save.
 var _saved_collected: Dictionary[String, bool] = {}
 var _pending_collected: Dictionary[String, bool] = {}
+# Bosses defeated and saved, and those defeated since the last save.
+var _saved_defeated_bosses: Dictionary[String, bool] = {}
+var _pending_defeated_bosses: Dictionary[String, bool] = {}
 
 
 func has_save() -> bool:
@@ -29,6 +32,8 @@ func has_save() -> bool:
 func delete_save() -> void:
 	_saved_collected.clear()
 	_pending_collected.clear()
+	_saved_defeated_bosses.clear()
+	_pending_defeated_bosses.clear()
 
 	if not has_save():
 		return
@@ -62,6 +67,10 @@ func save_player(player: Node) -> bool:
 	collected.merge(_pending_collected)
 	file.set_value(SECTION_WORLD, "collected", collected.keys())
 
+	var defeated_bosses := _saved_defeated_bosses.duplicate()
+	defeated_bosses.merge(_pending_defeated_bosses)
+	file.set_value(SECTION_WORLD, "defeated_bosses", defeated_bosses.keys())
+
 	var error := file.save(save_path)
 
 	if error != OK:
@@ -70,6 +79,8 @@ func save_player(player: Node) -> bool:
 
 	_saved_collected = collected
 	_pending_collected.clear()
+	_saved_defeated_bosses = defeated_bosses
+	_pending_defeated_bosses.clear()
 	saved.emit()
 	return true
 
@@ -107,6 +118,12 @@ func load_into_player(player: Node) -> bool:
 	for id in file.get_value(SECTION_WORLD, "collected", []):
 		_saved_collected[String(id)] = true
 
+	_saved_defeated_bosses.clear()
+	_pending_defeated_bosses.clear()
+
+	for boss_id in file.get_value(SECTION_WORLD, "defeated_bosses", []):
+		_saved_defeated_bosses[String(boss_id)] = true
+
 	CoinManager.set_coins(file.get_value(SECTION_PLAYER, "stardust", 0))
 	_restore_spells(player.get_spell_registry(), file.get_value(SECTION_PLAYER, "spells", []))
 	_restore_inventory(player.get_inventory(), file.get_value(SECTION_PLAYER, "inventory", {}))
@@ -125,14 +142,29 @@ func mark_collected(pickup: Node) -> void:
 		_pending_collected[PersistentPickup.get_id(pickup)] = true
 
 
-## Starts a play session: forgets unsaved pickups and removes the saved ones
+## Starts a play session: forgets unsaved pickups and boss defeats, and removes the saved pickups
 ## from the running scene. Call after loading (or when there is no save).
 func apply_world_state(tree: SceneTree) -> void:
 	_pending_collected.clear()
+	_pending_defeated_bosses.clear()
 
 	for pickup in tree.get_nodes_in_group(PersistentPickup.GROUP):
 		if _saved_collected.has(PersistentPickup.get_id(pickup)):
 			pickup.queue_free()
+
+
+## Records a boss defeated this session; it stays defeated once saved.
+func mark_boss_defeated(boss_id: StringName) -> void:
+	if boss_id.is_empty():
+		push_warning("SaveGame: Ignoring a defeated boss without an id.")
+		return
+
+	_pending_defeated_bosses[String(boss_id)] = true
+
+
+func is_boss_defeated(boss_id: StringName) -> bool:
+	var id := String(boss_id)
+	return _saved_defeated_bosses.has(id) or _pending_defeated_bosses.has(id)
 
 
 func is_collected(pickup: Node) -> bool:

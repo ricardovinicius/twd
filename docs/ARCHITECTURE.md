@@ -27,6 +27,7 @@ entities/
     dung_beetle/                  Harmless beetle that rolls a health orb away and drops it
     star_man/                     Tough enemy that screams, rolls invulnerable at the player, then stands dizzy
     scorpion_man/                 Tough enemy that slams its tail stinger up close and leaps butt-first from afar
+    jewish_golem/                 Clay golem boss: slam, clay balls that become minions, summoned clay minions, breakable block shield, kneeling defeat
     respawn/                      Enemy recreation after player death or checkpoint rest
     bestiary/                     Monster guide entries shown in the pause menu
   interactive/
@@ -87,7 +88,7 @@ docs/specs/                       Feature behavior and acceptance criteria
 | `SwitchComponent` | Discrete switch state consumed by doors. |
 | `CoinManager` | Currency total and its change signal. |
 | `Settings` | Player options and keyboard bindings, applied to the engine and saved to disk. |
-| `SaveGame` | The save file; captures and restores other owners' state only through their public APIs. |
+| `SaveGame` | The save file; captures and restores other owners' state only through their public APIs. Also records defeated bosses by id. |
 
 `Main` composes the level and application UI and supplies player dependencies to the pause menu. Features exchange data through public methods, typed data objects, signals, and explicitly assigned references. Components do not discover unrelated nodes by traversing arbitrary paths.
 

@@ -1,0 +1,339 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://entities/enemies/jewish_golem/sprites/idle_64x64.png" id="1_idle"]
+[ext_resource type="Texture2D" path="res://entities/enemies/jewish_golem/sprites/walk_64x64.png" id="2_walk"]
+[ext_resource type="Texture2D" path="res://entities/enemies/jewish_golem/sprites/slam_64x64.png" id="3_slam"]
+[ext_resource type="Texture2D" path="res://entities/enemies/jewish_golem/sprites/throw_64x64.png" id="4_throw"]
+[ext_resource type="Texture2D" path="res://entities/enemies/jewish_golem/sprites/summon_64x64.png" id="5_summon"]
+[ext_resource type="Texture2D" path="res://entities/enemies/jewish_golem/sprites/shield_64x64.png" id="6_shield"]
+[ext_resource type="Texture2D" path="res://entities/enemies/jewish_golem/sprites/defeat_64x64.png" id="7_defeat"]
+[ext_resource type="Texture2D" path="res://entities/enemies/jewish_golem/sprites/rune_10x12.png" id="8_rune"]
+[ext_resource type="Script" path="res://entities/enemies/jewish_golem/jewish_golem.gd" id="10_golem"]
+[ext_resource type="Script" path="res://entities/enemies/jewish_golem/clay_shot_component.gd" id="11_shot"]
+[ext_resource type="PackedScene" path="res://entities/enemies/jewish_golem/clay_ball/ClayBall.tscn" id="12_ball"]
+[ext_resource type="Script" path="res://entities/enemies/jewish_golem/clay_minion_summoner.gd" id="13_summoner"]
+[ext_resource type="PackedScene" path="res://entities/enemies/jewish_golem/minions/ClayHomunculus.tscn" id="14_clay_homunculus"]
+[ext_resource type="PackedScene" path="res://entities/enemies/jewish_golem/minions/ClayFlyingEye.tscn" id="15_clay_eye"]
+[ext_resource type="Script" path="res://entities/enemies/jewish_golem/shield_block_spawner.gd" id="16_shield"]
+[ext_resource type="PackedScene" path="res://entities/enemies/jewish_golem/shield_block/ClayShieldBlock.tscn" id="17_block"]
+[ext_resource type="Script" uid="uid://bmouqvprw5wyj" path="res://components/movement/horizontal_movement_component.gd" id="20_move"]
+[ext_resource type="Script" uid="uid://bwbhww5r7mqe3" path="res://entities/enemies/combat/melee_attack_component.gd" id="21_melee"]
+[ext_resource type="Script" uid="uid://d2y585wyaknw3" path="res://entities/enemies/combat/attack_hitbox.gd" id="22_hitbox"]
+[ext_resource type="Script" uid="uid://2htj0e4va8nl" path="res://components/movement/gravity_component.gd" id="23_gravity"]
+[ext_resource type="Script" uid="uid://d14jwxuq06jvb" path="res://entities/enemies/detection/target_detector.gd" id="24_detector"]
+[ext_resource type="Script" uid="uid://dx4kugto8jvw2" path="res://entities/enemies/combat/contact_impact_component.gd" id="25_contact"]
+[ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="26_health"]
+[ext_resource type="Script" path="res://currency/drop/stardust_drop_on_death.gd" id="27_stardust_drop"]
+[ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://currency/pickup/CoinPickup.tscn" id="28_coin_pickup"]
+[ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="29_receiver"]
+[ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="30_damage"]
+[ext_resource type="Script" path="res://components/attack_reactions/burn/burn_status_reaction.gd" id="31_burn"]
+
+[sub_resource type="AtlasTexture" id="Idle0"]
+atlas = ExtResource("1_idle")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Idle1"]
+atlas = ExtResource("1_idle")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Walk0"]
+atlas = ExtResource("2_walk")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Walk1"]
+atlas = ExtResource("2_walk")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Walk2"]
+atlas = ExtResource("2_walk")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Walk3"]
+atlas = ExtResource("2_walk")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Slam0"]
+atlas = ExtResource("3_slam")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Slam1"]
+atlas = ExtResource("3_slam")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Slam2"]
+atlas = ExtResource("3_slam")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Throw0"]
+atlas = ExtResource("4_throw")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Throw1"]
+atlas = ExtResource("4_throw")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Summon0"]
+atlas = ExtResource("5_summon")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Summon1"]
+atlas = ExtResource("5_summon")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Shield0"]
+atlas = ExtResource("6_shield")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Shield1"]
+atlas = ExtResource("6_shield")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Defeat0"]
+atlas = ExtResource("7_defeat")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Defeat1"]
+atlas = ExtResource("7_defeat")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Defeat2"]
+atlas = ExtResource("7_defeat")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="GolemFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Idle0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Idle1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Walk0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Slam0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Slam1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Slam2")
+}],
+"loop": false,
+"name": &"slam",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Throw0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Throw1")
+}],
+"loop": false,
+"name": &"throw",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Summon0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Summon1")
+}],
+"loop": false,
+"name": &"summon",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Shield0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Shield1")
+}],
+"loop": false,
+"name": &"shield",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Defeat0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Defeat1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Defeat2")
+}],
+"loop": false,
+"name": &"defeat",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="BodyShape"]
+size = Vector2(28, 40)
+
+[sub_resource type="CircleShape2D" id="DetectorShape"]
+radius = 240.0
+
+[sub_resource type="RectangleShape2D" id="ContactShape"]
+size = Vector2(30, 42)
+
+[sub_resource type="RectangleShape2D" id="AttackReceiverShape"]
+size = Vector2(34, 54)
+
+[sub_resource type="RectangleShape2D" id="SlamHitboxShape"]
+size = Vector2(30, 22)
+
+[node name="JewishGolem" type="CharacterBody2D"]
+scale = Vector2(3, 3)
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("10_golem")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("GolemFrames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Rune" type="Sprite2D" parent="."]
+visible = false
+z_index = 1
+texture_filter = 1
+position = Vector2(1, 4)
+texture = ExtResource("8_rune")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 11.5)
+shape = SubResource("BodyShape")
+
+[node name="HorizontalMovement" type="Node" parent="."]
+script = ExtResource("20_move")
+max_speed = 60.0
+acceleration = 400.0
+deceleration = 1200.0
+
+[node name="Gravity" type="Node" parent="."]
+script = ExtResource("23_gravity")
+
+[node name="Summons" type="Node" parent="."]
+
+[node name="Slam" type="Node2D" parent="." node_paths=PackedStringArray("attack_hitbox", "visual")]
+script = ExtResource("21_melee")
+attack_hitbox = NodePath("Hitbox")
+visual = NodePath("../AnimatedSprite2D")
+damage = 30.0
+windup_duration = 0.85
+active_duration = 0.15
+recovery_duration = 0.8
+windup_distance = 1.0
+lunge_distance = 2.0
+
+[node name="Hitbox" type="Area2D" parent="Slam"]
+position = Vector2(26, 21)
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+script = ExtResource("22_hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slam/Hitbox"]
+shape = SubResource("SlamHitboxShape")
+
+[node name="ClayShot" type="Node2D" parent="." node_paths=PackedStringArray("source", "summoner", "projectile_parent")]
+position = Vector2(6, -34)
+script = ExtResource("11_shot")
+source = NodePath("..")
+ball_scene = ExtResource("12_ball")
+summoner = NodePath("../Summoner")
+projectile_parent = NodePath("../Summons")
+
+[node name="Summoner" type="Node" parent="." node_paths=PackedStringArray("container")]
+script = ExtResource("13_summoner")
+minion_scenes = Array[PackedScene]([ExtResource("14_clay_homunculus"), ExtResource("15_clay_eye")])
+container = NodePath("../Summons")
+max_alive = 2
+
+[node name="ShieldSpawner" type="Node" parent="." node_paths=PackedStringArray("anchor", "container")]
+script = ExtResource("16_shield")
+block_scene = ExtResource("17_block")
+anchor = NodePath("..")
+container = NodePath("../Summons")
+
+[node name="AggroDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("24_detector")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AggroDetector"]
+shape = SubResource("DetectorShape")
+
+[node name="ContactImpact" type="Node2D" parent="." node_paths=PackedStringArray("source", "contact_area")]
+script = ExtResource("25_contact")
+source = NodePath("..")
+contact_area = NodePath("ContactArea")
+contact_damage = 15.0
+knockback_strength = 600.0
+
+[node name="ContactArea" type="Area2D" parent="ContactImpact"]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactImpact/ContactArea"]
+position = Vector2(0, 11.5)
+shape = SubResource("ContactShape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("26_health")
+maximum = 750.0
+
+[node name="StardustDropOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "source")]
+script = ExtResource("27_stardust_drop")
+health = NodePath("../Health")
+source = NodePath("..")
+pickup_scene = ExtResource("28_coin_pickup")
+pickup_count = 10
+amount_per_pickup = 25
+
+[node name="AttackReceiver" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("29_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackReceiver"]
+position = Vector2(0, 5)
+shape = SubResource("AttackReceiverShape")
+
+[node name="HealthDamageReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health")]
+script = ExtResource("30_damage")
+health = NodePath("../../Health")
+
+[node name="BurnStatusReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("health", "visual")]
+script = ExtResource("31_burn")
+health = NodePath("../../Health")
+visual = NodePath("../../AnimatedSprite2D")
