@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://thkqp1lfpfk0" path="res://entities/enemies/dung_beetle/sprites/portrait.png" id="7_dung_beetle"]
 [ext_resource type="Texture2D" uid="uid://b8lanrqp7alu3" path="res://entities/enemies/star_man/sprites/portrait.png" id="8_star_man"]
 [ext_resource type="Texture2D" uid="uid://4jcpa6yn1kt4" path="res://entities/enemies/scorpion_man/sprites/portrait.png" id="9_scorpion_man"]
+[ext_resource type="Texture2D" uid="uid://dscc1m2wirlr2" path="res://entities/enemies/jewish_golem/sprites/portrait.png" id="10_jewish_golem"]
 
 [sub_resource type="Resource" id="Resource_skeleton"]
 script = ExtResource("2_entry")
@@ -94,6 +95,17 @@ damage = 25.0
 stardust_drop = 100
 weakness = "Jumping over the leap, striking while he recovers"
 
+[sub_resource type="Resource" id="Resource_jewish_golem"]
+script = ExtResource("2_entry")
+id = &"jewish_golem"
+display_name = "Jewish Golem"
+description = "A giant of clay from the old legends, brought to life by the rune in his chest. He is slow, but he lobs lumps of clay that can rise as small clay monsters, two at most, and hides behind breakable blocks. His clay creatures sometimes leave a health orb behind. Pulled from his chest, the rune lets him rest."
+portrait = ExtResource("10_jewish_golem")
+max_health = 750.0
+damage = 30.0
+stardust_drop = 250
+weakness = "Dig through his blocks; strike while he winds up"
+
 [resource]
 script = ExtResource("1_bestiary")
-entries = Array[ExtResource("2_entry")]([SubResource("Resource_skeleton"), SubResource("Resource_crawler"), SubResource("Resource_flying_eye"), SubResource("Resource_homunculus_couple"), SubResource("Resource_life_moth"), SubResource("Resource_dung_beetle"), SubResource("Resource_star_man"), SubResource("Resource_scorpion_man")])
+entries = Array[ExtResource("2_entry")]([SubResource("Resource_skeleton"), SubResource("Resource_crawler"), SubResource("Resource_flying_eye"), SubResource("Resource_homunculus_couple"), SubResource("Resource_life_moth"), SubResource("Resource_dung_beetle"), SubResource("Resource_star_man"), SubResource("Resource_scorpion_man"), SubResource("Resource_jewish_golem")])

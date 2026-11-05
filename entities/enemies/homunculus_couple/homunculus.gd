@@ -120,10 +120,28 @@ func wait() -> void:
 	_set_state(State.IDLE)
 
 
+## True while it rests on top of `body` (e.g. it fell onto the player's head).
+func is_standing_on(body: Node2D) -> bool:
+	if not is_on_floor() or not is_instance_valid(body):
+		return false
+
+	for index in get_slide_collision_count():
+		var collision := get_slide_collision(index)
+
+		if collision.get_collider() == body and collision.get_normal().y < -0.5:
+			return true
+
+	return false
+
+
 func _resolve_direction() -> float:
 	match _state:
 		State.CHASE:
 			if is_instance_valid(_target):
+				# Directly above the target its x matches, so it would stop
+				# there for good; keep running to slide off its head instead.
+				if is_standing_on(_target):
+					return _facing
 				return _direction_to_x(_target.global_position.x)
 		State.RETURN:
 			if is_home():

@@ -1,0 +1,34 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://entities/enemies/homunculus_couple/Homunculus.tscn" id="1_homunculus"]
+[ext_resource type="Shader" path="res://entities/enemies/jewish_golem/minions/clay.gdshader" id="2_clay"]
+[ext_resource type="Script" path="res://health/orb/health_orb_drop_on_death.gd" id="3_orb_drop"]
+[ext_resource type="PackedScene" path="res://health/orb/HealthOrb.tscn" id="4_orb"]
+
+[sub_resource type="ShaderMaterial" id="ClayMaterial"]
+shader = ExtResource("2_clay")
+
+[node name="ClayHomunculus" instance=ExtResource("1_homunculus")]
+collision_mask = 3
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+material = SubResource("ClayMaterial")
+
+[node name="HorizontalMovement" parent="." index="2"]
+max_speed = 220.0
+
+[node name="ContactImpact" parent="." index="4"]
+contact_damage = 10.0
+
+[node name="Health" parent="." index="5"]
+maximum = 15.0
+
+[node name="StardustDropOnDeath" parent="." index="7"]
+pickup_count = 0
+
+[node name="HealthOrbDropOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "hand")]
+script = ExtResource("3_orb_drop")
+health = NodePath("../Health")
+hand = NodePath("..")
+orb_scene = ExtResource("4_orb")
+drop_chance = 0.35

@@ -11,7 +11,8 @@ signal dropped(pickups: Array[Node2D])
 @export var pickup_scene: PackedScene
 ## Onde os pickups são adicionados. Vazio = cena atual (ou o pai da raiz do source).
 @export var drop_parent: Node
-@export_range(1, 20) var pickup_count: int = 2
+## 0 = drops nothing (e.g. minions summoned by a boss).
+@export_range(0, 20) var pickup_count: int = 2
 @export_range(1, 1000) var amount_per_pickup: int = 10
 @export var pickup_spacing: float = 28.0
 @export var spawn_offset: Vector2 = Vector2.ZERO

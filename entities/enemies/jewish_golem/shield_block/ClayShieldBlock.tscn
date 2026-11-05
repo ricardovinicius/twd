@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://entities/interactive/diggable_block/DiggableBlock.tscn" id="1_block"]
+[ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="2_receiver"]
+[ext_resource type="Script" path="res://entities/enemies/jewish_golem/shield_block/shield_absorb_reaction.gd" id="3_absorb"]
+
+[sub_resource type="RectangleShape2D" id="ShieldReceiverShape"]
+size = Vector2(32, 32)
+
+[node name="ClayShieldBlock" instance=ExtResource("1_block")]
+
+[node name="AttackReceiver" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("2_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackReceiver"]
+shape = SubResource("ShieldReceiverShape")
+
+[node name="ShieldAbsorbReaction" type="Node" parent="AttackReceiver"]
+script = ExtResource("3_absorb")

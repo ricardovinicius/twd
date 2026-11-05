@@ -12,6 +12,8 @@ signal dropped(orb: HealthOrb)
 @export var orb_scene: PackedScene
 ## Optional visual of the held orb, hidden when it is dropped.
 @export var held_orb: CanvasItem
+## Chance that the orb drops at all (1 = always). Rolled once on death.
+@export_range(0.0, 1.0, 0.01) var drop_chance: float = 1.0
 ## Overrides the orb's heal amount when above zero.
 @export_range(0.0, 1000.0, 1.0, "or_greater") var heal_amount: float = 0.0
 ## Where the orb is added. Empty = current scene (or the carrier's parent).
@@ -27,6 +29,9 @@ func _ready() -> void:
 
 
 func _on_health_depleted() -> void:
+	if drop_chance < 1.0 and randf() >= drop_chance:
+		return
+
 	var parent := _resolve_drop_parent()
 
 	if parent == null:
