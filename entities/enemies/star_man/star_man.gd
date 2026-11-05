@@ -148,10 +148,15 @@ func has_line_of_sight(point: Vector2) -> bool:
 
 
 func can_see(target: Node2D) -> bool:
+	if not is_instance_valid(target) or not vision.has_target(target):
+		return false
+
+	# Whoever just hit him (provoked) is noticed even from out of range or sight.
+	if vision.is_provoked(target):
+		return true
+
 	return (
-		is_instance_valid(target)
-		and vision.has_target(target)
-		and global_position.distance_to(target.global_position) <= vision_radius
+		global_position.distance_to(target.global_position) <= vision_radius
 		and has_line_of_sight(target.global_position)
 	)
 

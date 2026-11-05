@@ -44,6 +44,7 @@ Set `GODOT_BIN` to select a Godot executable. Suites start through `tests/bootst
 | `spell_effects` | Push reaching receivers in every direction and pushing them away, push radius, Magic Arrow passing through walls and stopping on the first enemy. |
 | `burn` | Burn definition (J + J) and shop rule, burn reactions on every enemy, fireball hit and ignition, ticking and going out, refresh without stacking, plain attacks not igniting, the rolling Star Man, and casting from the player. |
 | `playtest_fixes` | Regressions from the full-game playtest: the player's damage invulnerability window, every placed enemy under an `EnemyRespawner` (and coming back after death), and the flying eye dipping into the line of fire. |
+| `provoke` | Detector provocation (refresh, expiry, leaving while provoked), player-only provocation, wiring on every enemy, each enemy reacting to a far attacker, calming down, and a real Magic Arrow end to end. |
 | `pause_menu` | Pause menu tabs and navigation, inventory artifacts and status, sections, monster guide, spell details, settings tab, and quit actions. |
 | `options_and_death` | Startup scene, settings persistence, key rebinding and swaps, options menu, and the death loading screen. |
 | `standards` | Integration regressions for lifecycle signals, explicit dependencies, cooldown reconnection, inventory, and equipment. |

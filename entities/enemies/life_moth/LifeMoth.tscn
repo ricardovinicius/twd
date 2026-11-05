@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="17_damage"]
 
 [ext_resource type="Script" path="res://components/attack_reactions/burn/burn_status_reaction.gd" id="90_burn"]
+[ext_resource type="Script" path="res://components/attack_reactions/provoke/provoke_on_hit_reaction.gd" id="91_provoke"]
 [sub_resource type="AtlasTexture" id="Fly0"]
 atlas = ExtResource("2_fly")
 region = Rect2(0, 0, 16, 16)
@@ -138,3 +139,7 @@ health = NodePath("../../Health")
 script = ExtResource("90_burn")
 health = NodePath("../../Health")
 visual = NodePath("../../AnimatedSprite2D")
+
+[node name="ProvokeOnHitReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("detectors")]
+script = ExtResource("91_provoke")
+detectors = [NodePath("../../ThreatDetector")]

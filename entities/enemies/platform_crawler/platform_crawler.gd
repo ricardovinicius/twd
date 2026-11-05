@@ -124,11 +124,14 @@ func has_line_of_sight(point: Vector2) -> bool:
 
 
 func can_see(target: Node2D) -> bool:
-	return (
-		is_instance_valid(target)
-		and is_in_front(target.global_position)
-		and has_line_of_sight(target.global_position)
-	)
+	if not is_instance_valid(target):
+		return false
+
+	# Quem acabou de acertá-lo (provocação) conta como visto, de qualquer lado.
+	if vision.is_provoked(target):
+		return true
+
+	return is_in_front(target.global_position) and has_line_of_sight(target.global_position)
 
 
 ## Volta recoil_distance pelo caminho, para por attack_pause e então pode

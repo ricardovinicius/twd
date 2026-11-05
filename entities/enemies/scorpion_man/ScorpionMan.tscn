@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="27_receiver"]
 
 [ext_resource type="Script" path="res://components/attack_reactions/burn/burn_status_reaction.gd" id="90_burn"]
+[ext_resource type="Script" path="res://components/attack_reactions/provoke/provoke_on_hit_reaction.gd" id="91_provoke"]
 [sub_resource type="AtlasTexture" id="Walk0"]
 atlas = ExtResource("2_walk")
 region = Rect2(0, 0, 32, 32)
@@ -237,3 +238,7 @@ health = NodePath("../../Health")
 script = ExtResource("90_burn")
 health = NodePath("../../Health")
 visual = NodePath("../../AnimatedSprite2D")
+
+[node name="ProvokeOnHitReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("detectors")]
+script = ExtResource("91_provoke")
+detectors = [NodePath("../../AggroDetector")]

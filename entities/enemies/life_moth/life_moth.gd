@@ -108,7 +108,8 @@ func _update_threat() -> void:
 	var closest_distance := INF
 
 	for candidate in threat_detector.get_targets():
-		var distance := global_position.distance_to(candidate.global_position)
+		# Whoever just hit it (provoked) is a threat at any distance.
+		var distance := 0.0 if threat_detector.is_provoked(candidate) else global_position.distance_to(candidate.global_position)
 
 		if distance < closest_distance:
 			closest = candidate

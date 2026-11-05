@@ -104,11 +104,11 @@ func has_line_of_sight(point: Vector2) -> bool:
 
 
 func can_see(target: Node2D) -> bool:
-	return (
-		is_instance_valid(target)
-		and aggro_detector.has_target(target)
-		and has_line_of_sight(target.global_position)
-	)
+	if not is_instance_valid(target) or not aggro_detector.has_target(target):
+		return false
+
+	# Whoever just hit it (provoked) is engaged even from out of range or sight.
+	return aggro_detector.is_provoked(target) or has_line_of_sight(target.global_position)
 
 
 func _find_visible_target() -> Node2D:

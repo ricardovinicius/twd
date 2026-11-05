@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://currency/pickup/CoinPickup.tscn" id="17_coin_pickup"]
 
 [ext_resource type="Script" path="res://components/attack_reactions/burn/burn_status_reaction.gd" id="90_burn"]
+[ext_resource type="Script" path="res://components/attack_reactions/provoke/provoke_on_hit_reaction.gd" id="91_provoke"]
 [sub_resource type="AtlasTexture" id="Attack00"]
 atlas = ExtResource("13_attack")
 region = Rect2(0, 0, 32, 32)
@@ -452,3 +453,7 @@ health = NodePath("../../Health")
 script = ExtResource("90_burn")
 health = NodePath("../../Health")
 visual = NodePath("../../AnimatedSprite2D")
+
+[node name="ProvokeOnHitReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("detectors")]
+script = ExtResource("91_provoke")
+detectors = [NodePath("../../AggroDetector")]

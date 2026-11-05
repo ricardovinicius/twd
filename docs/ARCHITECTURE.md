@@ -95,7 +95,7 @@ The player owns its movement coordination and exposes narrow capabilities such a
 
 The `Events` autoload publishes `player_died` and `item_collected`. The enemy respawner and item-notification display subscribe to those public events. It owns no gameplay state. The `CoinManager` autoload is the currency feature's application-lifetime state owner.
 
-Shared `components/` contains the action/attack receiver contracts, health damage reaction, the burning status reaction used by every enemy, switch state, gravity, horizontal movement, and character-to-rigid-body pushing. Player-only movement and input components remain inside the player feature. Generic behavior may move to shared components when a second feature demonstrates reuse.
+Shared `components/` contains the action/attack receiver contracts, health damage reaction, the burning status reaction used by every enemy, the provoke-on-hit reaction (an enemy hit from afar reacts to its attacker), switch state, gravity, horizontal movement, and character-to-rigid-body pushing. Player-only movement and input components remain inside the player feature. Generic behavior may move to shared components when a second feature demonstrates reuse.
 
 ## Runtime flow
 
