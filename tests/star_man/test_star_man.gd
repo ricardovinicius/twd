@@ -49,7 +49,11 @@ func _test_composition() -> void:
 	_check(star.collision_layer == 4 and star.collision_mask == 3, "He must be solid to the player but roll through them.")
 	_check(star.is_on_floor(), "He must stand on the floor.")
 	_check(star.get_state() == StarMan.State.IDLE, "He must start idle.")
-	_check(star.health.maximum >= 100.0, "The Star Man must have plenty of health.")
+	var arrow_spell := load("res://spells/attack/magic_arrow/MagicArrowSpell.tscn").instantiate() as MagicArrowSpell
+	var arrow_damage := arrow_spell.damage
+	arrow_spell.free()
+	_check(arrow_damage < star.health.maximum, "One Magic Arrow must not kill the Star Man.")
+	_check(arrow_damage * 2.0 >= star.health.maximum, "Two Magic Arrows must kill the Star Man.")
 
 	await _free_node(world)
 

@@ -166,7 +166,7 @@ shape = SubResource("ContactShape")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("23_health")
-maximum = 120.0
+maximum = 50.0
 
 [node name="DestroyOnDeath" type="Node" parent="." node_paths=PackedStringArray("health", "target")]
 script = ExtResource("24_death")

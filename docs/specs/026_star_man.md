@@ -18,7 +18,7 @@ A man with a star stuck around his neck. He stands still until he sees the playe
 5. **Dizzy.** When the roll ends he brakes to a stop and stands dizzy for `dizzy_duration` (1.8 s). He takes damage normally, and contact damage drops to `stand_contact_damage` (5).
 6. **Again.** After the daze he rolls again (no scream) while the target is within `lose_radius` (1000); otherwise he forgets the player and goes idle, screaming again on the next sighting.
 7. **Vulnerability.** He can be hurt whenever he is not rolling (idle, screaming, dizzy).
-8. **Death.** 120 HP; drops 4 × 20 Stardust.
+8. **Death.** 50 HP, so two Magic Arrows (25 each) kill him; drops 4 × 20 Stardust.
 9. `rng_seed` makes the hops repeatable (0 = random).
 
 ## Scene composition
@@ -30,7 +30,7 @@ StarMan (CharacterBody2D, StarMan, scale 3, layer Entities, mask World + One-way
 ├── Gravity
 ├── Vision             TargetDetector (radius = vision_radius)
 ├── ContactImpact      damage/knockback switched per state
-├── Health             120
+├── Health             50 
 ├── DestroyOnDeath
 ├── StardustDropOnDeath 4 × 20
 └── AttackReceiver
