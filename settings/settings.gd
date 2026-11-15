@@ -29,7 +29,7 @@ const REMAPPABLE_ACTIONS: Array[Dictionary] = [
 	{"action": &"cast_attack_token", "label": "Spell: Attack token"},
 	{"action": &"cast_confirm_token", "label": "Spell: Confirm"},
 	{"action": &"dialogue_cancel", "label": "Cancel / Back"},
-	{"action": &"Select", "label": "Select"},
+	{"action": &"Select", "label": "Map"},
 	{"action": &"pause", "label": "Pause / Menu"},
 ]
 

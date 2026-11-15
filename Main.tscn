@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://byp0dycr0lg5s" path="res://ui/pause_menu/PauseMenu.tscn" id="3_pause_menu"]
 [ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://currency/pickup/CoinPickup.tscn" id="4_cm0pq"]
 [ext_resource type="Script" uid="uid://dj6eyinmd4aea" path="res://currency/ui/currency_display.gd" id="4_fos0i"]
-[ext_resource type="PackedScene" uid="uid://8xl8jaiae467" path="res://ui/select_menu/SelectMenu.tscn" id="5_fos0i"]
+[ext_resource type="PackedScene" path="res://map/MapOverlay.tscn" id="5_map_overlay"]
 [ext_resource type="Script" uid="uid://ntfdi7u7s4ha" path="res://dialogue/dialogue_session.gd" id="6_dialogue"]
 [ext_resource type="PackedScene" path="res://dialogue/ui/DialoguePanel.tscn" id="7_dialogue_panel"]
 [ext_resource type="PackedScene" path="res://entities/player/respawn/ui/DeathScreen.tscn" id="8_death_screen"]
@@ -55,12 +55,6 @@ position = Vector2(1934, 898)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1364656620]
 
-[node name="Select" parent="CanvasLayer" unique_id=1897178014 instance=ExtResource("5_fos0i")]
-offset_left = -2.0
-offset_top = 3.0
-offset_right = -2.0
-offset_bottom = 3.0
-
 [node name="Label" type="Label" parent="CanvasLayer" unique_id=1788065863]
 anchors_preset = 1
 anchor_left = 1.0
@@ -73,6 +67,14 @@ grow_horizontal = 0
 text = "Stardust: 0"
 script = ExtResource("4_fos0i")
 metadata/_edit_use_anchors_ = true
+
+[node name="MapLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="MapOverlay" parent="MapLayer" node_paths=PackedStringArray("player", "horizontal_movement", "tile_layers") instance=ExtResource("5_map_overlay")]
+player = NodePath("../../LevelRoot/Player")
+horizontal_movement = NodePath("../../LevelRoot/Player/HorizontalMovement")
+tile_layers = [NodePath("../../LevelRoot/TileMapPrincipal1"), NodePath("../../LevelRoot/TileMapPrincipal2")]
 
 [node name="DialogueSession" type="Node" parent="." unique_id=964155133 node_paths=PackedStringArray("player", "health", "respawn")]
 script = ExtResource("6_dialogue")

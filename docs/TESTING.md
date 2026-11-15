@@ -48,6 +48,7 @@ Set `GODOT_BIN` to select a Godot executable. Suites start through `tests/bootst
 | `provoke` | Detector provocation (refresh, expiry, leaving while provoked), player-only provocation, wiring on every enemy, each enemy reacting to a far attacker, calming down, and a real Magic Arrow end to end. |
 | `pause_menu` | Pause menu tabs and navigation, inventory artifacts and status, sections, monster guide, spell details, settings tab, and quit actions. |
 | `options_and_death` | Startup scene, settings persistence, key rebinding and swaps, options menu, and the death loading screen. |
+| `map` | Map toggling with Select (Tab), no pause, slowed walking while open, speed restored on close, and ignoring the toggle while paused. |
 | `standards` | Integration regressions for lifecycle signals, explicit dependencies, cooldown reconnection, inventory, and equipment. |
 
 The runner fails on unsuccessful process exits, script or engine errors, or a missing `PASS:` completion marker. It ignores only the known macOS system certificate lookup diagnostic emitted in sandboxed headless runs. A frame limit prevents a stalled suite from running indefinitely.
