@@ -1,6 +1,6 @@
 extends SceneTree
 
-# Push spell radial burst and Magic Arrow passing through world obstacles.
+# Push spell radial burst and Magic Arrow stopping at world obstacles.
 
 const PUSH_SPELL_SCENE := "res://spells/action/push/PushSpell.tscn"
 const ARROW_SCENE := "res://spells/attack/magic_arrow/MagicArrowProjectile.tscn"
@@ -29,7 +29,8 @@ func _initialize() -> void:
 func _run() -> void:
 	await _test_push_hits_every_direction()
 	await _test_push_ignores_far_receivers()
-	await _test_arrow_passes_through_walls()
+	await _test_arrow_stops_at_walls()
+	await _test_arrow_ignores_wall_behind_caster()
 	await _test_arrow_still_stops_on_first_enemy()
 
 	for failure in _failures:
@@ -91,20 +92,14 @@ func _test_push_ignores_far_receivers() -> void:
 	await process_frame
 
 
-func _test_arrow_passes_through_walls() -> void:
+func _test_arrow_stops_at_walls() -> void:
 	var world := Node2D.new()
 	root.add_child(world)
 
 	var source := Node2D.new()
 	world.add_child(source)
 
-	var wall := StaticBody2D.new()
-	wall.position = Vector2(70.0, 0.0)
-	wall.collision_layer = WORLD_LAYER
-	wall.collision_mask = 0
-	wall.add_child(_make_shape(Vector2(10.0, 80.0)))
-	world.add_child(wall)
-
+	var wall := _make_wall(world, Vector2(70.0, 0.0))
 	var target := _make_target(world, Vector2(160.0, 0.0), 25.0)
 	var arrow = (load(ARROW_SCENE) as PackedScene).instantiate()
 	arrow.debug_collisions = false
@@ -122,15 +117,57 @@ func _test_arrow_passes_through_walls() -> void:
 		if arrow_ref.get_ref() == null:
 			break
 
-		if (arrow_ref.get_ref() as Node2D).global_position.x > wall.position.x + 10.0:
+		if (arrow_ref.get_ref() as Node2D).global_position.x > wall.position.x + 5.0:
 			passed_wall = true
 
-	_check(passed_wall, "Magic Arrow must keep flying past a wall.")
-	_check(is_equal_approx(target.current, 15.0), "Magic Arrow must hit the enemy behind the wall.")
-	_check(arrow_ref.get_ref() == null, "Magic Arrow must still be consumed by the enemy it hits.")
+	_check(not passed_wall, "Magic Arrow must not fly past a wall.")
+	_check(arrow_ref.get_ref() == null, "Magic Arrow must be destroyed when it hits a wall.")
+	_check(is_equal_approx(target.current, 25.0), "Magic Arrow must not hit the enemy behind the wall.")
 
 	world.queue_free()
 	await process_frame
+
+
+func _test_arrow_ignores_wall_behind_caster() -> void:
+	var world := Node2D.new()
+	root.add_child(world)
+
+	var source := Node2D.new()
+	world.add_child(source)
+
+	# A wall inside the arrow's hit area but behind the caster, as when the
+	# player shoots away from a wall they stand against.
+	_make_wall(world, Vector2(-20.0, 0.0))
+	var target := _make_target(world, Vector2(160.0, 0.0), 25.0)
+	var arrow = (load(ARROW_SCENE) as PackedScene).instantiate()
+	arrow.debug_collisions = false
+	world.add_child(arrow)
+	await process_frame
+
+	var arrow_ref: WeakRef = weakref(arrow)
+	arrow.launch(Vector2.ZERO, Vector2.RIGHT, _make_attack(source, 10.0), 360.0, 1.0)
+
+	for i in 90:
+		await physics_frame
+
+		if arrow_ref.get_ref() == null:
+			break
+
+	_check(is_equal_approx(target.current, 15.0), "A wall behind the caster must not stop the arrow.")
+
+	world.queue_free()
+	await process_frame
+
+
+func _make_wall(parent: Node, at: Vector2) -> StaticBody2D:
+	var wall := StaticBody2D.new()
+	wall.position = at
+	wall.collision_layer = WORLD_LAYER
+	wall.collision_mask = 0
+	wall.add_child(_make_shape(Vector2(10.0, 80.0)))
+	parent.add_child(wall)
+
+	return wall
 
 
 func _test_arrow_still_stops_on_first_enemy() -> void:

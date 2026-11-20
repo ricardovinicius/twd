@@ -17,7 +17,7 @@ Set `GODOT_BIN` to select a Godot executable. Suites start through `tests/bootst
 | `initial_mob` | Enemy behavior, attack pipeline, projectiles, contact, player health, and respawn cleanup. |
 | `cooldown_ui` | Cooldown entry presentation, ordering, lifecycle, and rejection. |
 | `doors_and_levers` | Switch state, lever physics, push interactions, door transitions, obstruction safety, and level wiring. |
-| `spell_registry` | Catalogue queries (six spells), per-player availability, dynamic casting, and registry UI. |
+| `spell_registry` | Catalogue queries (seven spells), per-player availability, dynamic casting, and registry UI. |
 | `double_jump` | Grounded and airborne casting, the single air charge and its recharge on landing, cooldowns, and movement-mode coordination. |
 | `jump_down` | One-way platform traversal and collision restoration. |
 | `npcs_and_dialogue` | Shared target selection, dialogue lifecycle, live movement/casting, input, interruptions, and pause integration. |
@@ -31,18 +31,22 @@ Set `GODOT_BIN` to select a Godot executable. Suites start through `tests/bootst
 | `star_man` | Star Man sight through walls, scream, invulnerable roll at speed with spin, bounded turn-backs, wall bounces, dizzy vulnerability and re-rolling, forgetting a far player, drops, respawn, and monster guide entry. |
 | `scorpion_man` | Scorpion Man toughness, attack choice by distance, walking closer then slamming, tail slam, butt-pincer leap across the room with its cooldown, uninterrupted attacks, drops, respawn, and monster guide entry. |
 | `jewish_golem` | Golem boss size and toughness, dormant until the player comes, slow chase, attack choice, slam, clay balls hurting the player or rising as minions, clay minion variants, summon and the two-minion cap, minions sometimes dropping health, breakable block shield and free slots, walls stopping arrows and fireballs, one Dig breaking a whole column, uninterrupted attacks and enrage, kneeling defeat with the rune, remembered defeat, respawn, save records, and monster guide entry. |
+| `breakable_shield` | Breakable shield keeping damage off Health, breaking with a burst inside the window (overflow reaching Health), refilling when the window runs out, letting hits through while broken, regenerating after a quiet period, hits delaying regeneration, and `Health.reset()` restoring it. |
+| `big_head` | Big Head size (two blocks tall), its breakable shield, blocking the player but not projectiles, sleeping until hit, waking with the alert, dozing off again, death clearing the passage with Stardust, respawn, and monster guide entry. |
 | `stardust_drop` | Enemy Stardust drops, pickup amounts, player-only collection, and `CoinManager.add_coins`. |
 | `stardust_gravity` | Stardust pickups falling onto world collision, ignoring other layers, attraction suspending and resuming the fall, collection while falling, and enemy drops landing. |
 | `dash` | Dash speed profile (ease-in from the current speed, ease-out to walking speed), tick-counted duration, rejection and cancellation, and smooth player speed through and after a dash. |
 | `grimoire` | Grimoire companion composition and size, smooth follow through walls, side switching, teleport snapping, removed targets, and Level 01 wiring. |
-| `dig` | Dig spell definition and sequence, one-hit block breaking, unsupported actions, player casting, and Level 01 block placement. |
+| `dig` | Dig spell definition and sequence, one-hit block breaking, the magic slash, unsupported actions, player casting, and Level 01 block placement. |
 | `spell_shop` | Shop offers, locked multi-token spells, Stardust spending and rejection, checkpoint menu purchase flow. |
 | `save_system` | Resting at checkpoints (health, enemy recreation), save/load round trip, missing saves, and the checkpoint Save button. |
 | `qa_fixes` | QA regressions: saved pickups stay collected, equipment limited to owned copies, levers behind the caster, New Game confirmation, menu key conflicts, restart label, shaft B corridor, and walkable elevator landings. |
 | `elevator_landings` | Level traversal around the elevators: crossing corridors on the platforms, walking onto and off every landing, riding, and calling with levers. |
 | `controller_input` | Controller layout for every action on any controller slot, OK (A) and Back (B) in menus and dialogue without jumping, interacting with Down (S, D-pad down, stick down), Interact following a remapped Down key, and the camera only looking up or down while the player stands still. |
 | `elevator` | Elevator trips, crush guard, riding, toggle and pass-through levers, Level 01 placement (levers per the spec: A 2, B 3, C 1) and opened shaft, WASD menu navigation. |
-| `spell_effects` | Push reaching receivers in every direction and pushing them away, push radius, Magic Arrow passing through walls and stopping on the first enemy. |
+| `spell_fizzle` | The fizzle animation playing on the player when a sequence fails, restarting, hiding when done, and not playing for a successful cast. |
+| `spell_effects` | Push reaching receivers in every direction and pushing them away, push radius, Magic Arrow stopping at walls (but not at a wall behind the caster) and on the first enemy. |
+| `break_spell` | Break definition (J + L) and shop rule, the shard dealing no damage, the break reaction shattering a shield at once and ignoring a broken one, Big Head's shield shattered end to end, and enemies without a shield ignoring it. |
 | `burn` | Burn definition (J + J) and shop rule, burn reactions on every enemy, fireball hit and ignition, ticking and going out, refresh without stacking, plain attacks not igniting, the rolling Star Man, and casting from the player. |
 | `playtest_fixes` | Regressions from the full-game playtest: the player's damage invulnerability window, every placed enemy under an `EnemyRespawner` (and coming back after death), and the flying eye dipping into the line of fire. |
 | `provoke` | Detector provocation (refresh, expiry, leaving while provoked), player-only provocation, wiring on every enemy, each enemy reacting to a far attacker, calming down, and a real Magic Arrow end to end. |

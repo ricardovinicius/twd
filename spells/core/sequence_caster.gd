@@ -24,6 +24,10 @@ signal spell_selected(spell: SpellDefinition)
 
 var current_sequence: Array[StringName] = []
 
+# The confirm action can be an analog trigger (RT), which sends many motion
+# events per press. Only the first one confirms.
+var _confirm_held: bool = false
+
 # Maps sequences strings to their corresponding SpellDefinition for quick lookup.
 var sequence_to_spell: Dictionary[StringName, SpellDefinition] = {}
 
@@ -54,12 +58,24 @@ func _unhandled_input(event: InputEvent) -> void:
 		_add_token_to_sequence("interaction")
 	elif event.is_action_pressed("cast_move_token"):
 		_add_token_to_sequence("move")
-	elif event.is_action_pressed("cast_confirm_token"):
+	elif event.is_action("cast_confirm_token"):
+		if not _is_new_confirm_press(event):
+			return
+
 		confirm_sequence()
 	else:
 		return
 
 	get_viewport().set_input_as_handled()
+
+
+func _is_new_confirm_press(event: InputEvent) -> bool:
+	var is_pressed := event.is_action_pressed("cast_confirm_token")
+	var is_new_press := is_pressed and not _confirm_held
+
+	_confirm_held = is_pressed
+
+	return is_new_press
 
 
 func clear_sequence() -> void:

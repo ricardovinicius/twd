@@ -7,7 +7,7 @@
 ## Behavior rules
 
 1. **Definition.** `burn` in `SpellDatabase`: sequence `[attack, attack]`, cooldown 2.5 s, icon `spells/attack/burn/sprites/burn_icon.png`. As a two-token spell it is sold in the checkpoint shop like the other multi-token spells, and must be owned (registered) before J + J casts it. The pause menu's Spell Registry debug window can register it for testing.
-2. **Projectile.** `BurnSpell` (a `MagicArrowSpell`) launches `FireballProjectile` in the aimed direction at 800 px/s for 0.6 s. It reuses the Magic Arrow projectile behavior: passes through walls and stops on the first enemy Attack Receiver.
+2. **Projectile.** `BurnSpell` (a `MagicArrowSpell`) launches `FireballProjectile` in the aimed direction at 800 px/s for 0.6 s. It reuses the Magic Arrow projectile behavior: stops at walls and on the first enemy Attack Receiver.
 3. **Hit.** The attack has `attack_type = &"burn"`, `damage_type = &"fire"`, 15 damage, and a `BurnEffect` (3 s, a tick every 0.5 s, 4 damage per tick).
 4. **Burning.** An enemy's `BurnStatusReaction` handles attacks carrying a `BurnEffect`:
    - it ignites the enemy, damaging its `Health` on every tick (6 ticks, 24 damage by default);

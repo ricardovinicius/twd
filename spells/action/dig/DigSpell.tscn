@@ -1,6 +1,50 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://spells/action/dig/dig_spell.gd" id="1_dig"]
+[ext_resource type="Texture2D" path="res://spells/action/dig/sprites/dig_slash.png" id="2_slash"]
+
+[sub_resource type="AtlasTexture" id="Slash0"]
+atlas = ExtResource("2_slash")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Slash1"]
+atlas = ExtResource("2_slash")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Slash2"]
+atlas = ExtResource("2_slash")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Slash3"]
+atlas = ExtResource("2_slash")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="Slash4"]
+atlas = ExtResource("2_slash")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SlashFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Slash0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Slash1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Slash2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Slash3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Slash4")
+}],
+"loop": false,
+"name": &"slash",
+"speed": 20.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dig"]
 radius = 12.0
@@ -14,3 +58,11 @@ target_position = Vector2(24, 0)
 collision_mask = 8
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="Slash" type="AnimatedSprite2D" parent="EffectQuery"]
+visible = false
+z_index = 5
+texture_filter = 1
+position = Vector2(24, 0)
+sprite_frames = SubResource("SlashFrames")
+animation = &"slash"

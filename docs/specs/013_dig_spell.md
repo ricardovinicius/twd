@@ -12,6 +12,7 @@ Dig is an Action Spell that breaks the yellow diggable blocks placed in the leve
 - A diggable block has `Health.maximum = 1.0`, so one dig breaks it. `DestroyOnDeath` frees the block.
 - Push and other actions are ignored by diggable blocks. Magic Arrow treats the block as a world obstacle and does not break it.
 - Casting with no block in range has no effect and completes normally.
+- Every cast plays a magic slash (`EffectQuery/Slash`, `sprites/dig_slash.png`, 5 frames at 20 fps) where the dig reaches, rotated with the aim, even when nothing is hit.
 
 ## Scene Composition
 
@@ -45,7 +46,7 @@ DiggableBlock (StaticBody2D, layer World, scale 3)
 ## Scope Limits
 
 - Blocks are scene instances, not painted tiles. Level 01's yellow tiles (`TileMapPrincipal1` source 4 and the whole `TileMapPrincipal2`) were replaced by six `DiggableBlock` instances; `DiggableBlock5` overrides its sprite region to show the lower block art. `DiggableBlock6` (−479, 5472) replaced four yellow tiles painted back into `TileMapPrincipal1` later, which looked diggable but were not. New diggable blocks are placed by instancing `DiggableBlock.tscn`.
-- No break animation, sound or particles yet.
+- No block break animation, sound or particles yet; the slash is the only visual.
 
 ## Acceptance Criteria
 

@@ -15,6 +15,7 @@ const ENEMY_SCENES := [
 	"res://entities/enemies/dung_beetle/DungBeetle.tscn",
 	"res://entities/enemies/star_man/StarMan.tscn",
 	"res://entities/enemies/scorpion_man/ScorpionMan.tscn",
+	"res://entities/enemies/big_head/BigHead.tscn",
 ]
 
 var _checks: int = 0

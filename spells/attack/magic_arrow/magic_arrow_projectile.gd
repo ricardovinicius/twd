@@ -1,6 +1,11 @@
 class_name MagicArrowProjectile
 extends Area2D
 
+## Layers that stop the projectile, such as walls, floors, doors and diggable
+## blocks (World). Checked with a ray from the projectile's center, so its
+## larger hit area does not catch a wall right behind the caster.
+@export_flags_2d_physics var obstacle_mask: int = 1
+
 @export_category("Debug")
 @export var debug_collisions: bool = false
 
@@ -66,9 +71,15 @@ func _physics_process(delta: float) -> void:
 	if not _launched or _consumed:
 		return
 
-	# Move the projectile
-	var displacement = _direction * _speed * delta
-	global_position += displacement
+	var next_position := global_position + _direction * _speed * delta
+	var obstacle_hit := _find_obstacle(global_position, next_position)
+
+	if not obstacle_hit.is_empty():
+		global_position = obstacle_hit.position
+		_consume("hit world obstacle: %s" % obstacle_hit.collider)
+		return
+
+	global_position = next_position
 
 	# Update lifetime
 	_remaining_lifetime -= delta
@@ -95,9 +106,8 @@ func _on_area_entered(area: Area2D) -> void:
 	_consume("attack receiver handled collision")
 
 
-# The projectile only scans Attack Receivers, so world geometry (walls,
-# floors, platforms) never reaches here: the arrow passes through obstacles.
-# Bodies added to the mask in the future still stop it.
+# World geometry is handled by the obstacle ray in _physics_process. Bodies
+# added to the collision mask in the future still stop the projectile here.
 func _on_body_entered(body: Node) -> void:
 	if _consumed:
 		return
@@ -107,6 +117,20 @@ func _on_body_entered(body: Node) -> void:
 		return
 	
 	_consume("body collision treated as world obstacle: %s" % _describe_node(body))
+
+
+## Ray along this frame's movement against obstacle_mask. Empty when clear.
+func _find_obstacle(from: Vector2, to: Vector2) -> Dictionary:
+	if obstacle_mask == 0:
+		return {}
+
+	var query := PhysicsRayQueryParameters2D.create(from, to, obstacle_mask)
+	var caster := _attack.source as CollisionObject2D
+
+	if is_instance_valid(caster):
+		query.exclude = [caster.get_rid()]
+
+	return get_world_2d().direct_space_state.intersect_ray(query)
 
 
 func _belongs_to_caster(node: Node) -> bool:

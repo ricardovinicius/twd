@@ -15,6 +15,9 @@ var maximum: float = 100.0
 ## overlapping hits in the same moment do not all land.
 @export_range(0.0, 5.0, 0.05, "or_greater")
 var invulnerability_duration: float = 0.0
+## Optional shield that must be broken with a burst of damage before Health
+## takes any (see BreakableShield). Independent of the equipment shield below.
+@export var breakable_shield: BreakableShield
 
 var current: float
 var shield_maximum: float = 0.0
@@ -36,7 +39,10 @@ func take_damage(amount: float) -> float:
 
 	var remaining_damage := amount
 
-	if shield_current > 0.0:
+	if breakable_shield != null:
+		remaining_damage = breakable_shield.absorb(remaining_damage)
+
+	if shield_current > 0.0 and remaining_damage > 0.0:
 		var previous_shield := shield_current
 		shield_current = maxf(shield_current - remaining_damage, 0.0)
 
@@ -113,3 +119,6 @@ func reset() -> void:
 	shield_current = shield_maximum
 	changed.emit(current, maximum)
 	shield_changed.emit(shield_current, shield_maximum)
+
+	if breakable_shield != null:
+		breakable_shield.reset()

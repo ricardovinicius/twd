@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" path="res://entities/enemies/scorpion_man/ScorpionMan.tscn" id="15_fpfj3"]
 [ext_resource type="Script" uid="uid://dlo81gifjljid" path="res://entities/enemies/respawn/enemy_respawner.gd" id="16_respawner"]
 [ext_resource type="PackedScene" path="res://entities/enemies/jewish_golem/JewishGolem.tscn" id="17_sc1dx"]
+[ext_resource type="PackedScene" uid="uid://cbdr3awxubmhw" path="res://entities/enemies/big_head/BigHead.tscn" id="18_kjvhd"]
 
 [node name="Main" type="Node2D" unique_id=1783851588 node_paths=PackedStringArray("pause_menu", "spell_registry", "equipment", "stats", "health", "inventory", "interactor", "dialogue_session", "dialogue_interaction", "player")]
 process_mode = 1
@@ -114,3 +115,7 @@ position = Vector2(-173.00002, 4912)
 
 [node name="JewishGolem" parent="." unique_id=971472153 instance=ExtResource("17_sc1dx")]
 position = Vector2(-3833, 912)
+
+[node name="BigHead" parent="." unique_id=500059759 instance=ExtResource("18_kjvhd")]
+position = Vector2(-2451, 4270)
+scale = Vector2(4, 4)

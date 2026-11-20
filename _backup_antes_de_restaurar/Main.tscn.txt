@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://155xx7s6y6ta"]
+
+[ext_resource type="Script" uid="uid://dsgskjhc2825q" path="res://main.gd" id="1_3dxm6"]
+[ext_resource type="PackedScene" uid="uid://6uw7wsvlc7y2" path="res://levels/level_01/Level01.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://byp0dycr0lg5s" path="res://ui/pause_menu/PauseMenu.tscn" id="3_pause_menu"]
+[ext_resource type="Script" uid="uid://dj6eyinmd4aea" path="res://currency/ui/currency_display.gd" id="4_fos0i"]
+[ext_resource type="PackedScene" path="res://map/MapOverlay.tscn" id="5_map_overlay"]
+[ext_resource type="Script" uid="uid://ntfdi7u7s4ha" path="res://dialogue/dialogue_session.gd" id="6_dialogue"]
+[ext_resource type="PackedScene" path="res://dialogue/ui/DialoguePanel.tscn" id="7_dialogue_panel"]
+[ext_resource type="PackedScene" path="res://entities/player/respawn/ui/DeathScreen.tscn" id="8_death_screen"]
+[ext_resource type="PackedScene" path="res://entities/enemies/flying_eye/FlyingEye.tscn" id="10_wkp8b"]
+[ext_resource type="PackedScene" path="res://entities/enemies/homunculus_couple/HomunculusCouple.tscn" id="11_20pc6"]
+[ext_resource type="PackedScene" path="res://entities/enemies/life_moth/LifeMoth.tscn" id="12_5vvyt"]
+[ext_resource type="PackedScene" path="res://entities/enemies/dung_beetle/DungBeetle.tscn" id="13_c6i3y"]
+[ext_resource type="PackedScene" path="res://entities/enemies/star_man/StarMan.tscn" id="14_j4qnp"]
+[ext_resource type="PackedScene" path="res://entities/enemies/scorpion_man/ScorpionMan.tscn" id="15_fpfj3"]
+[ext_resource type="Script" uid="uid://dlo81gifjljid" path="res://entities/enemies/respawn/enemy_respawner.gd" id="16_respawner"]
+[ext_resource type="PackedScene" path="res://entities/enemies/jewish_golem/JewishGolem.tscn" id="17_sc1dx"]
+[ext_resource type="PackedScene" uid="uid://cbdr3awxubmhw" path="res://entities/enemies/big_head/BigHead.tscn" id="18_kjvhd"]
+
+[node name="Main" type="Node2D" unique_id=1783851588 node_paths=PackedStringArray("pause_menu", "spell_registry", "equipment", "stats", "health", "inventory", "interactor", "dialogue_session", "dialogue_interaction", "player")]
+process_mode = 1
+script = ExtResource("1_3dxm6")
+pause_menu = NodePath("PauseMenuLayer/PauseMenu")
+spell_registry = NodePath("LevelRoot/Player/SpellRegistry")
+equipment = NodePath("LevelRoot/Player/Equipment")
+stats = NodePath("LevelRoot/Player/Stats")
+health = NodePath("LevelRoot/Player/Health")
+inventory = NodePath("LevelRoot/Player/Inventory")
+interactor = NodePath("LevelRoot/Player/PlayerInteractor")
+dialogue_session = NodePath("DialogueSession")
+dialogue_interaction = NodePath("LevelRoot/VillageGuide/DialogueInteraction")
+player = NodePath("LevelRoot/Player")
+
+[node name="LevelRoot" parent="." unique_id=39161027 instance=ExtResource("2_0wfyh")]
+process_mode = 1
+position = Vector2(1, 1)
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=621268640]
+layer = 10
+
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=1613493885 instance=ExtResource("3_pause_menu")]
+metadata/_edit_use_anchors_ = true
+
+[node name="Coin" type="Node2D" parent="." unique_id=353597701]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1364656620]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1788065863]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -109.0
+offset_top = 18.0
+offset_right = -25.0
+offset_bottom = 41.0
+grow_horizontal = 0
+text = "Stardust: 0"
+script = ExtResource("4_fos0i")
+metadata/_edit_use_anchors_ = true
+
+[node name="MapLayer" type="CanvasLayer" parent="." unique_id=211730350]
+layer = 5
+
+[node name="MapOverlay" parent="MapLayer" unique_id=573540554 node_paths=PackedStringArray("player", "horizontal_movement", "tile_layers") instance=ExtResource("5_map_overlay")]
+player = NodePath("../../LevelRoot/Player")
+horizontal_movement = NodePath("../../LevelRoot/Player/HorizontalMovement")
+tile_layers = [NodePath("../../LevelRoot/TileMapPrincipal1"), NodePath("../../LevelRoot/TileMapPrincipal2")]
+
+[node name="DialogueSession" type="Node" parent="." unique_id=964155133 node_paths=PackedStringArray("player", "health", "respawn")]
+script = ExtResource("6_dialogue")
+player = NodePath("../LevelRoot/Player")
+health = NodePath("../LevelRoot/Player/Health")
+respawn = NodePath("../LevelRoot/Player/RespawnOnDeath")
+
+[node name="DialoguePanel" parent="." unique_id=160320710 node_paths=PackedStringArray("session", "interactor") instance=ExtResource("7_dialogue_panel")]
+session = NodePath("../DialogueSession")
+interactor = NodePath("../LevelRoot/Player/PlayerInteractor")
+
+[node name="DeathScreen" parent="." unique_id=1846908779 instance=ExtResource("8_death_screen")]
+
+[node name="Enemies" type="Node2D" parent="." unique_id=1370737475]
+script = ExtResource("16_respawner")
+
+[node name="FlyingEye" parent="Enemies" unique_id=111065260 instance=ExtResource("10_wkp8b")]
+position = Vector2(-3335, 1775.0001)
+
+[node name="FlyingEye2" parent="Enemies" unique_id=396838380 instance=ExtResource("10_wkp8b")]
+position = Vector2(-4112, 2447)
+
+[node name="HomunculusCouple" parent="Enemies" unique_id=1756340629 instance=ExtResource("11_20pc6")]
+position = Vector2(1055, 4926)
+
+[node name="LifeMoth" parent="Enemies" unique_id=1531069571 instance=ExtResource("12_5vvyt")]
+position = Vector2(-4447, 3645)
+
+[node name="DungBeetle" parent="Enemies" unique_id=1861190909 instance=ExtResource("13_c6i3y")]
+position = Vector2(758, 3061)
+
+[node name="StarMan" parent="Enemies" unique_id=1498422096 instance=ExtResource("14_j4qnp")]
+position = Vector2(-300.00006, 5065)
+
+[node name="ScorpionMan" parent="Enemies" unique_id=126257218 instance=ExtResource("15_fpfj3")]
+position = Vector2(569, 5720)
+
+[node name="JewishGolem" parent="." unique_id=971472153 instance=ExtResource("17_sc1dx")]
+position = Vector2(-3833, 912)
+
+[node name="BigHead" parent="." unique_id=500059759 instance=ExtResource("18_kjvhd")]
+position = Vector2(-2451, 4270)
+scale = Vector2(4, 4)

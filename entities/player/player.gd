@@ -77,8 +77,10 @@ func _apply_normal_movement(delta: float) -> void:
 
 	var direction := Input.get_axis("left", "right")
 
-	if direction:
-		facing_direction = Vector2(direction, 0.0)
+	# Any stick tilt past the deadzone turns the character, so it never walks
+	# backwards and spells fire the way it is facing.
+	if not is_zero_approx(direction):
+		facing_direction = Vector2(signf(direction), 0.0)
 
 	velocity.x = horizontal_movement.calculate_velocity(
 		velocity.x,
@@ -87,10 +89,16 @@ func _apply_normal_movement(delta: float) -> void:
 	)
 
 	_move_and_slide_with_rigid_body_push()
+	_update_sprite_facing()
 
-	if direction == 1.0:
+
+## The sprite always matches facing_direction. It used to flip only at full
+## input (exactly 1 or -1), so a light analog tilt moved the player backwards
+## without turning the sprite.
+func _update_sprite_facing() -> void:
+	if facing_direction.x > 0.0:
 		animated_sprite_2d.flip_h = false
-	elif direction == -1.0:
+	elif facing_direction.x < 0.0:
 		animated_sprite_2d.flip_h = true
 
 

@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://spells/attack/break/break_spell.gd" id="1_break"]
+[ext_resource type="PackedScene" path="res://spells/attack/break/BreakProjectile.tscn" id="2_projectile"]
+
+[node name="BreakSpell" type="Node2D"]
+script = ExtResource("1_break")
+projectile_scene = ExtResource("2_projectile")
+speed = 900.0
+lifetime = 0.5
+damage = 0.0

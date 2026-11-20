@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://cbdr3awxubmhw"]
+
+[ext_resource type="Script" uid="uid://kx6gpuy6aypd" path="res://entities/enemies/big_head/big_head.gd" id="1_big_head"]
+[ext_resource type="Texture2D" uid="uid://c6tuwxry42ipq" path="res://entities/enemies/big_head/sprites/big_head_16x32.png" id="2_sheet"]
+[ext_resource type="Script" uid="uid://cp1lc56q8ispu" path="res://health/health.gd" id="11_health"]
+[ext_resource type="Script" uid="uid://crs540wacfv0j" path="res://health/destroy_on_death.gd" id="12_death"]
+[ext_resource type="Script" uid="uid://cqmsuvavggis5" path="res://currency/drop/stardust_drop_on_death.gd" id="13_stardust_drop"]
+[ext_resource type="PackedScene" uid="uid://hs6dswbvecbt" path="res://currency/pickup/CoinPickup.tscn" id="14_coin_pickup"]
+[ext_resource type="Script" uid="uid://dnck314runjjs" path="res://components/attack_reactions/attack_receiver.gd" id="16_receiver"]
+[ext_resource type="Script" uid="uid://de8r3y0cvpu5u" path="res://components/attack_reactions/health/health_damage_reaction.gd" id="17_damage"]
+[ext_resource type="Script" uid="uid://dllta4odmbcn6" path="res://components/attack_reactions/burn/burn_status_reaction.gd" id="90_burn"]
+[ext_resource type="Script" uid="uid://0jfu88d65rxe" path="res://health/shield/breakable_shield.gd" id="91_shield"]
+[ext_resource type="Script" uid="uid://dmgs7obacwn44" path="res://health/shield/shield_visual.gd" id="92_shield_visual"]
+[ext_resource type="Script" path="res://components/attack_reactions/shield_break/shield_break_reaction.gd" id="93_shield_break"]
+
+[sub_resource type="AtlasTexture" id="Awake0"]
+atlas = ExtResource("2_sheet")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="Sleep0"]
+atlas = ExtResource("2_sheet")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="BigHeadFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Awake0")
+}],
+"loop": 1,
+"name": &"awake",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Sleep0")
+}],
+"loop": 1,
+"name": &"sleep",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AlertTexture"]
+atlas = ExtResource("2_sheet")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="RectangleShape2D" id="BodyShape"]
+size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="AttackReceiverShape"]
+size = Vector2(16, 32)
+
+[node name="BigHead" type="StaticBody2D" unique_id=1982142501]
+scale = Vector2(3, 3)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_big_head")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=952634886]
+texture_filter = 1
+sprite_frames = SubResource("BigHeadFrames")
+animation = &"sleep"
+autoplay = "sleep"
+
+[node name="Alert" type="Sprite2D" parent="." unique_id=972952729]
+visible = false
+z_index = 1
+texture_filter = 1
+position = Vector2(6, -32)
+texture = SubResource("AlertTexture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1384166144]
+shape = SubResource("BodyShape")
+
+[node name="BreakableShield" type="Node" parent="." unique_id=2031939882]
+script = ExtResource("91_shield")
+
+[node name="ShieldVisual" type="Node2D" parent="." unique_id=419180290 node_paths=PackedStringArray("shield")]
+z_index = 1
+script = ExtResource("92_shield_visual")
+shield = NodePath("../BreakableShield")
+
+[node name="Health" type="Node" parent="." unique_id=1728029135 node_paths=PackedStringArray("breakable_shield")]
+script = ExtResource("11_health")
+maximum = 60.0
+breakable_shield = NodePath("../BreakableShield")
+
+[node name="DestroyOnDeath" type="Node" parent="." unique_id=1270873850 node_paths=PackedStringArray("health", "target")]
+script = ExtResource("12_death")
+health = NodePath("../Health")
+target = NodePath("..")
+
+[node name="StardustDropOnDeath" type="Node" parent="." unique_id=425041953 node_paths=PackedStringArray("health", "source")]
+script = ExtResource("13_stardust_drop")
+health = NodePath("../Health")
+source = NodePath("..")
+pickup_scene = ExtResource("14_coin_pickup")
+amount_per_pickup = 15
+
+[node name="AttackReceiver" type="Area2D" parent="." unique_id=428144762]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("16_receiver")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackReceiver" unique_id=1250450534]
+shape = SubResource("AttackReceiverShape")
+
+[node name="HealthDamageReaction" type="Node" parent="AttackReceiver" unique_id=283868116 node_paths=PackedStringArray("health")]
+script = ExtResource("17_damage")
+health = NodePath("../../Health")
+
+[node name="BurnStatusReaction" type="Node" parent="AttackReceiver" unique_id=584289111 node_paths=PackedStringArray("health", "visual")]
+script = ExtResource("90_burn")
+health = NodePath("../../Health")
+visual = NodePath("../../AnimatedSprite2D")
+
+[node name="ShieldBreakReaction" type="Node" parent="AttackReceiver" node_paths=PackedStringArray("shield")]
+script = ExtResource("93_shield_break")
+shield = NodePath("../../BreakableShield")

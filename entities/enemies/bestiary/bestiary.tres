@@ -106,6 +106,16 @@ damage = 30.0
 stardust_drop = 250
 weakness = "Dig through his blocks; strike while he winds up"
 
+[sub_resource type="Resource" id="Resource_big_head"]
+script = ExtResource("2_entry")
+id = &"big_head"
+display_name = "Big Head"
+description = "A giant head on a tiny body, exactly as tall as a corridor. It sleeps in the way and nothing gets past it. Hit it and it wakes up with a start, then dozes off again. It never fights back."
+placeholder_color = Color(0.55, 0.55, 0.59, 1)
+max_health = 60.0
+stardust_drop = 30
+weakness = "Anything: it never fights back"
+
 [resource]
 script = ExtResource("1_bestiary")
-entries = Array[ExtResource("2_entry")]([SubResource("Resource_skeleton"), SubResource("Resource_crawler"), SubResource("Resource_flying_eye"), SubResource("Resource_homunculus_couple"), SubResource("Resource_life_moth"), SubResource("Resource_dung_beetle"), SubResource("Resource_star_man"), SubResource("Resource_scorpion_man"), SubResource("Resource_jewish_golem")])
+entries = Array[ExtResource("2_entry")]([SubResource("Resource_skeleton"), SubResource("Resource_crawler"), SubResource("Resource_flying_eye"), SubResource("Resource_homunculus_couple"), SubResource("Resource_life_moth"), SubResource("Resource_dung_beetle"), SubResource("Resource_star_man"), SubResource("Resource_scorpion_man"), SubResource("Resource_jewish_golem"), SubResource("Resource_big_head")])

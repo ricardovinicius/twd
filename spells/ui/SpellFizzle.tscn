@@ -1,0 +1,62 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://spells/ui/spell_fizzle.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://spells/ui/sprites/spell_fizzle.png" id="2_sheet"]
+
+[sub_resource type="AtlasTexture" id="Fizzle0"]
+atlas = ExtResource("2_sheet")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Fizzle1"]
+atlas = ExtResource("2_sheet")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Fizzle2"]
+atlas = ExtResource("2_sheet")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Fizzle3"]
+atlas = ExtResource("2_sheet")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Fizzle4"]
+atlas = ExtResource("2_sheet")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Fizzle5"]
+atlas = ExtResource("2_sheet")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="FizzleFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Fizzle0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Fizzle1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Fizzle2")
+}, {
+"duration": 1.5,
+"texture": SubResource("Fizzle3")
+}, {
+"duration": 1.5,
+"texture": SubResource("Fizzle4")
+}, {
+"duration": 1.5,
+"texture": SubResource("Fizzle5")
+}],
+"loop": false,
+"name": &"fizzle",
+"speed": 16.0
+}]
+
+[node name="SpellFizzle" type="AnimatedSprite2D"]
+visible = false
+z_index = 2
+texture_filter = 1
+sprite_frames = SubResource("FizzleFrames")
+animation = &"fizzle"
+script = ExtResource("1_script")

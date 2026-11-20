@@ -105,6 +105,12 @@ func _test_player_cast_breaks_block() -> void:
 		"Casting J + K and confirming with I must break the block in front of the player."
 	)
 
+	var slash := _find_dig_slash(player)
+
+	_check(slash != null, "The dig spell must have a slash sprite.")
+	if slash != null:
+		_check(slash.visible and slash.is_playing(), "Digging must play the magic slash.")
+
 	await _free_node(block)
 	await _free_node(player)
 
@@ -151,6 +157,14 @@ func _test_level_wiring() -> void:
 	)
 
 	level.free()
+
+
+func _find_dig_slash(player: Node) -> AnimatedSprite2D:
+	for child in player.get_children():
+		if child is DigSpell and not child.is_queued_for_deletion():
+			return child.get_node_or_null("EffectQuery/Slash") as AnimatedSprite2D
+
+	return null
 
 
 func _spawn_player_facing_block() -> Array[Node2D]:
