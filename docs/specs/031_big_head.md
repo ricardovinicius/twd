@@ -37,7 +37,7 @@ BigHead (StaticBody2D, BigHead, scale 3, layer Entities, mask none)
 
 ## Placement
 
-Instance `BigHead.tscn` under an `EnemyRespawner` (for example `Main/Enemies`) in a corridor two blocks tall. Its origin is its center, so place it one block above the corridor floor's surface (48 px), centered in the corridor.
+Instance `BigHead.tscn` under Level 01's `EnemyRespawner` in a corridor two blocks tall. Its origin is its center, so place it one block above the corridor floor's surface (48 px), centered in the corridor.
 
 ## Scope limits
 

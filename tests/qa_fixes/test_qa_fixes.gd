@@ -48,7 +48,7 @@ func _run() -> void:
 func _test_saved_pickups_stay_collected() -> void:
 	await _open_game()
 
-	var coins := current_scene.get_node("Coin")
+	var coins := current_scene.get_node("LevelRoot/Stardust")
 	var first: Node = coins.get_child(0)
 	var first_name := first.name
 	var player = _player()
@@ -59,18 +59,18 @@ func _test_saved_pickups_stay_collected() -> void:
 
 	# Not saved yet: a restart brings the coin back and drops the Stardust.
 	await _restart()
-	_check(current_scene.get_node("Coin").has_node(NodePath(first_name)), "An unsaved pickup must come back on restart.")
+	_check(current_scene.get_node("LevelRoot/Stardust").has_node(NodePath(first_name)), "An unsaved pickup must come back on restart.")
 	_check(_coins.coins == 0, "Unsaved Stardust must be lost on restart.")
 
-	first = current_scene.get_node("Coin").get_node(NodePath(first_name))
+	first = current_scene.get_node("LevelRoot/Stardust").get_node(NodePath(first_name))
 	first._on_body_entered(_player())
 	await _frames(40)
 	await _rest_at_checkpoint()
 
 	await _restart()
-	_check(not current_scene.get_node("Coin").has_node(NodePath(first_name)), "A saved pickup must stay collected after restart.")
+	_check(not current_scene.get_node("LevelRoot/Stardust").has_node(NodePath(first_name)), "A saved pickup must stay collected after restart.")
 	_check(_coins.coins == 1, "Saved Stardust must be kept without being farmable.")
-	_check(current_scene.get_node("Coin").get_child_count() == 2, "Other pickups must remain.")
+	_check(current_scene.get_node("LevelRoot/Stardust").get_child_count() == 2, "Other pickups must remain.")
 
 	_save_game.delete_save()
 

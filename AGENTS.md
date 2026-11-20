@@ -7,6 +7,7 @@
 # Project organization
 
 - Use a feature-driven directory structure. Place files according to the gameplay feature or system that owns them.
+- Place everything that has a position in the world (terrain, player, enemies, NPCs, pickups, interactives) in the level scene, such as `levels/level_01/Level01.tscn`. `Main.tscn` only composes the level, UI layers, and global systems; it holds no world content. Enemies go under the level's `EnemyRespawner`.
 - Keep a feature's scenes, scripts, resources, data objects, UI, and dedicated assets together. For example, `spells/attack/magic_arrow/` owns the Magic Arrow command, projectile, definition, scenes, and sprites; spell-specific UI may live under `spells/ui/`.
 - Keep feature-specific components inside their owning feature. Move components into a shared directory such as `components/` only when they are reused across features.
 - Shared directories should have a clear purpose and actual consumers. Avoid vague collections such as `common`, `utils`, or `managers` without a defined responsibility.

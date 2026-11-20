@@ -84,13 +84,13 @@ docs/specs/                       Feature behavior and acceptance criteria
 | `Health` | Health, shield, healing, an optional post-damage invulnerability window (the player's), and depletion events. |
 | `Inventory` / `Equipment` | Item quantities and equipped slots, changed through public APIs. |
 | `RespawnOnDeath` | Player spawn position, checkpoint, and respawn lifecycle. |
-| `EnemyRespawner` | Placed enemy definitions and transforms used for recreation. Level 01's respawner holds the level's enemies and `Main/Enemies` holds the enemies placed in `Main`. |
+| `EnemyRespawner` | Placed enemy definitions and transforms used for recreation. Level 01's respawner holds every placed enemy, bosses included. |
 | `SwitchComponent` | Discrete switch state consumed by doors. |
 | `CoinManager` | Currency total and its change signal. |
 | `Settings` | Player options and keyboard bindings, applied to the engine and saved to disk. |
 | `SaveGame` | The save file; captures and restores other owners' state only through their public APIs. Also records defeated bosses by id. |
 
-`Main` composes the level and application UI and supplies player dependencies to the pause menu. Features exchange data through public methods, typed data objects, signals, and explicitly assigned references. Components do not discover unrelated nodes by traversing arbitrary paths.
+`Main` composes the level and application UI; it holds no world content. Everything with a position in the world (terrain, player, interactives, pickups under `Stardust`, NPCs, enemies under `EnemyRespawner`) lives in the level scene, so the map is edited in `Level01.tscn` alone. `Main` instances the level as `LevelRoot` at (62, 12), an offset kept so existing saves (checkpoint positions are world coordinates) stay valid. It also supplies player dependencies to the pause menu. Features exchange data through public methods, typed data objects, signals, and explicitly assigned references. Components do not discover unrelated nodes by traversing arbitrary paths.
 
 The player owns its movement coordination and exposes narrow capabilities such as `try_spell_jump()`, `collect_item()`, and `set_checkpoint()`. Checkpoints request a rest through `rest_at_checkpoint()`; `RespawnOnDeath` owns the resulting checkpoint and health restoration, and announces it with `Events.checkpoint_rested`. `RespawnOnDeath` emits lifecycle signals so the player can clear movement modes before position and health are restored.
 
